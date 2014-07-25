@@ -1,0 +1,59 @@
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Landing Page for first MVP">
+    <meta name="author" content="Paul Zavalza">
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
+
+    <title>Tak</title>
+    
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+
+  </head>
+  <!-- START BODY -->
+  <body >
+  	<!--Dynamic background -->
+  	{{>slider}}
+
+    <section id="header">
+        <div class="container">
+            <header>
+                <!-- HEADLINE -->
+                <h2><b>TAK</b> te permite conectar tus deseos con la gente que te rodea.</h2>
+            </header>
+            <div class="col-lg-6 col-lg-offset-6 mt centered">
+            <h3>Comunicate con personas que quieren lo mismo que tú o que necesitan algo que ofreces.</h3>
+        	</div>
+            <div class="col-lg-4 col-lg-offset-4 mt centered">
+            	<h4>LET ME KNOW WHEN YOU LAUNCH</h4>
+				<form class="form-inline" role="form">
+				  <div class="form-group">
+				    <label class="sr-only" for="exampleInputEmail2">Email address</label>
+				    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Enter email">
+				  </div>
+				  <button type="submit" class="btn btn-info">Submit</button>
+				</form>            
+			</div>
+        </div>
+        {{>desiresInput}}
+    </section>
+  </body>
+
+  <template name="desiresInput">
+  		<div class="container">
+  			<h2><b>¿Cuáles son tus tres deseos?</b></h2>
+  			<span class="glyphicon glyphicon-chevron-left  lastDesire"></span>
+ 			<span class="glyphicon glyphicon-chevron-right nextDesire"></span>
+ 		</div>
+  </template>
+  <template name="slider">
+  <style>
+  body {
+  background-image:url(slider/{{desireImg}}.jpg);
+  background-repeat: no-repeat;
+  background-position: right top;
+  z-index: -1;
+  }
+  </style>
+  </template>
