@@ -15,6 +15,10 @@
   <body >
   	<!--Dynamic background -->
   	{{>slider}}
+    {{>content}}
+  </body>
+
+  <template name="content">
 
     <section id="header">
         <div class="container">
@@ -23,22 +27,31 @@
                 <h2><b>TAK</b> te permite conectar tus deseos con la gente que te rodea.</h2>
             </header>
             <div class="col-lg-6 col-lg-offset-6 mt centered">
-            <h3>Comunicate con personas que quieren lo mismo que tú o que necesitan algo que ofreces.</h3>
-        	</div>
+            <h4>Comunicate con personas que quieren lo mismo que tú o que necesitan algo que ofreces.</h4>
+          </div>
             <div class="col-lg-4 col-lg-offset-4 mt centered">
-            	<h4>LET ME KNOW WHEN YOU LAUNCH</h4>
-				<form class="form-inline" role="form">
-				  <div class="form-group">
-				    <label class="sr-only" for="exampleInputEmail2">Email address</label>
-				    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Enter email">
-				  </div>
-				  <button type="submit" class="btn btn-info">Submit</button>
-				</form>            
-			</div>
+              <b>Mi primer deseo</b>
+        <form class="form-inline" role="form">
+          <div class="form-group">
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="userDesire" placeholder="Deseo...">
+             </div>
+          </div>
+          <button type="submit" class="btn btn-info saveDesire">Enviar</button>
+        </form>
+        {{>desiresOptions}}            
+      </div>
         </div>
         {{>desiresInput}}
     </section>
-  </body>
+  </template>
+
+  <template name="desiresOptions">
+      {{#each matchingDesire}}
+        {{description}}<br/>
+      {{/each}}
+  </template>
+
 
   <template name="desiresInput">
   		<div class="container">
