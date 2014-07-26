@@ -1,11 +1,17 @@
 //DB Connnection
 Desires = new Meteor.Collection("desires")
 
+Router.map(function() {
+  this.route('welcome', {path: '/'});
+  this.route('desires', {path: '/desires'});
+});
+
 if (Meteor.isClient) {
 Meteor.startup(function () {
     Session.set("desireImg", 1);
     Session.set('desire', " ");
     Session.set('numberOfDesires', 3);
+    Session.set('idsToSearch', []);
   });
 
 Deps.autorun(function () {
@@ -25,13 +31,13 @@ Deps.autorun(function () {
     var desiresNum=Session.get("numberOfDesires");
     if(desiresNum==0)
     { 
-      Session.set("showResults", true);
-      alert("Hecho");
+      Router.go('desires'); //show desires page
+      //alert("Hecho");
     }
    
  }, 1500 );
 
- Template.content.events({
+ Template.welcome.events({
   'keypress #userDesire': function (evt, tmpl){
       var desire = document.getElementById("userDesire").value;
       //alert(desire);
@@ -68,11 +74,11 @@ Deps.autorun(function () {
         Session.set('numberOfDesires', desiresNum-1);
       }
       document.getElementById("userDesire").value = "";
+      Session.set('desire', "");
       return false;
    },
 
    'click .option': function (evt, tmpl){
-     evt.preventDefault();
      //alert(this._id);
      var description = document.getElementById("userDesire");
      description.value = this.description;
@@ -83,7 +89,13 @@ Deps.autorun(function () {
         Session.set('desire'+String(desiresNum), this.description);
         Session.set('numberOfDesires', desiresNum-1);
       }
+      var ids = Session.get('idsToSearch');
+      ids.push(this._id)
+      Session.set('idsToSearch', ids);
       description.value = "";
+      Session.set('desire', "");
+
+      return false;
    }
 
  });
@@ -91,6 +103,15 @@ Deps.autorun(function () {
   Template.desiresOptions.helpers({
     matchingDesire: function(){
     //var tagsOfIdea = Session.get("tagsOfIdea");
+    return Desires.find();
+    }
+  });
+
+  Template.desires.helpers({
+    desiresToShow: function(){
+    Meteor.subscribe("findDesires", Session.get('idsToSearch'));
+    //var idsToSearch = Session.get("idsToSearch");
+    //alert(idsToSearch.length);
     return Desires.find();
     }
   });
@@ -128,6 +149,9 @@ if (Meteor.isServer) {
     });
   });
 
+ Meteor.publish('findDesires', function(idsToSearch){
+   return Desires.find({_id: {$in: idsToSearch}});
+ });
  Meteor.publish('similarDesires', function(searchText) {
 
          var doc = {};
@@ -204,7 +228,7 @@ if (Meteor.isServer) {
               var score = searchResults[i].score;
               console.log(score);
               Desires.update({_id: id}, {$set: {'lastScore':score}});
-              if(score >= searchText.split(" ").length*0.6){
+              if(score >= searchText.split(" ").length*0.7*0.6){
                 ids.push(id);
               }
               

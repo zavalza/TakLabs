@@ -13,13 +13,11 @@
   </head>
   <!-- START BODY -->
   <body >
-  	<!--Dynamic background -->
-  	{{>slider}}
-    {{>content}}
   </body>
 
-  <template name="content">
-
+  <template name="welcome">
+    <!--Dynamic background -->
+    {{>slider}}
     <section id="header">
         <div class="container">
             <header>
@@ -32,6 +30,28 @@
         {{>desiresInput}}
       </div>
     </section>
+  </template>
+
+  <template name="desires">
+      {{>static}}
+      {{#each desiresToShow}}
+       <div class="panel panel-primary">
+          <div class="panel-heading">
+              <h3 class="panel-title">{{description}}</h3>{{amount}} personas en Monterrey quieren esto
+          </div>
+        <div class="panel-body">
+          <!--ul class="list-group">
+              {{#each comments}}
+                <li class="list-group-item">
+                  <span class="badge">14</span>
+                  {{text}}
+                </li>
+              {{/each}}
+          </ul-->
+          Basic panel example
+        </div>
+      </div>
+      {{/each}}
   </template>
 
   <template name="desiresOptions">
@@ -66,6 +86,17 @@
   <style>
   body {
   background-image:url(slider/{{desireImg}}.jpg);
+  background-repeat: no-repeat;
+  background-position: right top;
+  z-index: -1;
+  }
+  </style>
+  </template>
+
+  <template name="static">
+  <style>
+  body {
+  background-image:url(slider/1.jpg);
   background-repeat: no-repeat;
   background-position: right top;
   z-index: -1;
