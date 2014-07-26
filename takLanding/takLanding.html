@@ -34,6 +34,7 @@
 
   <template name="desires">
       {{>static}}
+      {{>navbar}}
       {{#each desiresToShow}}
        <div class="panel panel-primary">
           <div class="panel-heading">
@@ -52,6 +53,46 @@
         </div>
       </div>
       {{/each}}
+  </template>
+  <template name="navbar">
+    <nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Colapsar</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Tak</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <!--li class="active"><a href="#">Deseos</a></li-->
+        <li><a class="showAllDesires" href="#">Ver todos los deseos</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Más<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Compartir</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Contactar a Tak</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Acerca de</a></li>
+          </ul>
+        </li>
+      </ul>
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input id="searchDesire" type="text" class="form-control" placeholder="Buscar deseo">
+        </div>
+        <button type="submit" class="btn btn-default">Buscar</button>
+      </form>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
   </template>
 
   <template name="newMessage">
@@ -101,7 +142,6 @@
   <template name="static">
   <style>
   body {
-  background-image:url(slider/1.jpg);
   background-repeat: no-repeat;
   background-position: right top;
   z-index: -1;

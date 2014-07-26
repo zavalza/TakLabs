@@ -105,6 +105,24 @@ Deps.autorun(function () {
 
  });
 
+Template.navbar.events({
+  'keypress #searchDesire': function (evt, tmpl){
+      var desire = document.getElementById("searchDesire").value;
+      //alert(desire);
+      var re = /([a-zA-Z]+)/g;
+      if(desire.match(re))
+      {
+        Session.set('desire', desire);
+      }
+      
+      return true;
+  },
+
+  'click .showAllDesires': function(evt, tmpl){
+    Session.set('idsToSearch', []);
+  }
+});
+
   Template.newMessage.events({
     'click .saveMessage': function (evt, tmpl) {
       evt.preventDefault();
@@ -184,7 +202,10 @@ if (Meteor.isServer) {
   });
 
  Meteor.publish('findDesires', function(idsToSearch){
-   return Desires.find({_id: {$in: idsToSearch}});
+    if(idsToSearch.length > 0)
+        return Desires.find({_id: {$in: idsToSearch}});
+    else
+       return Desires.find({});
  });
  Meteor.publish("findMessages", function(desireId){
   console.log("finding messages of desire"+ desireId);
