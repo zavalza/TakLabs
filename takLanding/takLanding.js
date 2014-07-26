@@ -4,15 +4,20 @@ Messages = new Meteor.Collection("messages")
 
 Router.map(function() {
   this.route('welcome', {path: '/'});
-  this.route('desires', {path: '/desires'});
+  this.route('desires', {path: '/results'});
 });
 
 if (Meteor.isClient) {
+var addthis_config
+
 Meteor.startup(function () {
     Session.set("desireImg", 1);
     Session.set('desire', " ");
     Session.set('numberOfDesires', 3);
     Session.set('idsToSearch', []);
+  addthis_config = {"data_track_addressbar": true,
+                    pubid: 'ra-53d405157d4cf334' };
+
   });
 
 Deps.autorun(function () {
@@ -26,6 +31,7 @@ Deps.autorun(function () {
     if(currentImage==4)
       currentImage =1;
     Session.set("desireImg", currentImage);
+    //alert(addthis_config.pubid)
  }, 8000 );
 
  Meteor.setInterval( function(){
@@ -47,7 +53,6 @@ Deps.autorun(function () {
       {
         Session.set('desire', desire);
       }
-      
       return true;
   },
 
@@ -112,6 +117,7 @@ Template.navbar.events({
       var re = /([a-zA-Z]+)/g;
       if(desire.match(re))
       {
+        Session.set('idsToSearch', []);
         Session.set('desire', desire);
       }
       
@@ -119,7 +125,7 @@ Template.navbar.events({
   },
 
   'click .showAllDesires': function(evt, tmpl){
-    Session.set('idsToSearch', []);
+    Session.set('idsToSearch', ['all']);
   }
 });
 
@@ -148,7 +154,6 @@ Template.navbar.events({
 
   Template.desiresOptions.helpers({
     matchingDesire: function(){
-    //var tagsOfIdea = Session.get("tagsOfIdea");
     return Desires.find();
     }
   });
@@ -203,10 +208,14 @@ if (Meteor.isServer) {
 
  Meteor.publish('findDesires', function(idsToSearch){
     if(idsToSearch.length > 0)
-        return Desires.find({_id: {$in: idsToSearch}});
+        if(idsToSearch[0] == 'all')
+          return Desires.find({}, {sort:{amount:-1}});
+        else
+          return Desires.find({_id: {$in: idsToSearch}});
     else
-       return Desires.find({});
+        this.stop();
  });
+
  Meteor.publish("findMessages", function(desireId){
   console.log("finding messages of desire"+ desireId);
   return Messages.find({desire_id : desireId});
