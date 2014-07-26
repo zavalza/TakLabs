@@ -40,18 +40,23 @@
               <h3 class="panel-title">{{description}}</h3>{{amount}} personas en Monterrey quieren esto
           </div>
         <div class="panel-body">
-          <!--ul class="list-group">
-              {{#each comments}}
+          <ul class="list-group">
+              {{#each messages}}
                 <li class="list-group-item">
                   <span class="badge">14</span>
                   {{text}}
                 </li>
               {{/each}}
-          </ul-->
-          Basic panel example
+          </ul>
+          {{>newMessage}}
         </div>
       </div>
       {{/each}}
+  </template>
+
+  <template name="newMessage">
+    <input type="text" class="form-control" id="newMessage" placeholder="Dejales un mensaje">
+    <button type="submit" class="btn btn-info saveMessage">Guardar</button>
   </template>
 
   <template name="desiresOptions">

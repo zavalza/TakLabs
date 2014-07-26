@@ -1,5 +1,6 @@
 //DB Connnection
 Desires = new Meteor.Collection("desires")
+Messages = new Meteor.Collection("messages")
 
 Router.map(function() {
   this.route('welcome', {path: '/'});
@@ -65,7 +66,11 @@ Deps.autorun(function () {
                 lastScore: 0,
                 referrer: document.referrer, timestamp: new Date()
                 };
-      Meteor.call("insertDesire", doc);
+       Meteor.call("insertDesire", doc, function(error, result){
+          var ids = Session.get('idsToSearch');
+          ids.push(result)
+          Session.set('idsToSearch', ids);
+      });
       
       var desiresNum = Session.get('numberOfDesires');
       if(desiresNum > 0){
@@ -100,6 +105,29 @@ Deps.autorun(function () {
 
  });
 
+  Template.newMessage.events({
+    'click .saveMessage': function (evt, tmpl) {
+      evt.preventDefault();
+       var text = tmpl.find('#newMessage').value;
+
+      if(text=="")
+      {
+        alert("Por favor escribe tu mensaje");
+        return false;
+      }
+      //alert(text);
+      var doc = {
+                text: text,
+                desire_id: this._id,
+                points: 0,
+                referrer: document.referrer, timestamp: new Date()
+                };
+      Meteor.call("insertMessage", doc);
+      tmpl.find('#newMessage').value = ""
+      return false;
+   }
+  });
+
   Template.desiresOptions.helpers({
     matchingDesire: function(){
     //var tagsOfIdea = Session.get("tagsOfIdea");
@@ -113,6 +141,12 @@ Deps.autorun(function () {
     //var idsToSearch = Session.get("idsToSearch");
     //alert(idsToSearch.length);
     return Desires.find();
+    },
+
+    messages:function(){
+      var desireId =  this._id;
+      Meteor.subscribe("findMessages", desireId);
+      return Messages.find({desire_id: desireId});
     }
   });
 
@@ -152,6 +186,10 @@ if (Meteor.isServer) {
  Meteor.publish('findDesires', function(idsToSearch){
    return Desires.find({_id: {$in: idsToSearch}});
  });
+ Meteor.publish("findMessages", function(desireId){
+  console.log("finding messages of desire"+ desireId);
+  return Messages.find({desire_id : desireId});
+ });
  Meteor.publish('similarDesires', function(searchText) {
 
          var doc = {};
@@ -181,6 +219,13 @@ if (Meteor.isServer) {
           console.log('Adding desire with doc');
           console.log(doc);
           var desireId = Desires.insert(doc);
+          return desireId;
+      },
+      insertMessage: function(doc) {
+          console.log('Adding message with doc');
+          console.log(doc);
+          var messageId = Messages.insert(doc);
+          return messageId;
       },
       _searchDesires: function (searchText) {
       console.log(typeof(searchText));
