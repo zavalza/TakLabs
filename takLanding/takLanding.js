@@ -1,6 +1,8 @@
 //DB Connnection
 Desires = new Meteor.Collection("desires")
 Messages = new Meteor.Collection("messages")
+Taks = new Meteor.Collection("tak") //message to tak
+Emails = new Meteor.Collection('emails')
 
 Router.map(function() {
   this.route('welcome', {path: '/'});
@@ -15,6 +17,8 @@ Meteor.startup(function () {
     Session.set('desire', " ");
     Session.set('numberOfDesires', 3);
     Session.set('idsToSearch', []);
+    Session.set('showToTak', false);
+    Session.set('showAboutTak', false);
   addthis_config = {"data_track_addressbar": true,
                     pubid: 'ra-53d405157d4cf334' };
 
@@ -126,8 +130,49 @@ Template.navbar.events({
 
   'click .showAllDesires': function(evt, tmpl){
     Session.set('idsToSearch', ['all']);
+  },
+
+  'click .toTak': function(evt, tmpl){
+    Session.set('idsToSearch', []);
+    Session.set('showToTak', true);
+    
+  },
+  'click .aboutTak': function(evt, tmpl){
+    Session.set('idsToSearch', []);
+    Session.set('showAboutTak', true);
   }
 });
+
+  Template.desires.events({
+    'click .sendMessage': function(evt, tmpl){
+      var text = tmpl.find('#messageToTak').value;
+      if(text ="")
+      {
+        alert("Por favor escribe tu mensaje");
+        return false;
+      }
+       var doc = {
+                text: text,
+                referrer: document.referrer, timestamp: new Date()
+                };
+      Meteor.call('insertTak', doc);
+      alert("Gracias por comunicarte con nosotros");
+    },
+    'click .sendInterest': function(evt, tmpl){
+      var email = tmpl.find('#email').value;
+      if(!email.match(/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/))      
+        {
+          alert("El correo electrónico no es válido");
+          return false;
+        }
+       var doc = {
+                address: email,
+                referrer: document.referrer, timestamp: new Date()
+                };
+      Meteor.call('insertEmail', doc);
+      alert ("Cuando este lista la siguiente versión, nos comunicaremos contigo");
+    }
+  });
 
   Template.newMessage.events({
     'click .saveMessage': function (evt, tmpl) {
@@ -173,6 +218,13 @@ Template.navbar.events({
     }
   });
 
+  Template.desires.showToTak = function(){
+    return Session.get('showToTak');
+  }
+
+  Template.desires.showAboutTak = function(){
+    return Session.get('showAboutTak');
+  }
   Template.userDesires.desire1= function(){
     return Session.get("desire1");
   };
@@ -256,6 +308,18 @@ if (Meteor.isServer) {
           console.log(doc);
           var messageId = Messages.insert(doc);
           return messageId;
+      },
+      insertTak: function(doc) {
+          console.log('Adding message to tak with doc');
+          console.log(doc);
+          var takId = Taks.insert(doc);
+          return takId;
+      },
+      insertEmail: function(doc) {
+          console.log('Adding email with doc');
+          console.log(doc);
+          var emialId = Emails.insert(doc);
+          return emailId;
       },
       _searchDesires: function (searchText) {
       console.log(typeof(searchText));
