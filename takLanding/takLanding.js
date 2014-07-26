@@ -2,10 +2,10 @@
 Desires = new Meteor.Collection("desires")
 
 if (Meteor.isClient) {
-var desires;
 Meteor.startup(function () {
     Session.set("desireImg", 1);
     Session.set('desire', " ");
+    Session.set('numberOfDesires', 3);
   });
 
 Deps.autorun(function () {
@@ -20,6 +20,16 @@ Deps.autorun(function () {
       currentImage =1;
     Session.set("desireImg", currentImage);
  }, 8000 );
+
+ Meteor.setInterval( function(){
+    var desiresNum=Session.get("numberOfDesires");
+    if(desiresNum==0)
+    { 
+      Session.set("showResults", true);
+      alert("Hecho");
+    }
+   
+ }, 1500 );
 
  Template.content.events({
   'keypress #userDesire': function (evt, tmpl){
@@ -44,12 +54,36 @@ Deps.autorun(function () {
         return false;
       }
       var doc = {
-                description: description, 
+                description: description,
+                amount: 1, //amount of people with that desire
                 lastScore: 0,
                 referrer: document.referrer, timestamp: new Date()
                 };
       Meteor.call("insertDesire", doc);
+      
+      var desiresNum = Session.get('numberOfDesires');
+      if(desiresNum > 0){
+        console.log('adding desire num' + desiresNum);
+        Session.set('desire'+String(desiresNum), description);
+        Session.set('numberOfDesires', desiresNum-1);
+      }
+      document.getElementById("userDesire").value = "";
       return false;
+   },
+
+   'click .option': function (evt, tmpl){
+     evt.preventDefault();
+     //alert(this._id);
+     var description = document.getElementById("userDesire");
+     description.value = this.description;
+     Meteor.call("increaseCounter", this._id);
+    var desiresNum = Session.get('numberOfDesires');
+     if(desiresNum > 0){
+        console.log('adding desire num' + desiresNum);
+        Session.set('desire'+String(desiresNum), this.description);
+        Session.set('numberOfDesires', desiresNum-1);
+      }
+      description.value = "";
    }
 
  });
@@ -60,6 +94,18 @@ Deps.autorun(function () {
     return Desires.find();
     }
   });
+
+  Template.userDesires.desire1= function(){
+    return Session.get("desire1");
+  };
+
+  Template.userDesires.desire2= function(){
+    return Session.get("desire2");
+  };
+
+  Template.userDesires.desire3= function(){
+    return Session.get("desire3");
+  };
 
   Template.slider.desireImg = function() {
     return Session.get("desireImg");
@@ -137,6 +183,12 @@ if (Meteor.isServer) {
           }
       });
       return future.wait();
+      },
+
+      increaseCounter: function(desireId) {
+        console.log("One more person wants" + desireId);
+          Desires.update({_id: desireId},
+          {$inc: {'amount':1}});
       },
 
       // Helper that extracts the users ids from the search results

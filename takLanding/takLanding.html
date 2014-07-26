@@ -27,39 +27,41 @@
                 <h2><b>TAK</b> te permite conectar tus deseos con la gente que te rodea.</h2>
             </header>
             <div class="col-lg-6 col-lg-offset-6 mt centered">
-            <h4>Comunicate con personas que quieren lo mismo que tú o que necesitan algo que ofreces.</h4>
+            <h4>Comunícate con personas que quieren lo mismo que tú o que necesitan algo que ofreces.</h4>
           </div>
-            <div class="col-lg-4 col-lg-offset-4 mt centered">
-              <b>Mi primer deseo</b>
-        <form class="form-inline" role="form">
-          <div class="form-group">
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="userDesire" placeholder="Deseo...">
-             </div>
-          </div>
-          <button type="submit" class="btn btn-info saveDesire">Enviar</button>
-        </form>
-        {{>desiresOptions}}            
-      </div>
-        </div>
         {{>desiresInput}}
+      </div>
     </section>
   </template>
 
   <template name="desiresOptions">
       {{#each matchingDesire}}
-        {{description}}<br/>
+        <div class="option">{{description}}<br/></div>
       {{/each}}
   </template>
 
 
   <template name="desiresInput">
-  		<div class="container">
+      <div class="col-lg-4 col-lg-offset-4 mt centered">
   			<h2><b>¿Cuáles son tus tres deseos?</b></h2>
-  			<span class="glyphicon glyphicon-chevron-left  lastDesire"></span>
- 			<span class="glyphicon glyphicon-chevron-right nextDesire"></span>
- 		</div>
+        {{>userDesires}}
+        <form class="form-inline" autocomplete="off" role="form">
+          <div class="form-group">
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="userDesire" placeholder="Deseo...">
+             </div>
+          </div>
+          <button type="submit" class="btn btn-info saveDesire">Pedir</button>
+        </form>
+        {{>desiresOptions}} 
+ 		</div> 
   </template>
+  <template name="userDesires">
+    <del>{{desire3}}</del><br/>
+    <del>{{desire2}}</del><br/>
+    <del>{{desire1}}</del><br/>
+  </template>
+
   <template name="slider">
   <style>
   body {
