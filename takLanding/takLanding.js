@@ -42,6 +42,7 @@ Deps.autorun(function () {
     var desiresNum=Session.get("numberOfDesires");
     if(desiresNum==0)
     { 
+      GAnalytics.pageview('/results');
       Router.go('desires'); //show desires page
       //alert("Hecho");
     }
@@ -61,6 +62,7 @@ Deps.autorun(function () {
   },
 
  'click .saveDesire': function (evt, tmpl) {
+  GAnalytics.event("wishUsed", "newWish");
   evt.preventDefault();
       var description = document.getElementById("userDesire").value;
 
@@ -94,6 +96,7 @@ Deps.autorun(function () {
 
    'click .option': function (evt, tmpl){
      //alert(this._id);
+     GAnalytics.event("wishUsed", "previousWish");
      var description = document.getElementById("userDesire");
      description.value = this.description;
      Meteor.call("increaseCounter", this._id);

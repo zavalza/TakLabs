@@ -3,6 +3,6 @@
     "bootstrap3-less": {},
     "font-awesome-4-less": {},
     "iron-router": {},
-    "shareit": {}
+    "GAnalytics": {}
   }
 }
