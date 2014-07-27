@@ -29,16 +29,15 @@
     <!--Dynamic background -->
     {{>slider}}
     <section id="header">
-        <div class="container">
-            <header>
+            <header class="centered">
                 <!-- HEADLINE -->
-                <h2><b>TAK</b> te permite conectar tus deseos con la gente que te rodea.</h2>
+                <h2><b>TAK</b> conecta tus deseos con la gente que te rodea.</h2>
             </header>
             <div class="col-lg-6 col-lg-offset-6 mt centered">
-            <h4>Comunícate con personas que quieren lo mismo que tú o que necesitan algo que ofreces.</h4>
+            <h4>Recibe ofertas grupales para cumplirlos y conoce gente que quiere lo mismo que tú</h4>
+            <br/>
           </div>
         {{>desiresInput}}
-      </div>
     </section>
   </template>
 
@@ -150,8 +149,9 @@
 
 
   <template name="desiresInput">
-      <div class="col-lg-4 col-lg-offset-4 mt centered">
-  			<h2><b>¿Cuáles son tus tres deseos?</b></h2>
+    <div class="container col-lg-6 col-lg-offset-3">
+      <div class="centered">
+  			<h3>¿Cuáles son tus tres deseos?</h3>
         {{>userDesires}}
         <form class="form-inline" autocomplete="off" role="form">
           <div class="form-group">
@@ -163,11 +163,14 @@
         </form>
         {{>desiresOptions}} 
  		</div> 
+  </div>
   </template>
   <template name="userDesires">
+    <div class="desire">
     <del>{{desire3}}</del><br/>
     <del>{{desire2}}</del><br/>
     <del>{{desire1}}</del><br/>
+    </div>
   </template>
 
   <template name="slider">

@@ -297,15 +297,18 @@ if (Meteor.isServer) {
     var desiresIds = Meteor.call("search",searchText);
    
     console.log(desiresIds)
-    if(desiresIds.length > 0)
-   {
-        doc._id = {
-            $in: desiresIds
-        };
+    if (desiresIds != undefined){
+           if(desiresIds.length > 0)
+       {
+            doc._id = {
+                $in: desiresIds
+            };
 
-      var similarDesires = Desires.find(doc,{sort:{lastScore:-1}});
-      return similarDesires;
+          var similarDesires = Desires.find(doc,{sort:{lastScore:-1}});
+          return similarDesires;
+        }
     }
+   
     /*else
     {
       console.log("subscription has no results back");
