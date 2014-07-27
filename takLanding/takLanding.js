@@ -42,7 +42,11 @@ Deps.autorun(function () {
     var desiresNum=Session.get("numberOfDesires");
     if(desiresNum==0)
     { 
-      GAnalytics.pageview('/results');
+      googleAnalytics(function(settings, path, ga) {
+          //                    categoria accion    etiqueta    valor
+          //ga('send', 'event', 'button', 'click', 'nav buttons', 4);
+          ga('send', 'event', 'pages', 'goToResults');
+        });
       Router.go('desires'); //show desires page
       //alert("Hecho");
     }
@@ -56,13 +60,14 @@ Deps.autorun(function () {
       var re = /([a-zA-Z]+)/g;
       if(desire.match(re))
       {
+        
         Session.set('desire', desire);
       }
       return true;
   },
 
  'click .saveDesire': function (evt, tmpl) {
-  GAnalytics.event("wishUsed", "newWish");
+  
   evt.preventDefault();
       var description = document.getElementById("userDesire").value;
 
@@ -91,12 +96,18 @@ Deps.autorun(function () {
       }
       document.getElementById("userDesire").value = "";
       Session.set('desire', "");
+      googleAnalytics(function(settings, path, ga) {
+          //                    categoria accion    etiqueta    valor
+          //ga('send', 'event', 'button', 'click', 'nav buttons', 4);
+          ga('send', 'event', 'wish', 'save');
+      });
+
       return false;
    },
 
    'click .option': function (evt, tmpl){
      //alert(this._id);
-     GAnalytics.event("wishUsed", "previousWish");
+     
      var description = document.getElementById("userDesire");
      description.value = this.description;
      Meteor.call("increaseCounter", this._id);
@@ -112,6 +123,11 @@ Deps.autorun(function () {
       description.value = "";
       Session.set('desire', "");
 
+      googleAnalytics(function(settings, path, ga) {
+          //                    categoria accion    etiqueta    valor
+          //ga('send', 'event', 'button', 'click', 'nav buttons', 4);
+          ga('send', 'event', 'wish', 'select');
+      });
       return false;
    }
 
@@ -127,7 +143,6 @@ Template.navbar.events({
         Session.set('idsToSearch', []);
         Session.set('desire', desire);
       }
-      
       return true;
   },
 
