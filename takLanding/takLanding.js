@@ -42,26 +42,30 @@ Deps.autorun(function () {
     var desiresNum=Session.get("numberOfDesires");
     if(desiresNum==0)
     { 
-      googleAnalytics(function(settings, path, ga) {
-          //                    categoria accion    etiqueta    valor
-          //ga('send', 'event', 'button', 'click', 'nav buttons', 4);
-          ga('send', 'event', 'pages', 'goToResults');
-        });
+    
       Router.go('desires'); //show desires page
-      //alert("Hecho");
+      //ale("Hecho");
     }
    
  }, 1500 );
 
  Template.welcome.events({
-  'keypress #userDesire': function (evt, tmpl){
+  'keyup #userDesire': function (evt, tmpl){
       var desire = document.getElementById("userDesire").value;
       //alert(desire);
       var re = /([a-zA-Z]+)/g;
       if(desire.match(re))
       {
+        var words = desire.split(" ");
+        if(words.length = 1)
+        {
+          Session.set('desire', desire.trim());
+        }
+        else
+        {
+          Session.set('desire', desire);
+        }
         
-        Session.set('desire', desire);
       }
       return true;
   },
@@ -134,20 +138,38 @@ Deps.autorun(function () {
  });
 
 Template.navbar.events({
-  'keypress #searchDesire': function (evt, tmpl){
+  'keyup #searchDesire': function (evt, tmpl){
       var desire = document.getElementById("searchDesire").value;
       //alert(desire);
       var re = /([a-zA-Z]+)/g;
       if(desire.match(re))
       {
+         var words = desire.split(" ");
+        if(words.length = 1)
+        {
+          Session.set('desire', desire.trim());
+        }
+        else
+        {
+          Session.set('desire', desire);
+        }
         Session.set('idsToSearch', []);
-        Session.set('desire', desire);
+        googleAnalytics(function(settings, path, ga) {
+          //                    categoria accion    etiqueta    valor
+          //ga('send', 'event', 'button', 'click', 'nav buttons', 4);
+          ga('send', 'event', 'search', 'filter');
+      });
       }
       return true;
   },
 
   'click .showAllDesires': function(evt, tmpl){
     Session.set('idsToSearch', ['all']);
+      googleAnalytics(function(settings, path, ga) {
+          //                    categoria accion    etiqueta    valor
+          //ga('send', 'event', 'button', 'click', 'nav buttons', 4);
+          ga('send', 'event', 'search', 'all');
+      });
   },
 
   'click .toTak': function(evt, tmpl){
@@ -211,6 +233,11 @@ Template.navbar.events({
                 };
       Meteor.call("insertMessage", doc);
       tmpl.find('#newMessage').value = ""
+      googleAnalytics(function(settings, path, ga) {
+          //                    categoria accion    etiqueta    valor
+          //ga('send', 'event', 'button', 'click', 'nav buttons', 4);
+          ga('send', 'event', 'message', 'save');
+      });
       return false;
    }
   });

@@ -66,7 +66,7 @@
               <h3 class="panel-title">Acerca de Tak</h3>
           </div>
       <div class="panel-body">
-        Estamos probando el concepto. Si te interesa probar la aplicación finalizada, deja tu correo:
+        Si te interesa probar la aplicación finalizada, deja tu correo:
         <form class="form-inline" autocomplete="off" role="form">
             <div id ="aboutTak" class="form-group">
               <div class="col-sm-10">
@@ -87,7 +87,6 @@
           <ul class="list-group">
               {{#each messages}}
                 <li class="list-group-item">
-                  <span class="badge">14</span>
                   {{text}}
                 </li>
               {{/each}}
@@ -109,7 +108,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Tak</a>
+      <a class="navbar-brand" href="{{pathFor 'welcome'}}">Tak</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -137,8 +136,8 @@
   </template>
 
   <template name="newMessage">
-    <input type="text" class="form-control" id="newMessage" placeholder="Déjales un mensaje o Publica una oferta">
-    <button type="submit" class="btn btn-info saveMessage">Guardar</button>
+    <input type="text" class="form-control" id="newMessage">
+    <button type="submit" class="btn btn-info saveMessage">Mandar mensaje / Publicar oferta</button>
   </template>
 
   <template name="desiresOptions">
@@ -176,7 +175,7 @@
   <template name="slider">
   <style>
   body {
-  background-image:url(slider/{{desireImg}}.jpg);
+  background-image:url({{desireImg}}.jpg);
   background-repeat: no-repeat;
   background-position: right top;
   z-index: -1;
