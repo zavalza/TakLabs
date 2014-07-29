@@ -10,3 +10,5 @@ bootstrap3-less
 font-awesome-4-less
 iron-router
 googleAnalytics
+accounts-facebook
+accounts-ui

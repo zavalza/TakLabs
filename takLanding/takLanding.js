@@ -70,6 +70,25 @@ Deps.autorun(function () {
       return true;
   },
 
+    'click .tryFacebookLogin': function(evt, tmpl){
+      if(Accounts.loginServicesConfigured()){
+        Meteor.loginWithFacebook({
+        requestPermissions: ['public_profile', 'user_friends']
+        }, function (err) {
+          if (err)
+            Session.set('errorMessage', err.reason || 'Unknown error');
+          else
+          {
+            //Success
+            Router.go('desires');
+          }
+      }); 
+      }
+      else{
+        alert("Error")
+      }
+    },
+
  'click .saveDesire': function (evt, tmpl) {
   
   evt.preventDefault();
@@ -287,6 +306,21 @@ Template.navbar.events({
   };
 }
 if (Meteor.isServer) {
+
+  Accounts.onCreateUser(function(options, user){
+    if(user.services.facebook)
+    {
+      console.log(user.services.facebook);
+    }
+    else{
+      console.log("Error in login")  
+    }
+    return user;
+  });
+
+
+
+
  Meteor.startup(function () {
     // code to run on server at startup
     //Comment this line the first time, so Meteor can find the index_name afterwards
