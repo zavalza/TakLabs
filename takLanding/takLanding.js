@@ -3,7 +3,7 @@ Desires = new Meteor.Collection("desires")
 Messages = new Meteor.Collection("messages")
 Taks = new Meteor.Collection("tak") //message to tak
 Emails = new Meteor.Collection('emails')
-
+//Router
 Router.map(function() {
   this.route('welcome', {path: '/'});
   this.route('desires', {path: '/results'});
