@@ -1,3 +1,10 @@
+Router.map(function() {
+  this.route('welcome', {path: '/'});
+  this.route('loginForm', {path: '/login'});
+  this.route('newUserForm', {path: '/newUser'});
+});
+
+
 if (Meteor.isClient) {
   Template.hello.greeting = function () {
     return "Welcome to takBeta.";
