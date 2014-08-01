@@ -20,7 +20,9 @@
 	{{>headerwrap}}
 	{{>footer}}
 </template>
-
+<template name="news">
+	{{>footer}}
+</template>
 
 
 
@@ -84,7 +86,7 @@
           </div>
       	<div class="panel-body">
           <form class="form col-md-12 center-block" name="newUserForm">
-            <h2>¿Qué roles te gusta tener?</h2>
+            <h2>Selecciona los roles que te gusta tener</h2>
             {{>roles}}
             <div class="col-lg-6 col-lg-offset-3 centered">
               <img class="btn tryFacebookLogin img-responsive"  src="facebookButton.png">
@@ -105,6 +107,7 @@
             <div class="col-lg-6 col-lg-offset-3 centered">
               <img class="btn tryFacebookLogin img-responsive"  src="facebookButton.png">
             </div>
+
       </div>
   </div>
 </div>

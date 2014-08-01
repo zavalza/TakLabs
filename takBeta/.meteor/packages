@@ -10,3 +10,7 @@ less
 bootstrap3-less
 font-awesome-4-less
 iron-router
+accounts-facebook
+cfs-gridfs
+collectionFS
+accounts-ui
