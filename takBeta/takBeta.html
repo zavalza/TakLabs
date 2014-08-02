@@ -23,7 +23,9 @@
 <template name="news">
 	{{>footer}}
 </template>
-
+<template name="projects">
+	<h1>PROYECTOS</h1>
+</template>
 
 
 <template name="navigation">
@@ -37,25 +39,29 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
+      	{{#if currentUser}}
+      	<a href="{{pathFor 'news'}}"><img class="btn img-responsive" width="100" src="takLogo.png"></a>
+      	{{else}}
      	<a href="{{pathFor 'welcome'}}"><img class="btn img-responsive" width="100" src="takLogo.png"></a>
+     	{{/if}}
     </div>
     <div class="navbar-collapse h navbar-right">
       <ul class="nav navbar-nav">
+        {{#if currentUser}}
+        <li><a href="{{pathFor 'projects'}}">PROYECTOS</a></li>
+         <li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="btn img-responsive" width="60" src="{{currentUser.profile.picture}}"><b class="caret"></b></a>
+			<ul class="dropdown-menu">
+				<li><a href="#profile">{{currentUser.profile.firstName}}  {{currentUser.profile.lastName}} </a></li>
+				<li><a href="#logout" class="tryLogout">SALIR</a></li>
+			</ul>
+		</li>
+        {{else}}
         <li><a href="{{pathFor 'welcome'}}">INICIO</a></li>
         <li><a href="#">ACERCA DE</a></li>
         <li><a href="{{pathFor 'newUserForm'}}">UNIRME</a></li>
         <li><a href="{{pathFor 'loginForm'}}">INGRESAR</a></li>
-        <!--
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">PAGES <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">BLOG</a></li>
-            <li><a href="#">SINGLE POST</a></li>
-            <li><a href="#">PORTFOLIO</a></li>
-            <li><a href="#">SINGLE PROJECT</a></li>
-          </ul>
-        </li>
-    	-->
+        {{/if}}
       </ul>
     </div><!--/.nav-collapse -->
   </div>
@@ -117,37 +123,65 @@
       <div class="col-lg-3 col-sm-4 col-xs-6">
       	<h4>Administración</h4>
       	Poner orden al trabajo 
-      	<a href="#"><img class="thumbnail img-responsive" src="/roles/management.png"></a>
+        {{#if management}}
+      	<a href="#"><img class="thumbnail img-responsive" style="background-color:#384452;" src="/roles/management.png"></a>
+        {{else}}
+        <a href="#"><img class="thumbnail img-responsive" src="/roles/management.png"></a>
+        {{/if}}
       </div>
       <div class="col-lg-3 col-sm-4 col-xs-6">
       	<h4>Desarrollo</h4>
       	Saber a detalle cómo funciona la solución
-      	<a href="#"><img class="thumbnail img-responsive" src="/roles/development.png"></a>
+        {{#if development}}
+      	<a  href="#"><img class="thumbnail img-responsive" style="background-color:#384452;" src="/roles/development.png"></a>
+        {{else}}
+        <a  href="#"><img class="thumbnail img-responsive" src="/roles/development.png"></a>
+        {{/if}}
       </div>
       <div class="col-lg-3 col-sm-4 col-xs-6">
       	<h4>Diseño</h4>
       	Dar la mejor experiencia
-      	<a href="#"><img class="thumbnail img-responsive" src="/roles/design.png"></a>
+      	{{#if design}}
+      	<a href="#"><img class="thumbnail img-responsive"  style="background-color:#384452;" src="/roles/design.png"></a>
+      	{{else}}
+		    <a href="#"><img class="thumbnail img-responsive" src="/roles/design.png"></a>
+      	{{/if}}
       </div>
       <div class="col-lg-3 col-sm-4 col-xs-6">
       	<h4>Inversión</h4>
       	Permitir crecimiento a través de tu dinero
-      	<a href="#"><img class="thumbnail img-responsive" src="/roles/investment.png"></a>
+        {{#if investment}}
+      	<a  href="#"><img class="thumbnail img-responsive" style="background-color:#384452;" src="/roles/investment.png"></a>
+        {{else}}
+        <a  href="#"><img class="thumbnail img-responsive" src="/roles/investment.png"></a>
+        {{/if}}
       </div>
       <div class="col-lg-3 col-sm-4 col-xs-6">
       	<h4>Marketing</h4>
       	Difundir el producto o servicio
-      	<a href="#"><img class="thumbnail img-responsive" src="/roles/marketing.png"></a>
+        {{#if marketing}}
+      	<a href="#"><img class="thumbnail img-responsive" style="background-color:#384452;" src="/roles/marketing.png"></a>
+        {{else}}
+        <a href="#"><img class="thumbnail img-responsive" src="/roles/marketing.png"></a>
+        {{/if}}
       </div>
       <div class="col-lg-3 col-sm-4 col-xs-6">
       	<h4>Mentoría</h4>
       	Transmitir tus experiencias
-      	<a href="#"><img class="thumbnail img-responsive" src="/roles/mentor.png"></a>
+        {{#if mentor}}
+      	<a href="#"><img class="thumbnail img-responsive" style="background-color:#384452;" src="/roles/mentor.png"></a>
+        {{else}}
+        <a href="#"><img class="thumbnail img-responsive" src="/roles/mentor.png"></a>
+        {{/if}}
       </div>
       <div class="col-lg-3 col-sm-4 col-xs-6">
       	<h4>Ventas</h4>
       	Cerrar los tratos <br/><br/>
-      	<a href="#"><img class="thumbnail img-responsive" src="/roles/sales.png"></a>
+        {{#if sales}}
+      	<a href="#"><img class="thumbnail img-responsive"  style="background-color:#384452;" src="/roles/sales.png"></a>
+        {{else}}
+        <a href="#"><img class="thumbnail img-responsive" src="/roles/sales.png"></a>
+        {{/if}}
       </div>
     </div>
 </template>
