@@ -27,11 +27,43 @@
 	<h1>PROYECTOS</h1>
 </template>
 
+<template name="editProfile">
+  <div class="wrap">
+     <div class="panel panel-primary col-md-8 col-xs-12 col-md-offset-2">
+          <div class="panel-heading">
+              <h3 class="panel-title text-center">Editar Perfil</h3>
+          </div>
+        <div class="panel-body">
+          <form class="form col-md-12 col-xs-12" name="editProfile">
+          <div class="form-group">
+              <div class="row">
+                <div class="col-md-2 col-xs-2">
+                  <img src="{{currentUser.profile.picture}}">
+                </div>
+                <div class="col-md-4 col-xs-4">
+              <input type="text" class="form-control " id="firstName" placeholder="Nombre">
+              </div>
+              <div class="col-md-4 col-xs-4">
+              <input type="text" class="form-control col-md-5 " id="lastName" placeholder="Apellido">
+              </div>
+              {{>rolesCheckbox}}
+            </div>
+          </div>
+          </form>
+            
+                <input type="text" class="form-control" id="email" placeholder="Correo Electrónico">
+        
+                <input type="password" class="form-control" id="password" placeholder="Contraseña">
+      </div>
+  </div>
+</div>
+</template>
 
 <template name="navigation">
 <!-- Fixed navbar -->
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
+  <div class="row">
+  <div class=" col-md-10 col-md-offset-1">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
         <span class="sr-only">Toggle navigation</span>
@@ -66,6 +98,7 @@
     </div><!--/.nav-collapse -->
   </div>
 </div>
+</div>
 </template>
 <template name="headerwrap">
 <div id="headerwrap">
@@ -91,9 +124,9 @@
               <h3 class="panel-title text-center">Nuevo Usuario</h3>
           </div>
       	<div class="panel-body">
-          <form class="form col-md-12 center-block" name="newUserForm">
-            <h2>Selecciona los roles que te gusta tener</h2>
-            {{>roles}}
+          <h2>Selecciona los roles que te gusta tener</h2>
+          <form class="form col-md-10 col-md-offset-1" name="newUserForm">
+            {{>rolesImages}}
             <div class="col-lg-6 col-lg-offset-3 centered">
               <img class="btn tryFacebookLogin img-responsive"  src="facebookButton.png">
             </div>
@@ -118,13 +151,48 @@
   </div>
 </div>
 </template>
-<template name="roles">
+<template name="rolesCheckbox">
+      <form name="roles" role="form" class="form-inline col-md-10 col-xs-12">
+              <div class="form-group">
+            <h5>Roles</h5>
+              <label>
+              Administración
+              <input class="form-control" type="checkbox" name="roles" value="management">
+              </label>
+              <label>
+              Desarrollo
+              <input class="form-control" type="checkbox" name="roles" value="Ciencia">
+              </label>
+              <label>
+                Diseño
+                <input class="form-control" type="checkbox" name="roles" value="Música">
+              </label>
+              <label>
+              Inversión
+              <input class="form-control" type="checkbox" name="roles" value="Música">
+              </label>
+              <label>
+                Marketing
+              <input class="form-control" type="checkbox" name="roles" value="Música">
+              </label>
+              <label>
+                Mentoría
+              <input class="form-control" type="checkbox" name="roles" value="Música">
+              </label>
+              <label>
+                Ventas
+                <input class="form-control" type="checkbox" name="roles" value="Música">
+              </label>
+            </div>
+            </form>
+</template>
+<template name="rolesImages">
 <div class="row">
       <div class="col-lg-3 col-sm-4 col-xs-6">
       	<h4>Administración</h4>
       	Poner orden al trabajo 
         {{#if management}}
-      	<a href="#"><img class="thumbnail img-responsive" style="background-color:#384452;" src="/roles/management.png"></a>
+      	<a href="#"><img class="img-responsive"  style="background-color:#384452;" src="/roles/management.png"></a>
         {{else}}
         <a href="#"><img class="thumbnail img-responsive" src="/roles/management.png"></a>
         {{/if}}

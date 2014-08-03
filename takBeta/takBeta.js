@@ -17,19 +17,21 @@ Images = new FS.Collection("images", {
 });
 
 Router.map(function() {
-  this.route('welcome', {path: '/'});
-  this.route('loginForm', {path: '/login'});
-  this.route('newUserForm', {path: '/newUser'});
-  this.route('news', {path: '/news'});
-  this.route('projects', {path: '/projects'});
+  this.route('editProfile', {path: '/'});
+  this.route('loginForm', {path: '/entrar'});
+  this.route('newUserForm', {path: '/registro'});
+  this.route('news', {path: '/noticias'});
+  this.route('projects', {path: '/proyectos'});
+  this.route('editProfile', {path: '/editarPerfil'});
 });
 
 
 if (Meteor.isClient) {
 
   Meteor.startup(function () {
+    //store roles in new user form
     Session.set("management", false);
-    Session.set("development", false);
+    Session.set("development", true);
     Session.set("design", false);
     Session.set("investment", false);
     Session.set("marketing", false);
@@ -52,14 +54,22 @@ if (Meteor.isClient) {
       }); 
       }
       else{
-        alert("Error")
+        alert("Error en inicio de sesión");
       }
     }
   });
 
   Template.newUserForm.events({
     'click .tryFacebookLogin': function(evt, tmpl){
-      if(Accounts.loginServicesConfigured()){
+      if(!(Session.get('management')|| Session.get('development') || Session.get('design')|| Session.get('marketing')
+        || Session.get('mentor') || Session.get('investment') || Session.get('sales')))
+      {
+        alert("Selecciona un rol");
+        return false;
+      }
+      else
+      {
+        if(Accounts.loginServicesConfigured()){
         Meteor.loginWithFacebook({
         requestPermissions: ['public_profile', 'user_friends']
         }, function (err) {
@@ -68,16 +78,28 @@ if (Meteor.isClient) {
           else
           {
             //Success
-            Router.go('news');
+            var roles={//roles to show in profile
+                management: Session.get('management'),
+                development: Session.get('development'), 
+                design : Session.get('design'),
+                marketing: Session.get('marketing'),
+                mentor: Session.get('mentor'),
+                investment: Session.get('investment'),
+                sales: Session.get('sales')
+            }
+            Meteor.call('updateRoles', Meteor.userId(), roles);
+            Router.go('editProfile');
           }
-      }); 
+        }); 
+        }
+        else{
+          alert("Error en inicio de sesión");
       }
-      else{
-        alert("Error")
       }
+      
     }
   });
-  Template.roles.events({
+  Template.rolesImages.events({
   'click a' : function (evt, tmpl){
       var sourceName = evt.target.src;
       var variable = sourceName.slice(sourceName.lastIndexOf("/")+1, sourceName.lastIndexOf("."));
@@ -86,26 +108,26 @@ if (Meteor.isClient) {
     },     
   });
 
-  Template.roles.management = function(){
+  Template.rolesImages.management = function(){
     return Session.get("management");
   }
 
-  Template.roles.development= function(){
+  Template.rolesImages.development= function(){
     return Session.get("development");
   }
-  Template.roles.design = function(){
+  Template.rolesImages.design = function(){
     return Session.get("design");
   }
-  Template.roles.investment = function(){
+  Template.rolesImages.investment = function(){
     return Session.get("investment");
   }
-  Template.roles.marketing = function(){
+  Template.rolesImages.marketing = function(){
     return Session.get("marketing");
   }
-  Template.roles.mentor = function(){
+  Template.rolesImages.mentor = function(){
     return Session.get("mentor");
   }
-  Template.roles.sales = function(){
+  Template.rolesImages.sales = function(){
     return Session.get("sales");
   }
 
@@ -149,7 +171,7 @@ if (Meteor.isServer) {
                       biography:"",
                       //college:"",
                       //locations_id:[] //we can store all the locations and just retrieve the last
-                      roles_ids: [], //save past roles 
+                      roles:{}, //roles to show in profile 
                       skill_ids:[],
                       projects_id:[],
                       followers:{count:0, users:[]},
@@ -162,4 +184,12 @@ if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
   });
+
+  Meteor.methods({
+      updateRoles: function(userId, rolesDoc) {
+          console.log('Updating roles of user ' + userId);
+          Meteor.users.update({_id: userId},
+          {$set: {'profile.roles':rolesDoc}});
+      }
+    });
 }
