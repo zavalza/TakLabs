@@ -89,7 +89,12 @@
       </span>
     </div><!-- /input-group -->
        {{#each selectedSkills}}
-      <b>{{this}}</b>
+        <div class="input-group">
+              <input type="text" class="form-control " id="skill" value="{{this}}" disabled>
+              <span class="input-group-btn">
+                <button class="btn btn-danger" type="button">x</button>
+              </span>
+      </div>
        {{/each}}
       </div>
       <div class="col-md-2 hidden-xs" >
@@ -99,13 +104,18 @@
   <form name="portafolio" role="form">
       <div class="col-md-4 col-xs-6">
       <div class="input-group">
-              <input type="text" class="form-control " id="newLink" placeholder="Nuevo Enlace">
+              <input type="url" class="form-control " id="newLink" placeholder="Nuevo Enlace">
               <span class="input-group-btn">
                 <button class="btn btn-info" type="button">+</button>
               </span>
       </div>
       {{#each selectedLinks}}
-      <b>{{this}}</b>
+       <div class="input-group">
+              <input type="text" class="form-control " id="link" value="{{this}}" disabled>
+              <span class="input-group-btn">
+                <button class="btn btn-danger" type="button">x</button>
+              </span>
+      </div>
       {{/each}}
       </div>
       <div class="col-md-2 hidden-xs" >
@@ -180,7 +190,12 @@
       <input type="text" class="form-control " id="title" value="{{name}}">
     {{/each}}
   -->
-  <input type="text" class="form-control " id="title" placeholder="Universidad">
+ <div class="input-group">
+              <input type="text" class="form-control " id="newUniversity" placeholder="Universidad">
+              <span class="input-group-btn">
+                <button class="btn btn-info" type="button">+</button>
+              </span>
+      </div>
   </div>
     </div>
   </form>
