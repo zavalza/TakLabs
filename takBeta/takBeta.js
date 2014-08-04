@@ -1,5 +1,5 @@
 
-Projects = new Meteor.Collection("projects");
+Companies = new Meteor.Collection("companies");
 Skills = new Meteor.Collection("skills");
 Locations = new Meteor.Collection("locations");
 Colleges = new Meteor.Collection("colleges");
@@ -37,6 +37,9 @@ if (Meteor.isClient) {
     Session.set("marketing", false);
     Session.set("mentor", false);
     Session.set("sales", false);
+    Session.set("selectedSkills", ['Javascript', 'MeteorJS']);
+    Session.set("selectedLinks", ['https://github.com/zavalza']);
+    Session.set("selectedExperience", []); //[{title: "Fundador"}]
   });
   Template.loginForm.events({
     'click .tryFacebookLogin': function(evt, tmpl){
@@ -108,6 +111,27 @@ if (Meteor.isClient) {
     },     
   });
 
+  Template.experienceInput.rendered=function() {
+    $('.input-group.date').datepicker({
+      format: "M-yyyy",
+      minViewMode: 1, 
+      language: "es",
+      autoclose: true
+      });
+}
+
+  Template.skillsInput.selectedSkills = function(){
+    return Session.get('selectedSkills');
+  }
+
+  Template.skillsInput.selectedLinks = function(){
+    return Session.get('selectedLinks');
+  }
+
+  Template.experienceInput.selectedExperience = function(){
+    return Session.get('selectedExperience');
+  }
+
   Template.rolesImages.management = function(){
     return Session.get("management");
   }
@@ -149,12 +173,13 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
    Accounts.onCreateUser(function(options, user){
-    var firstName, lastName, fbLink;
+    var firstName, lastName, fbLink, email;
     if(user.services.facebook)
     {
       console.log(user.services.facebook);
       firstName = user.services.facebook.first_name;
       lastName = user.services.facebook.last_name;
+      email = user.services.facebook.email;
       fbLink = user.services.facebook.link;
       fbPicture = "http://graph.facebook.com/" + user.services.facebook.id + "/picture/?type=large";
 
@@ -166,16 +191,21 @@ if (Meteor.isServer) {
     var profile ={
                       firstName:firstName,
                       lastName:lastName,
+                      email:email,
                       picture:fbPicture, //url of picture
                       facebook_url:fbLink,
-                      biography:"",
-                      //college:"",
-                      //locations_id:[] //we can store all the locations and just retrieve the last
+                      location_ids:[], // ids of location, show just the last one
                       roles:{}, //roles to show in profile 
                       skill_ids:[],
-                      projects_id:[],
-                      followers:{count:0, users:[]},
-                      following:{count: 0, users:[], projects:[]}
+                      portafolio_urls:[],
+                      experience:{}, //current and past jobs with title, started, endend and id of the company
+                      //github_url:
+                      //twitter_url:
+                      //linkedin_url:
+                      //behance_url
+                      colleges_ids:[],
+                      followers:{count:0, user_ids:[]},
+                      following:{count: 0, user_ids:[], company_ids:[]}
                     }
     user.profile = profile;
     return user;

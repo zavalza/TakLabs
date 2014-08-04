@@ -37,26 +37,133 @@
           <form class="form col-md-12 col-xs-12" name="editProfile">
           <div class="form-group">
               <div class="row">
-                <div class="col-md-2 col-xs-2">
+                <div class="col-md-2 col-xs-4">
                   <img src="{{currentUser.profile.picture}}">
                 </div>
-                <div class="col-md-4 col-xs-4">
+                <div class="col-md-4 col-xs-6">
               <input type="text" class="form-control " id="firstName" placeholder="Nombre">
               </div>
-              <div class="col-md-4 col-xs-4">
+              <div class="col-md-4 col-xs-6">
               <input type="text" class="form-control col-md-5 " id="lastName" placeholder="Apellido">
               </div>
-              {{>rolesCheckbox}}
+              <br/><br/>
+               <div class="col-md-4 col-xs-6">
+              <input type="text" class="form-control col-md-5 " id="location" placeholder="Ubicación">
+              </div>
+               <div class="col-md-4 col-xs-6">
+              <input type="text" class="form-control col-md-5 " id="location" placeholder="Email">
+              </div>
             </div>
+              {{>rolesCheckbox}}
+              {{>skillsInput}}
+              {{>experienceInput}}
+              {{>educationInput}}
           </div>
           </form>
-            
-                <input type="text" class="form-control" id="email" placeholder="Correo Electrónico">
-        
-                <input type="password" class="form-control" id="password" placeholder="Contraseña">
       </div>
   </div>
 </div>
+</template>
+
+<template name="skillsInput">
+  <div class="row">
+    <div class="col-md-6 col-xs-6" >
+      <h4>Mis habilidades</h4>
+    </div>
+    <div class="col-md-6 col-xs-6" >
+      <h4>Portafolio</h4>
+    </div>
+</div>
+<div class="row">
+  <form name="skills" role="form">
+      <div class="col-md-4 col-xs-6">
+    {{#each selectedSkills}}
+      <input type="text" class="form-control " id="firstName" value="{{this}}">
+    {{/each}}
+      <input type="text" class="form-control " id="firstName" placeholder="Nueva Habilidad">
+      </div>
+      <div class="col-md-2 hidden-xs" >
+        Ejemplos: <br/> PHP, HTML, Ilustrator, Photoshop, etc
+      </div>
+  </form>
+  <form name="portafolio" role="form">
+      <div class="col-md-4 col-xs-6">
+    {{#each selectedLinks}}
+      <input type="text" class="form-control " id="link" value="{{this}}">
+    {{/each}}
+      <input type="text" class="form-control " id="newLink" placeholder="Nuevo enlace">
+      </div>
+      <div class="col-md-2 hidden-xs" >
+        Ejemplos: <br/> Github, Behance, Página personal
+      </div>
+  </form>
+   </div>
+</template>
+
+<template name="experienceInput">
+  <div class="row">
+    <div class="col-md-6 col-xs-6" >
+  <h4>Mi experiencia</h4>
+</div>
+</div>
+  <form name="experience" role="form" class="col-md-12 col-xs-12">
+    <div class="row">
+    {{#each selectedExperience}}
+     <div class="col-md-3 col-xs-6">
+      <input type="text" class="form-control " id="title" value="{{title}}">
+    </div>
+    <!--
+      {{#each name this.company_id}}
+      <div class="col-md-3 col-xs-6">
+        <input type="text" class="form-control " id="companyName" value="{{this}}">
+      </div>
+      {{/each}}}}
+    -->
+    <div class="col-md-3 col-xs-6" >
+        Inicio<input type="month"><input type="year"><br/>
+        Fin<input type="month"><input type="year"><br/>
+    </div>
+    {{/each}}
+      <div class="row">
+       <div class="col-md-3 col-xs-6">
+      <input type="text" class="form-control " id="title" placeholder="Puesto">
+    </div>
+     <div class="col-md-3 col-xs-6">
+      <input type="text" class="form-control " id="company" placeholder="Compañía">
+    </div>
+     <div class="col-md-3 col-xs-6" >
+        <div class="input-group date">
+          <input type="text" class="form-control" placeholder="Inicio"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+        </div>
+      </div>
+      <div class="col-md-3 col-xs-6" >
+        <div class="input-group date">
+          <input type="text" class="form-control" placeholder="Fin"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+        </div>
+    </div>
+    </div>
+    </div>
+  </form>
+</template>
+
+<template name="educationInput">
+  <div class="row">
+    <div class="col-md-6 col-xs-6" >
+  <h4>Estudios</h4>
+</div>
+</div>
+  <form name="education" role="form" class="col-md-12 col-xs-12">
+    <div class="row">
+      <div class="col-md-4 col-xs-6">
+    <!--
+    {{#each college selectedEducation}}
+      <input type="text" class="form-control " id="title" value="{{name}}">
+    {{/each}}
+  -->
+  <input type="text" class="form-control " id="title" placeholder="Universidad">
+  </div>
+    </div>
+  </form>
 </template>
 
 <template name="navigation">
@@ -152,9 +259,14 @@
 </div>
 </template>
 <template name="rolesCheckbox">
+  <div class="row">
+    <div class="col-md-6 col-xs-6" >
+   <h4>Roles</h4>
+ </div>
+</div>
+<div class="row">
       <form name="roles" role="form" class="form-inline col-md-10 col-xs-12">
               <div class="form-group">
-            <h5>Roles</h5>
               <label>
               Administración
               <input class="form-control" type="checkbox" name="roles" value="management">
@@ -185,10 +297,11 @@
               </label>
             </div>
             </form>
+</div>
 </template>
 <template name="rolesImages">
 <div class="row">
-      <div class="col-lg-3 col-sm-4 col-xs-6">
+      <div class="col-lg-3 col-sm-4 col-xs-10">
       	<h4>Administración</h4>
       	Poner orden al trabajo 
         {{#if management}}
@@ -197,7 +310,7 @@
         <a href="#"><img class="thumbnail img-responsive" src="/roles/management.png"></a>
         {{/if}}
       </div>
-      <div class="col-lg-3 col-sm-4 col-xs-6">
+      <div class="col-lg-3 col-sm-4 col-xs-10">
       	<h4>Desarrollo</h4>
       	Saber a detalle cómo funciona la solución
         {{#if development}}
@@ -206,7 +319,7 @@
         <a  href="#"><img class="thumbnail img-responsive" src="/roles/development.png"></a>
         {{/if}}
       </div>
-      <div class="col-lg-3 col-sm-4 col-xs-6">
+      <div class="col-lg-3 col-sm-4 col-xs-10">
       	<h4>Diseño</h4>
       	Dar la mejor experiencia
       	{{#if design}}
@@ -215,7 +328,7 @@
 		    <a href="#"><img class="thumbnail img-responsive" src="/roles/design.png"></a>
       	{{/if}}
       </div>
-      <div class="col-lg-3 col-sm-4 col-xs-6">
+      <div class="col-lg-3 col-sm-4 col-xs-10">
       	<h4>Inversión</h4>
       	Permitir crecimiento a través de tu dinero
         {{#if investment}}
@@ -224,7 +337,7 @@
         <a  href="#"><img class="thumbnail img-responsive" src="/roles/investment.png"></a>
         {{/if}}
       </div>
-      <div class="col-lg-3 col-sm-4 col-xs-6">
+      <div class="col-lg-3 col-sm-4 col-xs-10">
       	<h4>Marketing</h4>
       	Difundir el producto o servicio
         {{#if marketing}}
@@ -233,7 +346,7 @@
         <a href="#"><img class="thumbnail img-responsive" src="/roles/marketing.png"></a>
         {{/if}}
       </div>
-      <div class="col-lg-3 col-sm-4 col-xs-6">
+      <div class="col-lg-3 col-sm-4 col-xs-10">
       	<h4>Mentoría</h4>
       	Transmitir tus experiencias
         {{#if mentor}}
@@ -242,7 +355,7 @@
         <a href="#"><img class="thumbnail img-responsive" src="/roles/mentor.png"></a>
         {{/if}}
       </div>
-      <div class="col-lg-3 col-sm-4 col-xs-6">
+      <div class="col-lg-3 col-sm-4 col-xs-10">
       	<h4>Ventas</h4>
       	Cerrar los tratos <br/><br/>
         {{#if sales}}

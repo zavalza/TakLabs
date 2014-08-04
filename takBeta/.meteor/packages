@@ -14,3 +14,5 @@ accounts-facebook
 cfs-gridfs
 collectionFS
 accounts-ui
+bootstrap3-datepicker
+jquery

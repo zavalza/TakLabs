@@ -3,6 +3,7 @@
     "bootstrap3-less": {},
     "font-awesome-4-less": {},
     "iron-router": {},
-    "cfs-gridfs": {}
+    "cfs-gridfs": {},
+    "bootstrap3-datepicker": {}
   }
 }

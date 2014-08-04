@@ -5,7 +5,8 @@
       "bootstrap3-less": {},
       "font-awesome-4-less": {},
       "iron-router": {},
-      "cfs-gridfs": {}
+      "cfs-gridfs": {},
+      "bootstrap3-datepicker": {}
     },
     "packages": {
       "bootstrap3-less": {
@@ -27,6 +28,11 @@
         "git": "https://github.com/CollectionFS/Meteor-cfs-gridfs.git",
         "tag": "v0.0.24",
         "commit": "46be5cbc2339783f59f0b2e38caa0c7bba88eba1"
+      },
+      "bootstrap3-datepicker": {
+        "git": "https://github.com/rajit/bootstrap3-datepicker.git",
+        "tag": "v0.2.1",
+        "commit": "442484eb1c8eb00c6b9e0e9c88accc934cf8f04a"
       },
       "iron-layout": {
         "git": "https://github.com/EventedMind/iron-layout.git",
