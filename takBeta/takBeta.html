@@ -41,17 +41,22 @@
                   <img src="{{currentUser.profile.picture}}">
                 </div>
                 <div class="col-md-4 col-xs-6">
-              <input type="text" class="form-control " id="firstName" placeholder="Nombre">
+              <input type="text" class="form-control " id="firstName" placeholder="Nombre" value="{{currentUser.profile.firstName}}">
               </div>
               <div class="col-md-4 col-xs-6">
-              <input type="text" class="form-control col-md-5 " id="lastName" placeholder="Apellido">
+              <input type="text" class="form-control col-md-5 " id="lastName" placeholder="Apellido" value="{{currentUser.profile.lastName}}">
               </div>
               <br/><br/>
                <div class="col-md-4 col-xs-6">
-              <input type="text" class="form-control col-md-5 " id="location" placeholder="Ubicación">
+              <div class="input-group">
+              <input type="text" class="form-control " id="location" placeholder="Ubicación">
+              <span class="input-group-btn">
+                <button class="btn btn-info" type="button">+</button>
+              </span>
               </div>
+            </div>
                <div class="col-md-4 col-xs-6">
-              <input type="text" class="form-control col-md-5 " id="location" placeholder="Email">
+              <input type="email" class="form-control col-md-5 " id="email" placeholder="Email" value="{{currentUser.profile.email}}">
               </div>
             </div>
               {{>rolesCheckbox}}
@@ -77,10 +82,15 @@
 <div class="row">
   <form name="skills" role="form">
       <div class="col-md-4 col-xs-6">
-    {{#each selectedSkills}}
-      <input type="text" class="form-control " id="firstName" value="{{this}}">
-    {{/each}}
-      <input type="text" class="form-control " id="firstName" placeholder="Nueva Habilidad">
+      <div class="input-group">
+      <input type="text" class="form-control " id="newSkill" placeholder="Nueva Habilidad">
+      <span class="input-group-btn">
+        <button class="btn btn-info" type="button">+</button>
+      </span>
+    </div><!-- /input-group -->
+       {{#each selectedSkills}}
+      <b>{{this}}</b>
+       {{/each}}
       </div>
       <div class="col-md-2 hidden-xs" >
         Ejemplos: <br/> PHP, HTML, Ilustrator, Photoshop, etc
@@ -88,10 +98,15 @@
   </form>
   <form name="portafolio" role="form">
       <div class="col-md-4 col-xs-6">
-    {{#each selectedLinks}}
-      <input type="text" class="form-control " id="link" value="{{this}}">
-    {{/each}}
-      <input type="text" class="form-control " id="newLink" placeholder="Nuevo enlace">
+      <div class="input-group">
+              <input type="text" class="form-control " id="newLink" placeholder="Nuevo Enlace">
+              <span class="input-group-btn">
+                <button class="btn btn-info" type="button">+</button>
+              </span>
+      </div>
+      {{#each selectedLinks}}
+      <b>{{this}}</b>
+      {{/each}}
       </div>
       <div class="col-md-2 hidden-xs" >
         Ejemplos: <br/> Github, Behance, Página personal
@@ -129,7 +144,12 @@
       <input type="text" class="form-control " id="title" placeholder="Puesto">
     </div>
      <div class="col-md-3 col-xs-6">
-      <input type="text" class="form-control " id="company" placeholder="Compañía">
+      <div class="input-group">
+              <input type="text" class="form-control " id="company" placeholder="Compañía">
+              <span class="input-group-btn">
+                <button class="btn btn-info" type="button">+</button>
+              </span>
+      </div>
     </div>
      <div class="col-md-3 col-xs-6" >
         <div class="input-group date">
@@ -269,31 +289,59 @@
               <div class="form-group">
               <label>
               Administración
-              <input class="form-control" type="checkbox" name="roles" value="management">
+              {{#if currentUser.profile.roles.management}}
+              <input class="form-control" type="checkbox" checked="true" name="roles" id="roles" value="management">
+              {{else}}
+              <input id="roles" class="form-control" type="checkbox" name="roles" value="management">
+              {{/if}}
               </label>
               <label>
               Desarrollo
-              <input class="form-control" type="checkbox" name="roles" value="Ciencia">
+              {{#if currentUser.profile.roles.development}}
+              <input  id="roles" class="form-control" type="checkbox" checked="true" name="roles" value="development">
+              {{else}}
+              <input id="roles" class="form-control" type="checkbox" name="roles" value="development">
+              {{/if}}
               </label>
               <label>
                 Diseño
-                <input class="form-control" type="checkbox" name="roles" value="Música">
+                {{#if currentUser.profile.roles.design}}
+              <input id="roles" class="form-control" type="checkbox" checked="true" name="roles" value="design">
+              {{else}}
+              <input  id="roles" class="form-control" type="checkbox" name="roles" value="design">
+              {{/if}}
               </label>
               <label>
               Inversión
-              <input class="form-control" type="checkbox" name="roles" value="Música">
+              {{#if currentUser.profile.roles.investment}}
+              <input id="roles" class="form-control" type="checkbox" checked="true" name="roles" value="investment">
+              {{else}}
+              <input id="roles" class="form-control" type="checkbox" name="roles" value="investment">
+              {{/if}}
               </label>
               <label>
                 Marketing
-              <input class="form-control" type="checkbox" name="roles" value="Música">
+              {{#if currentUser.profile.roles.marketing}}
+              <input id="roles" class="form-control" type="checkbox" checked="true" name="roles" value="marketing">
+              {{else}}
+              <input id="roles" class="form-control" type="checkbox" name="roles" value="marketing">
+              {{/if}}
               </label>
               <label>
                 Mentoría
-              <input class="form-control" type="checkbox" name="roles" value="Música">
+              {{#if currentUser.profile.roles.mentor}}
+              <input id="roles" class="form-control" type="checkbox" checked="true" name="roles" value="mentor">
+              {{else}}
+              <input id="roles" class="form-control" type="checkbox" name="roles" value="mentor">
+              {{/if}}
               </label>
               <label>
                 Ventas
-                <input class="form-control" type="checkbox" name="roles" value="Música">
+              {{#if currentUser.profile.roles.sales}}
+              <input id="roles" class="form-control" type="checkbox" checked="true" name="roles" value="sales">
+              {{else}}
+              <input id="roles" class="form-control" type="checkbox" name="roles" value="sales">
+              {{/if}}
               </label>
             </div>
             </form>

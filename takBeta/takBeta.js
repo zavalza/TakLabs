@@ -74,7 +74,7 @@ if (Meteor.isClient) {
       {
         if(Accounts.loginServicesConfigured()){
         Meteor.loginWithFacebook({
-        requestPermissions: ['public_profile', 'user_friends']
+        requestPermissions: ['public_profile', 'user_friends', 'email']
         }, function (err) {
           if (err)
             Session.set('errorMessage', err.reason || 'Unknown error');
@@ -110,6 +110,13 @@ if (Meteor.isClient) {
        Session.set(variable, !Session.get(variable));
     },     
   });
+
+  Template.editProfile.events({
+    'change form' : function(evt, tmpl){
+      var targetName = evt.target.id;
+      alert (targetName);
+    }
+  })
 
   Template.experienceInput.rendered=function() {
     $('.input-group.date').datepicker({
@@ -181,8 +188,7 @@ if (Meteor.isServer) {
       lastName = user.services.facebook.last_name;
       email = user.services.facebook.email;
       fbLink = user.services.facebook.link;
-      fbPicture = "http://graph.facebook.com/" + user.services.facebook.id + "/picture/?type=large";
-
+      fbPicture = "http://graph.facebook.com/v2.0/" + user.services.facebook.id + "/picture/?type=large";
       //graph request for picture
     }
     else{
@@ -207,6 +213,7 @@ if (Meteor.isServer) {
                       followers:{count:0, user_ids:[]},
                       following:{count: 0, user_ids:[], company_ids:[]}
                     }
+    //console.log(location);
     user.profile = profile;
     return user;
   });
