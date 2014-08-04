@@ -49,11 +49,18 @@
               <br/><br/>
                <div class="col-md-4 col-xs-6">
               <div class="input-group">
-              <input type="text" class="form-control " id="location" placeholder="Ubicación">
+              <input type="text" class="form-control " id="City" placeholder="Ciudad">
               <span class="input-group-btn">
-                <button class="btn btn-info" type="button">+</button>
+                <button name="City" class="btn btn-info saveTag" type="button">+</button>
               </span>
+
               </div>
+              <div id="cityOptions">
+              {{#each cityOptions}}
+                <div class="city" id="{{name}}" style="display: none">{{name}}<br/></div>
+              {{/each}}
+              </div>
+              
             </div>
                <div class="col-md-4 col-xs-6">
               <input type="email" class="form-control col-md-5 " id="email" placeholder="Email" value="{{currentUser.profile.email}}">

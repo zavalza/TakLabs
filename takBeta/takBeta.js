@@ -1,7 +1,7 @@
 
 Companies = new Meteor.Collection("companies");
 Skills = new Meteor.Collection("skills");
-Locations = new Meteor.Collection("locations");
+Cities = new Meteor.Collection("cities");
 Colleges = new Meteor.Collection("colleges");
 Jobs = new Meteor.Collection("jobs");
 
@@ -40,6 +40,7 @@ if (Meteor.isClient) {
     Session.set("selectedSkills", ['Javascript', 'MeteorJS']);
     Session.set("selectedLinks", ['https://github.com/zavalza']);
     Session.set("selectedExperience", []); //[{title: "Fundador"}]
+    //Session.set('cityOptions', ['Monterrey', 'Guadalajara'])
   });
   Template.loginForm.events({
     'click .tryFacebookLogin': function(evt, tmpl){
@@ -114,7 +115,40 @@ if (Meteor.isClient) {
   Template.editProfile.events({
     'change form' : function(evt, tmpl){
       var targetName = evt.target.id;
-      alert (targetName);
+      //alert (targetName);
+    },
+
+    'keyup #City' : function(evt, tmpl){
+      filter = tmpl.find('#City').value.toUpperCase();
+      var options = document.getElementsByClassName('city');
+      for (var i = 0; i < options.length; i++) {
+        var name = options[i].innerHTML;
+        //alert(name);
+        if (name.toUpperCase().indexOf(filter) == 0) 
+            options[i].style.display = 'inline';
+        else
+            options[i].style.display = 'none';
+        }
+    },
+
+    'click .saveTag' : function(evt, tmpl){
+      var targetName = evt.target.name;
+      //alert (targetName)
+      var value = tmpl.find('#'+targetName).value;
+      if(Meteor.userId)
+      {
+        var doc={
+                  name:value,
+                  referrer: document.referrer, 
+                  timestamp: new Date(),
+                }
+        var tagId = Meteor.call('save'+targetName, doc);
+        tmpl.find('#'+targetName).blur();
+      }
+      else
+      {
+        alert("Debes iniciar sesión");
+      }
     }
   })
 
@@ -126,6 +160,16 @@ if (Meteor.isClient) {
       autoclose: true
       });
 }
+    Template.editProfile.helpers ({
+        cityOptions : function()
+        {
+          return Cities.find();
+        }
+    });
+
+  /*Template.editProfile.cityOptions = function(){
+    return Session.get('cityOptions');
+  }*/
 
   Template.skillsInput.selectedSkills = function(){
     return Session.get('selectedSkills');
@@ -227,6 +271,13 @@ if (Meteor.isServer) {
           console.log('Updating roles of user ' + userId);
           Meteor.users.update({_id: userId},
           {$set: {'profile.roles':rolesDoc}});
+      },
+
+      saveCity: function(doc){
+        //protection method agains duplication
+        console.log('addingCity');
+        cityId = Cities.insert(doc);
+        return cityId;
       }
     });
 }
