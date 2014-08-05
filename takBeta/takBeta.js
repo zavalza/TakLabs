@@ -119,16 +119,25 @@ if (Meteor.isClient) {
     },
 
     'keyup #City' : function(evt, tmpl){
-      filter = tmpl.find('#City').value.toUpperCase();
+      filter = tmpl.find('#City').value.trim().toUpperCase();
+      var re = /([a-zA-Z]+)/g;
       var options = document.getElementsByClassName('city');
       for (var i = 0; i < options.length; i++) {
-        var name = options[i].innerHTML;
-        //alert(name);
-        if (name.toUpperCase().indexOf(filter) == 0) 
-            options[i].style.display = 'inline';
-        else
-            options[i].style.display = 'none';
+
+        if (filter.match(re)){
+          var name = options[i].innerHTML;
+          //alert(name);
+          if (name.toUpperCase().indexOf(filter) == 0)
+              options[i].style.display = 'inline';
+          else
+              options[i].style.display = 'none';
         }
+        else
+        {
+          options[i].style.display = 'none';
+        }
+          
+      }
     },
 
     'click .saveTag' : function(evt, tmpl){
