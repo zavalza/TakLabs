@@ -128,12 +128,20 @@ if (Meteor.isClient) {
           var name = options[i].innerHTML;
           //alert(name);
           if (name.toUpperCase().indexOf(filter) == 0)
-              options[i].style.display = 'inline';
+              {
+                document.getElementById('cityOptions').style.display='inline';
+                options[i].style.display = 'list-item';
+              }
+              
           else
-              options[i].style.display = 'none';
+              {
+                options[i].style.display = 'none';
+              }
+              
         }
         else
         {
+          document.getElementById('cityOptions').style.display='none';
           options[i].style.display = 'none';
         }
           
@@ -143,8 +151,9 @@ if (Meteor.isClient) {
     'click .saveTag' : function(evt, tmpl){
       var targetName = evt.target.name;
       //alert (targetName)
-      var value = tmpl.find('#'+targetName).value;
-      if(Meteor.userId)
+      var value = tmpl.find('#'+targetName).value.trim();
+       var re = /([a-zA-Z]+)/g;
+      if(Meteor.userId && value.match(re))
       {
         var doc={
                   name:value,
@@ -156,7 +165,7 @@ if (Meteor.isClient) {
       }
       else
       {
-        alert("Debes iniciar sesión");
+        alert("Error al guardar nombre");
       }
     }
   })

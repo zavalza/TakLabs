@@ -49,16 +49,15 @@
               <br/><br/>
                <div class="col-md-4 col-xs-6">
               <div class="input-group">
-              <input type="text" class="form-control " id="City" placeholder="Ciudad">
+              <input type="text" class="form-control dropdown-toggle" id="City" placeholder="Ciudad" data-toggle="dropdown">
               <span class="input-group-btn">
                 <button name="City" class="btn btn-info saveTag" type="button">+</button>
               </span>
-
-              </div>
-              <div id="cityOptions">
+              <ul class="dropdown-menu" style="display: none;" id="cityOptions">
               {{#each cityOptions}}
-                <div class="city" id="{{name}}" style="display: none">{{name}}<br/></div>
+                <li style="color: white; display: none;" class="city" id="{{name}}">{{name}}<br/></li>
               {{/each}}
+              </ul>
               </div>
               
             </div>
