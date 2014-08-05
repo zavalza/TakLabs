@@ -153,7 +153,7 @@ if (Meteor.isClient) {
       //alert (targetName)
       var value = tmpl.find('#'+targetName).value.trim();
        var re = /([a-zA-Z]+)/g;
-      if(Meteor.userId && value.match(re))
+      if(Meteor.userId() && value.match(re))
       {
         var doc={
                   name:value,
@@ -291,10 +291,19 @@ if (Meteor.isServer) {
           {$set: {'profile.roles':rolesDoc}});
       },
 
+      pushCity: function(userId, cityId){
+          console.log('Pushing city with id '+ cityId +' to user ' + userId);
+          Meteor.users.update({_id: userId},
+            {$push: {'profile.location_ids': cityId}});
+          return true
+      },
+
       saveCity: function(doc){
-        //protection method agains duplication
+        //some protection method against duplication
         console.log('addingCity');
         cityId = Cities.insert(doc);
+        console.log('new City has id '+ cityId);
+        Meteor.call('pushCity', Meteor.userId(), cityId);
         return cityId;
       }
     });
