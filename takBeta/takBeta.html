@@ -29,138 +29,199 @@
 
 <template name="editProfile">
   <div class="wrap">
-     <div class="panel panel-primary col-md-8 col-xs-12 col-md-offset-2">
-          <div class="panel-heading">
-              <h3 class="panel-title text-center">Editar Perfil</h3>
-          </div>
-        <div class="panel-body">
-          <form class="form col-md-12 col-xs-12" name="editProfile">
+    <div class="panel panel-primary col-md-8 col-xs-12 col-md-offset-2">
+      <div class="panel-heading">
+          <h3 class="panel-title text-center">Editar Perfil</h3>
+      </div>
+      <div class="panel-body">
+        <form class="form col-md-12 col-xs-12" name="editProfile">
           <div class="form-group">
-              <div class="row">
-                <div class="col-md-2 col-xs-4">
-                  <img src="{{currentUser.profile.picture}}">
-                </div>
-                <div class="col-md-4 col-xs-6">
-              <input type="text" class="form-control " id="firstName" placeholder="Nombre" value="{{currentUser.profile.firstName}}">
+            <div class="row">
+              <div class="col-md-2 col-xs-4">
+                <img src="{{currentUser.profile.picture}}">
               </div>
               <div class="col-md-4 col-xs-6">
-              <input type="text" class="form-control col-md-5 " id="lastName" placeholder="Apellido" value="{{currentUser.profile.lastName}}">
+                <input type="text" class="form-control " id="firstName" placeholder="Nombre" value="{{currentUser.profile.firstName}}">
+              </div>
+              <div class="col-md-4 col-xs-6">
+                <input type="text" class="form-control col-md-5 " id="lastName" placeholder="Apellido" value="{{currentUser.profile.lastName}}">
               </div>
               <br/><br/>
-               <div class="col-md-4 col-xs-6">
-              <div class="input-group">
-              <input type="text" class="form-control dropdown-toggle" id="City" placeholder="Ciudades de trabajo" data-toggle="dropdown">
+              <div class="col-md-4 col-xs-6">
+                <input type="email" class="form-control col-md-5 " id="email" placeholder="Email" value="{{currentUser.profile.email}}">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-xs-6" >
+                <h4>Ciudades donde trabajo</h4>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-xs-6">
+                {{>locationInput}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-xs-6" >
+                <h4>Roles</h4>
+              </div>
+            </div>
+            <div class="row">
+              <form name="roles" role="form" class="form-inline col-md-10 col-xs-12">
+              {{>rolesCheckbox}}
+              </form>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-xs-6" >
+                <h4>Mis habilidades</h4>
+              </div>
+              <div class="col-md-6 col-xs-6" >
+                <h4>Portafolio</h4>
+              </div>
+            </div>
+            <div class="row">
+              <form name="skills" role="form">
+                <div class="col-md-4 col-xs-6">
+                  {{>skillsInput}}
+                </div>
+              </form>
+              <div class="col-md-2 hidden-xs" >
+                Ejemplos: <br/> PHP, HTML, Ilustrator, Photoshop, etc
+              </div>
+              <form name="portafolio" role="form">
+                <div class="col-md-4 col-xs-6">
+                  {{>portafolioInput}}
+                </div>
+                <div class="col-md-2 hidden-xs" >
+                  Ejemplos: <br/> Github, Behance, Página personal
+                </div>
+              </form>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-xs-6" >
+                  <h4>Mi experiencia</h4>
+                </div>
+            </div>
+            <div class="row">
+              <form name="experience" role="form" class="col-md-12 col-xs-12">
+                {{>experienceInput}}
+              </form>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-xs-6" >
+                <h4>Estudios</h4>
+              </div>
+            </div>
+            <div class="row">
+              <form name="education" role="form" class="col-md-12 col-xs-12">
+                  <div class="col-md-4 col-xs-6">
+                    {{>collegesInput}}
+                  </div>
+              </form>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="locationInput">
+  <div class="input-group">
+    <input type="text" class="form-control dropdown-toggle" id="City" placeholder="Nueva ubicación" data-toggle="dropdown">
+    <span class="input-group-btn">
+      <button name="City" class="btn btn-info saveTag" type="button">+</button>
+    </span>
+    <ul class="dropdown-menu" style="display: none;" id="CityOptions">
+    {{#each cityOptions}}
+      <a href="#"><li style="color: white; display: none;" class="city" id="{{name}}">{{name}}</li></a>
+    {{/each}}
+    </ul>
+  </div>
+  {{#each currentUser.profile.location_ids}}
+    {{#each location this}}
+      <div class="input-group">
+        <input type="text" class="form-control " id="location" value="{{name}}" disabled>
+        <span class="input-group-btn">
+          <button name="City" class="btn btn-danger pullTag" type="button">x</button>
+        </span>
+      </div>
+    {{/each}}
+  {{/each}}
+</template>
+
+
+<template name="portafolioInput">
+  <div class="input-group">
+    <input type="url" class="form-control " id="newLink" placeholder="Nuevo Enlace">
+    <span class="input-group-btn">
+      <button class="btn btn-info addLink" type="button">+</button>
+    </span>
+  </div>
+  {{#each currentUser.profile.portafolio_urls}}
+    <div class="input-group">
+      <input type="text" class="form-control " id="link" value="{{this}}" disabled>
+      <span class="input-group-btn">
+        <button name="Link" class="btn btn-danger deleteLink" type="button">x</button>
+      </span>
+    </div>
+  {{/each}}
+</template>
+
+<template name="skillsInput">
+     <div class="input-group">
+              <input type="text" class="form-control dropdown-toggle" id="Skill" placeholder="Nueva habilidad" data-toggle="dropdown">
               <span class="input-group-btn">
-                <button name="City" class="btn btn-info saveTag" type="button">+</button>
+                <button name="Skill" class="btn btn-info saveTag" type="button">+</button>
               </span>
-              <ul class="dropdown-menu" style="display: none;" id="cityOptions">
-              {{#each cityOptions}}
-                <a href="#"><li style="color: white; display: none;" class="city" id="{{name}}">{{name}}</li></a>
+              <ul class="dropdown-menu" style="display: none;" id="SkillOptions">
+              {{#each skillOptions}}
+                <a href="#"><li style="color: white; display: none;" class="skill" id="{{name}}">{{name}}</li></a>
               {{/each}}
               </ul>
               </div>
-              {{#each currentUser.profile.location_ids}}
-                {{#each location this}}
+      {{#each currentUser.profile.skill_ids}}
+                {{#each skill this}}
                   <div class="input-group">
-                  <input type="text" class="form-control " id="location" value="{{name}}" disabled>
+                  <input type="text" class="form-control " id="skill" value="{{name}}" disabled>
                   <span class="input-group-btn">
-                    <button name="City" class="btn btn-danger pullTag" type="button">x</button>
+                    <button name="Skill" class="btn btn-danger pullTag" type="button">x</button>
                   </span>
                   </div>
                 {{/each}}
               {{/each}}
-              
-              
-            </div>
-               <div class="col-md-4 col-xs-6">
-              <input type="email" class="form-control col-md-5 " id="email" placeholder="Email" value="{{currentUser.profile.email}}">
-              </div>
-            </div>
-              {{>rolesCheckbox}}
-              {{>skillsInput}}
-              {{>experienceInput}}
-              {{>educationInput}}
-          </div>
-          </form>
-      </div>
-  </div>
-</div>
 </template>
 
-<template name="skillsInput">
-  <div class="row">
-    <div class="col-md-6 col-xs-6" >
-      <h4>Mis habilidades</h4>
-    </div>
-    <div class="col-md-6 col-xs-6" >
-      <h4>Portafolio</h4>
-    </div>
-</div>
-<div class="row">
-  <form name="skills" role="form">
-      <div class="col-md-4 col-xs-6">
-      <div class="input-group">
-      <input type="text" class="form-control " id="newSkill" placeholder="Nueva Habilidad">
-      <span class="input-group-btn">
-        <button class="btn btn-info" type="button">+</button>
-      </span>
-    </div><!-- /input-group -->
-       {{#each selectedSkills}}
-        <div class="input-group">
-              <input type="text" class="form-control " id="skill" value="{{this}}" disabled>
+<template name="collegesInput">
+     <div class="input-group">
+              <input type="text" class="form-control dropdown-toggle" id="College" placeholder="Nueva Universidad" data-toggle="dropdown">
               <span class="input-group-btn">
-                <button class="btn btn-danger" type="button">x</button>
+                <button name="College" class="btn btn-info saveTag" type="button">+</button>
               </span>
-      </div>
-       {{/each}}
-      </div>
-      <div class="col-md-2 hidden-xs" >
-        Ejemplos: <br/> PHP, HTML, Ilustrator, Photoshop, etc
-      </div>
-  </form>
-  <form name="portafolio" role="form">
-      <div class="col-md-4 col-xs-6">
-      <div class="input-group">
-              <input type="url" class="form-control " id="newLink" placeholder="Nuevo Enlace">
-              <span class="input-group-btn">
-                <button class="btn btn-info" type="button">+</button>
-              </span>
-      </div>
-      {{#each selectedLinks}}
-       <div class="input-group">
-              <input type="text" class="form-control " id="link" value="{{this}}" disabled>
-              <span class="input-group-btn">
-                <button class="btn btn-danger" type="button">x</button>
-              </span>
-      </div>
-      {{/each}}
-      </div>
-      <div class="col-md-2 hidden-xs" >
-        Ejemplos: <br/> Github, Behance, Página personal
-      </div>
-  </form>
-   </div>
+              <ul class="dropdown-menu" style="display: none;" id="CollegeOptions">
+              {{#each collegeOptions}}
+                <a href="#"><li style="color: white; display: none;" class="college" id="{{name}}">{{name}}</li></a>
+              {{/each}}
+              </ul>
+              </div>
+      {{#each currentUser.profile.college_ids}}
+                {{#each college this}}
+                  <div class="input-group">
+                  <input type="text" class="form-control " id="college" value="{{name}}" disabled>
+                  <span class="input-group-btn">
+                    <button name="College" class="btn btn-danger pullTag" type="button">x</button>
+                  </span>
+                  </div>
+                {{/each}}
+              {{/each}}
 </template>
 
 <template name="experienceInput">
-  <div class="row">
-    <div class="col-md-6 col-xs-6" >
-  <h4>Mi experiencia</h4>
-</div>
-</div>
-  <form name="experience" role="form" class="col-md-12 col-xs-12">
-    <div class="row">
     {{#each selectedExperience}}
      <div class="col-md-3 col-xs-6">
       <input type="text" class="form-control " id="title" value="{{title}}">
     </div>
-    <!--
-      {{#each name this.company_id}}
-      <div class="col-md-3 col-xs-6">
-        <input type="text" class="form-control " id="companyName" value="{{this}}">
-      </div>
-      {{/each}}}}
-    -->
     <div class="col-md-3 col-xs-6" >
         Inicio<input type="month"><input type="year"><br/>
         Fin<input type="month"><input type="year"><br/>
@@ -189,33 +250,7 @@
         </div>
     </div>
     </div>
-    </div>
-  </form>
-</template>
 
-<template name="educationInput">
-  <div class="row">
-    <div class="col-md-6 col-xs-6" >
-  <h4>Estudios</h4>
-</div>
-</div>
-  <form name="education" role="form" class="col-md-12 col-xs-12">
-    <div class="row">
-      <div class="col-md-4 col-xs-6">
-    <!--
-    {{#each college selectedEducation}}
-      <input type="text" class="form-control " id="title" value="{{name}}">
-    {{/each}}
-  -->
- <div class="input-group">
-              <input type="text" class="form-control " id="newUniversity" placeholder="Universidad">
-              <span class="input-group-btn">
-                <button class="btn btn-info" type="button">+</button>
-              </span>
-      </div>
-  </div>
-    </div>
-  </form>
 </template>
 
 <template name="navigation">
@@ -311,13 +346,7 @@
 </div>
 </template>
 <template name="rolesCheckbox">
-  <div class="row">
-    <div class="col-md-6 col-xs-6" >
-   <h4>Roles</h4>
- </div>
-</div>
-<div class="row">
-      <form name="roles" role="form" class="form-inline col-md-10 col-xs-12">
+  
               <div class="form-group">
               <label>
               Administración
@@ -376,8 +405,6 @@
               {{/if}}
               </label>
             </div>
-            </form>
-</div>
 </template>
 <template name="rolesImages">
 <div class="row">

@@ -37,7 +37,6 @@ if (Meteor.isClient) {
     Session.set("marketing", false);
     Session.set("mentor", false);
     Session.set("sales", false);
-    Session.set("selectedSkills", ['Javascript', 'MeteorJS']);
     Session.set("selectedLinks", ['https://github.com/zavalza']);
     Session.set("selectedExperience", []); //[{title: "Fundador"}]
     //Session.set('cityOptions', ['Monterrey', 'Guadalajara'])
@@ -116,44 +115,7 @@ if (Meteor.isClient) {
     'change form' : function(evt, tmpl){
       var targetName = evt.target.id;
       //alert (targetName);
-    },
-
-    'keyup #City' : function(evt, tmpl){
-      filter = tmpl.find('#City').value.trim().toUpperCase();
-      var re = /([a-zA-Z]+)/g;
-      var options = document.getElementsByClassName('city');
-      for (var i = 0; i < options.length; i++) {
-
-        if (filter.match(re)){
-          var name = options[i].innerHTML;
-          //alert(name);
-          if (name.toUpperCase().indexOf(filter) == 0)
-              {
-                document.getElementById('cityOptions').style.display='inline';
-                options[i].style.display = 'list-item';
-              }
-              
-          else
-              {
-                options[i].style.display = 'none';
-              }
-              
-        }
-        else
-        {
-          document.getElementById('cityOptions').style.display='none';
-          options[i].style.display = 'none';
-        }
-          
-      }
-    },
-
-    'click .city' : function (evt, tmpl){
-      //alert(this._id);
-      Meteor.call('pushCity', Meteor.userId(), this._id);
-      tmpl.find('#City').value = "";
-      //tmpl.find('#City').blur();
-      return false;
+      //verificar formato email
     },
 
     'click .pullTag' : function(evt, tmpl){
@@ -184,6 +146,7 @@ if (Meteor.isClient) {
         var tagId = Meteor.call('save'+targetName, doc);
         tmpl.find('#'+targetName).value = "";
         tmpl.find('#'+targetName).blur();
+        document.getElementById(targetName+'options').style.display='none';
       }
       else
       {
@@ -191,6 +154,157 @@ if (Meteor.isClient) {
       }
     }
   })
+
+  Template.locationInput.events({
+'keyup #City' : function(evt, tmpl){
+      //busca todo el string y no palabra por palabra
+      filter = tmpl.find('#City').value.trim().toUpperCase();
+      var re = /([a-zA-Z]+)/g;
+      var options = document.getElementsByClassName('city');
+      for (var i = 0; i < options.length; i++) {
+
+        if (filter.match(re)){
+          var name = options[i].innerHTML;
+          //alert(name);
+          if (name.toUpperCase().indexOf(filter) == 0)
+              {
+                document.getElementById('CityOptions').style.display='inline';
+                options[i].style.display = 'list-item';
+              }
+              
+          else
+              {
+                options[i].style.display = 'none';
+              }
+              
+        }
+        else
+        {
+          document.getElementById('CityOptions').style.display='none';
+          options[i].style.display = 'none';
+        }
+          
+      }
+    },
+
+    'click .city' : function (evt, tmpl){
+      //alert(this._id);
+      Meteor.call('pushCity', Meteor.userId(), this._id);
+      tmpl.find('#City').value = "";
+      tmpl.find('#City').blur();
+      document.getElementById('CityOptions').style.display='none';
+      return true;
+    }
+  });
+
+  Template.skillsInput.events({
+    'keyup #Skill' : function(evt, tmpl){
+      filter = tmpl.find('#Skill').value.trim().toUpperCase();
+      var re = /([a-zA-Z]+)/g;
+      var options = document.getElementsByClassName('skill');
+      for (var i = 0; i < options.length; i++) {
+
+        if (filter.match(re)){
+          var name = options[i].innerHTML;
+          //alert(name);
+          if (name.toUpperCase().indexOf(filter) == 0)
+              {
+                document.getElementById('SkillOptions').style.display='inline';
+                options[i].style.display = 'list-item';
+              }
+              
+          else
+              {
+                options[i].style.display = 'none';
+              }
+              
+        }
+        else
+        {
+          document.getElementById('SkillOptions').style.display='none';
+          options[i].style.display = 'none';
+        }
+          
+      }
+    },
+
+    'click .skill' : function (evt, tmpl){
+      //alert(this._id);
+      Meteor.call('pushSkill', Meteor.userId(), this._id);
+      tmpl.find('#Skill').value = "";
+      tmpl.find('#Skill').blur();
+      document.getElementById('SkillOptions').style.display='none';
+      return true;
+    }
+
+  });
+
+Template.collegesInput.events({
+    'keyup #College' : function(evt, tmpl){
+      filter = tmpl.find('#College').value.trim().toUpperCase();
+      var re = /([a-zA-Z]+)/g;
+      var options = document.getElementsByClassName('college');
+      for (var i = 0; i < options.length; i++) {
+
+        if (filter.match(re)){
+          var name = options[i].innerHTML;
+          //alert(name);
+          if (name.toUpperCase().indexOf(filter) == 0)
+              {
+                document.getElementById('CollegeOptions').style.display='inline';
+                options[i].style.display = 'list-item';
+              }
+              
+          else
+              {
+                options[i].style.display = 'none';
+              }
+              
+        }
+        else
+        {
+          document.getElementById('CollegeOptions').style.display='none';
+          options[i].style.display = 'none';
+        }
+          
+      }
+    },
+
+    'click .college' : function (evt, tmpl){
+      //alert(this._id);
+      Meteor.call('pushCollege', Meteor.userId(), this._id);
+      tmpl.find('#College').value = "";
+      tmpl.find('#College').blur();
+      document.getElementById('CollegeOptions').style.display='none';
+      return true;
+    }
+
+  });
+
+  Template.portafolioInput.events({
+    'click .addLink' : function (evt, tmpl){
+      //alert(this._id);
+      var link = tmpl.find('#newLink').value;
+      var re = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+      if (link.match(re))
+      {
+        Meteor.call('addLink', Meteor.userId(), link);
+        tmpl.find('#newLink').value = "";
+      }
+      else
+      {
+        alert('No parece una liga válida');
+      }
+      //document.getElementById('SkillOptions').style.display='none';
+      return true;
+    },
+
+    'click .deleteLink' : function (evt, tmpl){
+      //alert(this.toString());
+      Meteor.call('deleteLink', Meteor.userId(), this.toString());
+      return true;
+    }
+  });
 
   Template.experienceInput.rendered=function() {
     $('.input-group.date').datepicker({
@@ -200,7 +314,7 @@ if (Meteor.isClient) {
       autoclose: true
       });
 }
-    Template.editProfile.helpers ({
+    Template.locationInput.helpers ({
         cityOptions : function()
         {
           return Cities.find();
@@ -210,15 +324,33 @@ if (Meteor.isClient) {
         {
           return Cities.find({_id:locationId});
         }
+
+        
     });
 
-  /*Template.editProfile.cityOptions = function(){
-    return Session.get('cityOptions');
-  }*/
+    Template.skillsInput.helpers({
+       skillOptions : function()
+        {
+          return Skills.find();
+        },
 
-  Template.skillsInput.selectedSkills = function(){
-    return Session.get('selectedSkills');
-  }
+      skill: function(skillId)
+        {
+          return Skills.find({_id:skillId});
+        }
+    });
+
+    Template.collegesInput.helpers({
+       collegeOptions : function()
+        {
+          return Colleges.find();
+        },
+
+      college: function(collegeId)
+        {
+          return Colleges.find({_id:collegeId});
+        }
+    });
 
   Template.skillsInput.selectedLinks = function(){
     return Session.get('selectedLinks');
@@ -298,7 +430,7 @@ if (Meteor.isServer) {
                       //twitter_url:
                       //linkedin_url:
                       //behance_url
-                      colleges_ids:[],
+                      college_ids:[],
                       followers:{count:0, user_ids:[]},
                       following:{count: 0, user_ids:[], company_ids:[]}
                     }
@@ -318,10 +450,37 @@ if (Meteor.isServer) {
           {$set: {'profile.roles':rolesDoc}});
       },
 
+      addLink: function(userId, link){
+          console.log('Adding a link to profile '+ userId);
+          Meteor.users.update({_id: userId},
+          {$push:{'profile.portafolio_urls': link}});
+      },
+
+      deleteLink: function(userId, link){
+          console.log('Deleting the link '+link +' of profile '+ userId);
+          Meteor.users.update({_id: userId},
+          {$pull:{'profile.portafolio_urls': link}});
+      },
+
+
       pushCity: function(userId, cityId){
           console.log('Pushing city with id '+ cityId +' to user ' + userId);
           Meteor.users.update({_id: userId},
             {$push: {'profile.location_ids': cityId}});
+          return true
+      },
+
+       pushSkill: function(userId, skillId){
+          console.log('Pushing skill with id '+ skillId +' to user ' + userId);
+          Meteor.users.update({_id: userId},
+            {$push: {'profile.skill_ids': skillId}});
+          return true
+      },
+
+       pushCollege: function(userId, collegeId){
+          console.log('Pushing college with id '+ collegeId +' to user ' + userId);
+          Meteor.users.update({_id: userId},
+            {$push: {'profile.college_ids': collegeId}});
           return true
       },
 
@@ -332,6 +491,20 @@ if (Meteor.isServer) {
           return true
       },
 
+      pullSkill: function (userId, skillId){
+          console.log('Unlink skill with id '+ skillId +' from user '+ userId);
+          Meteor.users.update({_id: userId},
+            {$pull: {'profile.skill_ids': skillId}});
+          return true
+      },
+
+      pullCollege: function (userId, collegeId){
+          console.log('Unlink college with id '+ collegeId +' from user '+ userId);
+          Meteor.users.update({_id: userId},
+            {$pull: {'profile.college_ids': collegeId}});
+          return true
+      },
+
       saveCity: function(doc){
         //some protection method against duplication
         console.log('addingCity');
@@ -339,6 +512,22 @@ if (Meteor.isServer) {
         console.log('new City has id '+ cityId);
         Meteor.call('pushCity', Meteor.userId(), cityId);
         return cityId;
+      },
+      saveSkill: function(doc){
+        //some protection method against duplication
+        console.log('addingSkill');
+        skillId = Skills.insert(doc);
+        console.log('new Skill has id '+ skillId);
+        Meteor.call('pushSkill', Meteor.userId(), skillId);
+        return skillId;
+      },
+      saveCollege: function(doc){
+        //some protection method against duplication
+        console.log('addingCollege');
+        collegeId = Colleges.insert(doc);
+        console.log('new College has id '+ collegeId);
+        Meteor.call('pushCollege', Meteor.userId(), collegeId);
+        return collegeId;
       }
     });
 }
