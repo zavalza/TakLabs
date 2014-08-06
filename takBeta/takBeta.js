@@ -148,6 +148,27 @@ if (Meteor.isClient) {
       }
     },
 
+    'click .city' : function (evt, tmpl){
+      //alert(this._id);
+      Meteor.call('pushCity', Meteor.userId(), this._id);
+      tmpl.find('#City').value = "";
+      //tmpl.find('#City').blur();
+      return false;
+    },
+
+    'click .pullTag' : function(evt, tmpl){
+      var targetName = evt.target.name;
+      //alert (targetName)
+      if(Meteor.userId())
+      {
+        var sucess = Meteor.call('pull'+targetName, Meteor.userId(), this._id);
+      }
+      else
+      {
+        alert("Error al borrar etiqueta");
+      }
+    },
+
     'click .saveTag' : function(evt, tmpl){
       var targetName = evt.target.name;
       //alert (targetName)
@@ -161,11 +182,12 @@ if (Meteor.isClient) {
                   timestamp: new Date(),
                 }
         var tagId = Meteor.call('save'+targetName, doc);
+        tmpl.find('#'+targetName).value = "";
         tmpl.find('#'+targetName).blur();
       }
       else
       {
-        alert("Error al guardar nombre");
+        alert("Error al guardar etiqueta");
       }
     }
   })
@@ -182,6 +204,11 @@ if (Meteor.isClient) {
         cityOptions : function()
         {
           return Cities.find();
+        },
+
+        location: function(locationId)
+        {
+          return Cities.find({_id:locationId});
         }
     });
 
@@ -295,6 +322,13 @@ if (Meteor.isServer) {
           console.log('Pushing city with id '+ cityId +' to user ' + userId);
           Meteor.users.update({_id: userId},
             {$push: {'profile.location_ids': cityId}});
+          return true
+      },
+
+      pullCity: function (userId, cityId){
+          console.log('Unlink city with id '+ cityId +' from user '+ userId);
+          Meteor.users.update({_id: userId},
+            {$pull: {'profile.location_ids': cityId}});
           return true
       },
 

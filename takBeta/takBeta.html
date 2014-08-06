@@ -49,16 +49,27 @@
               <br/><br/>
                <div class="col-md-4 col-xs-6">
               <div class="input-group">
-              <input type="text" class="form-control dropdown-toggle" id="City" placeholder="Ciudad" data-toggle="dropdown">
+              <input type="text" class="form-control dropdown-toggle" id="City" placeholder="Ciudades de trabajo" data-toggle="dropdown">
               <span class="input-group-btn">
                 <button name="City" class="btn btn-info saveTag" type="button">+</button>
               </span>
               <ul class="dropdown-menu" style="display: none;" id="cityOptions">
               {{#each cityOptions}}
-                <li style="color: white; display: none;" class="city" id="{{name}}">{{name}}<br/></li>
+                <a href="#"><li style="color: white; display: none;" class="city" id="{{name}}">{{name}}</li></a>
               {{/each}}
               </ul>
               </div>
+              {{#each currentUser.profile.location_ids}}
+                {{#each location this}}
+                  <div class="input-group">
+                  <input type="text" class="form-control " id="location" value="{{name}}" disabled>
+                  <span class="input-group-btn">
+                    <button name="City" class="btn btn-danger pullTag" type="button">x</button>
+                  </span>
+                  </div>
+                {{/each}}
+              {{/each}}
+              
               
             </div>
                <div class="col-md-4 col-xs-6">
