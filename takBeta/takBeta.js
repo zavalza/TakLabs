@@ -1,10 +1,6 @@
 
 Companies = new Meteor.Collection("companies");
-Skills = new Meteor.Collection("skills");
-Cities = new Meteor.Collection("cities");
-Colleges = new Meteor.Collection("colleges");
 Jobs = new Meteor.Collection("jobs");
-
 Tags = new Meteor.Collection("tags");
 
 //File Storage
@@ -113,10 +109,12 @@ if (Meteor.isClient) {
   });
 
   Template.editProfile.events({
-    'change form' : function(evt, tmpl){
-      var targetName = evt.target.id;
-      //alert (targetName);
+    'change #firstName,#lastName,#email' : function(evt, tmpl){
+      var targetId = evt.target.id;
+      alert (targetId);
       //verificar formato email
+      var newValue = tmpl.find('#'+targetId).value.trim();
+      Meteor.call('updateTextField', Meteor.userId(), targetId, newValue);
     },
 
     'click .pullTag' : function(evt, tmpl){
@@ -369,6 +367,26 @@ if (Meteor.isServer) {
           console.log('Updating roles of user ' + userId);
           Meteor.users.update({_id: userId},
           {$set: {'profile.roles':rolesDoc}});
+      },
+
+      updateTextField: function(userId, field, value){
+          console.log('Updating field '+ field +' of user '+userId);
+          switch(field){
+            case ('firstName'):
+            Meteor.users.update({_id: userId},
+            {$set: {'profile.firstName':value}});
+            break;
+            case ('lastName'):
+            Meteor.users.update({_id: userId},
+            {$set: {'profile.lastName':value}});
+            break;
+            case('email'):
+            Meteor.users.update({_id: userId},
+            {$set: {'profile.email':value}});
+            break;
+            default: break;
+          }
+          
       },
 
       addLink: function(userId, link){
