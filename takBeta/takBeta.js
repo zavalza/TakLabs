@@ -1,6 +1,6 @@
 
-Companies = new Meteor.Collection("companies");
 Jobs = new Meteor.Collection("jobs");
+Companies = new Meteor.Collection("companies");
 Tags = new Meteor.Collection("tags");
 
 //File Storage
@@ -118,7 +118,7 @@ if (Meteor.isClient) {
       }
     },
 
-'keyup #City,#Skill,#College,#Role' : function(evt, tmpl){
+'keyup #City,#Skill,#College,#Role,#Company' : function(evt, tmpl){
       //busca todo el string y no palabra por palabra
       var targetId = evt.target.id;
       //alert(targetId)
@@ -196,7 +196,44 @@ if (Meteor.isClient) {
       language: "es",
       autoclose: true
       });
-}
+  };
+
+  Template.experienceInput.events({
+    'click .addExperience' : function(evt, tmpl){
+      var typeOfExperience = tmpl.find('#Experience').value.trim();
+      var companyName = tmpl.find('#Company').value.trim()
+      var re = /([a-zA-Z]+)/g;
+      if (typeOfExperience != "" && companyName.match(re))
+      {
+        var newCompany={
+                  type: "", //specify if it is a startup
+                  name:companyName,
+                  logoUrl:"", //path to default image
+                  description:"",
+                  highConcept:"",
+                  company_url:"",
+                  tag_ids:[],
+                  team:[{
+                    type:typeOfExperience,
+                    title:null,
+                    startedAt:null,
+                    endedAt:null,
+                    confirmed:false,
+                    user_id: Meteor.userId()
+                  }],
+                  followers:{count:0, user_ids:[]},
+                  referrer: document.referrer, 
+                  timestamp: new Date(),
+                }
+          Meteor.call('addExperience', Meteor.userId(), typeOfExperience, newCompany);
+      }
+      else
+      {
+        alert ("Selecciona un tipo de experiencia y escribe una compañía");
+      }
+    }
+  });
+
     Template.locationInput.helpers ({
         cityOptions : function()
         {
@@ -247,6 +284,21 @@ if (Meteor.isClient) {
         }
     });
 
+    Template.experienceInput.helpers ({
+        companyOptions : function()
+        {
+          return Companies.find();
+        },
+
+        company: function(companyId)
+        {
+          return Companies.find({_id:companyId});
+        }
+
+        
+    });
+
+
   Template.experienceInput.selectedExperience = function(){
     return Session.get('selectedExperience');
   }
@@ -291,7 +343,7 @@ if (Meteor.isServer) {
                       facebook_url:fbLink,
                       tag_ids:[],
                       portafolio_urls:[],
-                      experience:{}, //current and past jobs with title, started, endend and id of the company
+                      experience:[], //current and past jobs with title, started, endend and id of the company
                       //github_url:
                       //twitter_url:
                       //linkedin_url:
@@ -309,11 +361,6 @@ if (Meteor.isServer) {
   });
 
   Meteor.methods({
-      updateRoles: function(userId, rolesDoc) {
-          console.log('Updating roles of user ' + userId);
-          Meteor.users.update({_id: userId},
-          {$set: {'profile.roles':rolesDoc}});
-      },
 
       updateTextField: function(userId, field, value){
           console.log('Updating field '+ field +' of user '+userId);
@@ -347,6 +394,23 @@ if (Meteor.isServer) {
           {$pull:{'profile.portafolio_urls': link}});
       },
 
+      addExperience: function(userId, typeOfExperience, companyDoc){
+        console.log("Creating a new company")
+        //Validar nombre no repetido?
+        var companyId = Companies.insert(companyDoc);
+        console.log('Adding experience to '+ userId);
+        var experience = {
+                    type:typeOfExperience,
+                    title:null,
+                    startedAt:null,
+                    endedAt:null,
+                    confirmed:false,
+                    company_id: companyId
+                  }
+        Meteor.users.update({_id: userId},
+          {$push:{'profile.experience': experience}});
+
+      },
 
       pushTag: function(userId, tagId){
           console.log('Pushing tag with id '+ tagId +' to user ' + userId);
