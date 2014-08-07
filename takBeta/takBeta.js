@@ -27,14 +27,6 @@ Router.map(function() {
 if (Meteor.isClient) {
 
   Meteor.startup(function () {
-    //store roles in new user form
-    Session.set("management", false);
-    Session.set("development", true);
-    Session.set("design", false);
-    Session.set("investment", false);
-    Session.set("marketing", false);
-    Session.set("mentor", false);
-    Session.set("sales", false);
     Session.set("selectedExperience", []); //[{title: "Fundador"}]
     //Session.set('cityOptions', ['Monterrey', 'Guadalajara'])
   });
@@ -61,14 +53,6 @@ if (Meteor.isClient) {
 
   Template.newUserForm.events({
     'click .tryFacebookLogin': function(evt, tmpl){
-      if(!(Session.get('management')|| Session.get('development') || Session.get('design')|| Session.get('marketing')
-        || Session.get('mentor') || Session.get('investment') || Session.get('sales')))
-      {
-        alert("Selecciona un rol");
-        return false;
-      }
-      else
-      {
         if(Accounts.loginServicesConfigured()){
         Meteor.loginWithFacebook({
         requestPermissions: ['public_profile', 'user_friends', 'email']
@@ -77,17 +61,6 @@ if (Meteor.isClient) {
             Session.set('errorMessage', err.reason || 'Unknown error');
           else
           {
-            //Success
-            var roles={//roles to show in profile
-                management: Session.get('management'),
-                development: Session.get('development'), 
-                design : Session.get('design'),
-                marketing: Session.get('marketing'),
-                mentor: Session.get('mentor'),
-                investment: Session.get('investment'),
-                sales: Session.get('sales')
-            }
-            Meteor.call('updateRoles', Meteor.userId(), roles);
             Router.go('editProfile');
           }
         }); 
@@ -95,17 +68,8 @@ if (Meteor.isClient) {
         else{
           alert("Error en inicio de sesión");
       }
-      }
       
     }
-  });
-  Template.rolesImages.events({
-  'click a' : function (evt, tmpl){
-      var sourceName = evt.target.src;
-      var variable = sourceName.slice(sourceName.lastIndexOf("/")+1, sourceName.lastIndexOf("."));
-      //alert(variable);
-       Session.set(variable, !Session.get(variable));
-    },     
   });
 
   Template.editProfile.events({
@@ -154,7 +118,7 @@ if (Meteor.isClient) {
       }
     },
 
-'keyup #City,#Skill,#College' : function(evt, tmpl){
+'keyup #City,#Skill,#College,#Role' : function(evt, tmpl){
       //busca todo el string y no palabra por palabra
       var targetId = evt.target.id;
       //alert(targetId)
@@ -187,7 +151,7 @@ if (Meteor.isClient) {
       }
     },
 
-    'click .City,.Skill,.College' : function (evt, tmpl){
+    'click .City,.Skill,.College,.Role' : function (evt, tmpl){
       //alert(this._id);
       var targetClass = evt.target.getAttribute('class');
       //alert (targetClass);
@@ -271,35 +235,20 @@ if (Meteor.isClient) {
         }
     });
 
-  Template.skillsInput.selectedLinks = function(){
-    return Session.get('selectedLinks');
-  }
+    Template.rolesInput.helpers({
+       roleOptions : function()
+        {
+          return Tags.find({type:'Role'});
+        },
+
+      role: function(tagId)
+        {
+          return Tags.find({_id:tagId, type:'Role'});
+        }
+    });
 
   Template.experienceInput.selectedExperience = function(){
     return Session.get('selectedExperience');
-  }
-
-  Template.rolesImages.management = function(){
-    return Session.get("management");
-  }
-
-  Template.rolesImages.development= function(){
-    return Session.get("development");
-  }
-  Template.rolesImages.design = function(){
-    return Session.get("design");
-  }
-  Template.rolesImages.investment = function(){
-    return Session.get("investment");
-  }
-  Template.rolesImages.marketing = function(){
-    return Session.get("marketing");
-  }
-  Template.rolesImages.mentor = function(){
-    return Session.get("mentor");
-  }
-  Template.rolesImages.sales = function(){
-    return Session.get("sales");
   }
 
   Template.navigation.events({
@@ -340,16 +289,13 @@ if (Meteor.isServer) {
                       email:email,
                       picture:fbPicture, //url of picture
                       facebook_url:fbLink,
-                      location_ids:[], // ids of location, show just the last one
-                      roles:{}, //roles to show in profile 
-                      skill_ids:[],
+                      tag_ids:[],
                       portafolio_urls:[],
                       experience:{}, //current and past jobs with title, started, endend and id of the company
                       //github_url:
                       //twitter_url:
                       //linkedin_url:
                       //behance_url
-                      college_ids:[],
                       followers:{count:0, user_ids:[]},
                       following:{count: 0, user_ids:[], company_ids:[]}
                     }

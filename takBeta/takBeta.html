@@ -27,6 +27,49 @@
 	<h1>PROYECTOS</h1>
 </template>
 
+
+<template name="navigation">
+<!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="row">
+  <div class=" col-md-10 col-md-offset-1">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+        {{#if currentUser}}
+        <a href="{{pathFor 'news'}}"><img class="btn img-responsive" width="100" src="takLogo.png"></a>
+        {{else}}
+      <a href="{{pathFor 'welcome'}}"><img class="btn img-responsive" width="100" src="takLogo.png"></a>
+      {{/if}}
+    </div>
+    <div class="navbar-collapse h navbar-right">
+      <ul class="nav navbar-nav">
+        {{#if currentUser}}
+        <li><a href="{{pathFor 'projects'}}">PROYECTOS</a></li>
+         <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="btn img-responsive" width="60" src="{{currentUser.profile.picture}}"><b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <li><a href="#profile">{{currentUser.profile.firstName}}  {{currentUser.profile.lastName}} </a></li>
+        <li><a href="#logout" class="tryLogout">SALIR</a></li>
+      </ul>
+    </li>
+        {{else}}
+        <li><a href="{{pathFor 'welcome'}}">INICIO</a></li>
+        <li><a href="#">ACERCA DE</a></li>
+        <li><a href="{{pathFor 'newUserForm'}}">UNIRME</a></li>
+        <li><a href="{{pathFor 'loginForm'}}">INGRESAR</a></li>
+        {{/if}}
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+</div>
+</template>
+
 <template name="editProfile">
   <div class="wrap">
     <div class="panel panel-primary col-md-8 col-xs-12 col-md-offset-2">
@@ -63,13 +106,16 @@
             </div>
             <div class="row">
               <div class="col-md-6 col-xs-6" >
-                <h4>Roles</h4>
+                <h4>Roles que busco dentro de un equipo</h4>
               </div>
             </div>
             <div class="row">
-              <form name="roles" role="form" class="form-inline col-md-10 col-xs-12">
-              {{>rolesCheckbox}}
-              </form>
+              <div class="col-md-4 col-xs-6">
+              {{>rolesInput}}
+              </div>
+              <div class="col-md-4 hidden-xs" >
+                  Más comunes: <br/> Administración, Desarrollo, Diseño, Inversión, Mentoría, Mercadotecnia, Ventas
+                </div>
             </div>
             <div class="row">
               <div class="col-md-6 col-xs-6" >
@@ -217,6 +263,30 @@
               {{/each}}
 </template>
 
+<template name="rolesInput">
+     <div class="input-group">
+              <input type="text" class="form-control dropdown-toggle" id="Role" placeholder="Nuevo Rol" data-toggle="dropdown">
+              <span class="input-group-btn">
+                <button name="Role" class="btn btn-info saveTag" type="button">+</button>
+              </span>
+              <ul class="dropdown-menu" style="display: none;" id="RoleOptions">
+              {{#each roleOptions}}
+                <a href="#"><li style="color: white; display: none;" class="Role" id="{{name}}">{{name}}</li></a>
+              {{/each}}
+              </ul>
+              </div>
+      {{#each currentUser.profile.tag_ids}}
+                {{#each role this}}
+                  <div class="input-group">
+                  <input type="text" class="form-control " id="role" value="{{name}}" disabled>
+                  <span class="input-group-btn">
+                    <button name="Role" class="btn btn-danger pullTag" type="button">x</button>
+                  </span>
+                  </div>
+                {{/each}}
+              {{/each}}
+</template>
+
 <template name="experienceInput">
     {{#each selectedExperience}}
      <div class="col-md-3 col-xs-6">
@@ -228,10 +298,10 @@
     </div>
     {{/each}}
       <div class="row">
-       <div class="col-md-3 col-xs-6">
+       <div class="col-md-4 col-xs-6">
       <input type="text" class="form-control " id="title" placeholder="Puesto">
     </div>
-     <div class="col-md-3 col-xs-6">
+     <div class="col-md-4 col-xs-6">
       <div class="input-group">
               <input type="text" class="form-control " id="company" placeholder="Compañía">
               <span class="input-group-btn">
@@ -239,6 +309,8 @@
               </span>
       </div>
     </div>
+    </div>
+    <div class="row">
      <div class="col-md-3 col-xs-6" >
         <div class="input-group date">
           <input type="text" class="form-control" placeholder="Inicio"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
@@ -249,51 +321,10 @@
           <input type="text" class="form-control" placeholder="Fin"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
         </div>
     </div>
-    </div>
-
-</template>
-
-<template name="navigation">
-<!-- Fixed navbar -->
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="row">
-  <div class=" col-md-10 col-md-offset-1">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      	{{#if currentUser}}
-      	<a href="{{pathFor 'news'}}"><img class="btn img-responsive" width="100" src="takLogo.png"></a>
-      	{{else}}
-     	<a href="{{pathFor 'welcome'}}"><img class="btn img-responsive" width="100" src="takLogo.png"></a>
-     	{{/if}}
-    </div>
-    <div class="navbar-collapse h navbar-right">
-      <ul class="nav navbar-nav">
-        {{#if currentUser}}
-        <li><a href="{{pathFor 'projects'}}">PROYECTOS</a></li>
-         <li class="dropdown">
-			<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="btn img-responsive" width="60" src="{{currentUser.profile.picture}}"><b class="caret"></b></a>
-			<ul class="dropdown-menu">
-				<li><a href="#profile">{{currentUser.profile.firstName}}  {{currentUser.profile.lastName}} </a></li>
-				<li><a href="#logout" class="tryLogout">SALIR</a></li>
-			</ul>
-		</li>
-        {{else}}
-        <li><a href="{{pathFor 'welcome'}}">INICIO</a></li>
-        <li><a href="#">ACERCA DE</a></li>
-        <li><a href="{{pathFor 'newUserForm'}}">UNIRME</a></li>
-        <li><a href="{{pathFor 'loginForm'}}">INGRESAR</a></li>
-        {{/if}}
-      </ul>
-    </div><!--/.nav-collapse -->
   </div>
-</div>
-</div>
+
 </template>
+
 <template name="headerwrap">
 <div id="headerwrap">
 	<div class="container">
@@ -318,9 +349,7 @@
               <h3 class="panel-title text-center">Nuevo Usuario</h3>
           </div>
       	<div class="panel-body">
-          <h2>Selecciona los roles que te gusta tener</h2>
           <form class="form col-md-10 col-md-offset-1" name="newUserForm">
-            {{>rolesImages}}
             <div class="col-lg-6 col-lg-offset-3 centered">
               <img class="btn tryFacebookLogin img-responsive"  src="facebookButton.png">
             </div>
@@ -337,142 +366,16 @@
               <h3 class="panel-title text-center">Ingresar</h3>
           </div>
       	<div class="panel-body">
+          <form class="form col-md-10 col-md-offset-1" name="newUserForm">
             <div class="col-lg-6 col-lg-offset-3 centered">
               <img class="btn tryFacebookLogin img-responsive"  src="facebookButton.png">
             </div>
-
-      </div>
+          </form>
+        </div>
   </div>
 </div>
 </template>
-<template name="rolesCheckbox">
-  
-              <div class="form-group">
-              <label>
-              Administración
-              {{#if currentUser.profile.roles.management}}
-              <input class="form-control" type="checkbox" checked="true" name="roles" id="roles" value="management">
-              {{else}}
-              <input id="roles" class="form-control" type="checkbox" name="roles" value="management">
-              {{/if}}
-              </label>
-              <label>
-              Desarrollo
-              {{#if currentUser.profile.roles.development}}
-              <input  id="roles" class="form-control" type="checkbox" checked="true" name="roles" value="development">
-              {{else}}
-              <input id="roles" class="form-control" type="checkbox" name="roles" value="development">
-              {{/if}}
-              </label>
-              <label>
-                Diseño
-                {{#if currentUser.profile.roles.design}}
-              <input id="roles" class="form-control" type="checkbox" checked="true" name="roles" value="design">
-              {{else}}
-              <input  id="roles" class="form-control" type="checkbox" name="roles" value="design">
-              {{/if}}
-              </label>
-              <label>
-              Inversión
-              {{#if currentUser.profile.roles.investment}}
-              <input id="roles" class="form-control" type="checkbox" checked="true" name="roles" value="investment">
-              {{else}}
-              <input id="roles" class="form-control" type="checkbox" name="roles" value="investment">
-              {{/if}}
-              </label>
-              <label>
-                Marketing
-              {{#if currentUser.profile.roles.marketing}}
-              <input id="roles" class="form-control" type="checkbox" checked="true" name="roles" value="marketing">
-              {{else}}
-              <input id="roles" class="form-control" type="checkbox" name="roles" value="marketing">
-              {{/if}}
-              </label>
-              <label>
-                Mentoría
-              {{#if currentUser.profile.roles.mentor}}
-              <input id="roles" class="form-control" type="checkbox" checked="true" name="roles" value="mentor">
-              {{else}}
-              <input id="roles" class="form-control" type="checkbox" name="roles" value="mentor">
-              {{/if}}
-              </label>
-              <label>
-                Ventas
-              {{#if currentUser.profile.roles.sales}}
-              <input id="roles" class="form-control" type="checkbox" checked="true" name="roles" value="sales">
-              {{else}}
-              <input id="roles" class="form-control" type="checkbox" name="roles" value="sales">
-              {{/if}}
-              </label>
-            </div>
-</template>
-<template name="rolesImages">
-<div class="row">
-      <div class="col-lg-3 col-sm-4 col-xs-10">
-      	<h4>Administración</h4>
-      	Poner orden al trabajo 
-        {{#if management}}
-      	<a href="#"><img class="img-responsive"  style="background-color:#384452;" src="/roles/management.png"></a>
-        {{else}}
-        <a href="#"><img class="thumbnail img-responsive" src="/roles/management.png"></a>
-        {{/if}}
-      </div>
-      <div class="col-lg-3 col-sm-4 col-xs-10">
-      	<h4>Desarrollo</h4>
-      	Saber a detalle cómo funciona la solución
-        {{#if development}}
-      	<a  href="#"><img class="thumbnail img-responsive" style="background-color:#384452;" src="/roles/development.png"></a>
-        {{else}}
-        <a  href="#"><img class="thumbnail img-responsive" src="/roles/development.png"></a>
-        {{/if}}
-      </div>
-      <div class="col-lg-3 col-sm-4 col-xs-10">
-      	<h4>Diseño</h4>
-      	Dar la mejor experiencia
-      	{{#if design}}
-      	<a href="#"><img class="thumbnail img-responsive"  style="background-color:#384452;" src="/roles/design.png"></a>
-      	{{else}}
-		    <a href="#"><img class="thumbnail img-responsive" src="/roles/design.png"></a>
-      	{{/if}}
-      </div>
-      <div class="col-lg-3 col-sm-4 col-xs-10">
-      	<h4>Inversión</h4>
-      	Permitir crecimiento a través de tu dinero
-        {{#if investment}}
-      	<a  href="#"><img class="thumbnail img-responsive" style="background-color:#384452;" src="/roles/investment.png"></a>
-        {{else}}
-        <a  href="#"><img class="thumbnail img-responsive" src="/roles/investment.png"></a>
-        {{/if}}
-      </div>
-      <div class="col-lg-3 col-sm-4 col-xs-10">
-      	<h4>Marketing</h4>
-      	Difundir el producto o servicio
-        {{#if marketing}}
-      	<a href="#"><img class="thumbnail img-responsive" style="background-color:#384452;" src="/roles/marketing.png"></a>
-        {{else}}
-        <a href="#"><img class="thumbnail img-responsive" src="/roles/marketing.png"></a>
-        {{/if}}
-      </div>
-      <div class="col-lg-3 col-sm-4 col-xs-10">
-      	<h4>Mentoría</h4>
-      	Transmitir tus experiencias
-        {{#if mentor}}
-      	<a href="#"><img class="thumbnail img-responsive" style="background-color:#384452;" src="/roles/mentor.png"></a>
-        {{else}}
-        <a href="#"><img class="thumbnail img-responsive" src="/roles/mentor.png"></a>
-        {{/if}}
-      </div>
-      <div class="col-lg-3 col-sm-4 col-xs-10">
-      	<h4>Ventas</h4>
-      	Cerrar los tratos <br/><br/>
-        {{#if sales}}
-      	<a href="#"><img class="thumbnail img-responsive"  style="background-color:#384452;" src="/roles/sales.png"></a>
-        {{else}}
-        <a href="#"><img class="thumbnail img-responsive" src="/roles/sales.png"></a>
-        {{/if}}
-      </div>
-    </div>
-</template>
+
 
 
 
