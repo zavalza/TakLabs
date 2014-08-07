@@ -5,6 +5,8 @@ Cities = new Meteor.Collection("cities");
 Colleges = new Meteor.Collection("colleges");
 Jobs = new Meteor.Collection("jobs");
 
+Tags = new Meteor.Collection("tags");
+
 //File Storage
 var imageStore = new FS.Store.GridFS("images");
 Images = new FS.Collection("images", {
@@ -37,7 +39,6 @@ if (Meteor.isClient) {
     Session.set("marketing", false);
     Session.set("mentor", false);
     Session.set("sales", false);
-    Session.set("selectedLinks", ['https://github.com/zavalza']);
     Session.set("selectedExperience", []); //[{title: "Fundador"}]
     //Session.set('cityOptions', ['Monterrey', 'Guadalajara'])
   });
@@ -123,7 +124,7 @@ if (Meteor.isClient) {
       //alert (targetName)
       if(Meteor.userId())
       {
-        var sucess = Meteor.call('pull'+targetName, Meteor.userId(), this._id);
+        var sucess = Meteor.call('pullTag', Meteor.userId(), this._id);
       }
       else
       {
@@ -139,11 +140,12 @@ if (Meteor.isClient) {
       if(Meteor.userId() && value.match(re))
       {
         var doc={
+                  type: targetName,
                   name:value,
                   referrer: document.referrer, 
                   timestamp: new Date(),
                 }
-        var tagId = Meteor.call('save'+targetName, doc);
+        var tagId = Meteor.call('saveTag', doc);
         tmpl.find('#'+targetName).value = "";
         tmpl.find('#'+targetName).blur();
         document.getElementById(targetName+'options').style.display='none';
@@ -152,15 +154,15 @@ if (Meteor.isClient) {
       {
         alert("Error al guardar etiqueta");
       }
-    }
-  })
+    },
 
-  Template.locationInput.events({
-'keyup #City' : function(evt, tmpl){
+'keyup #City,#Skill,#College' : function(evt, tmpl){
       //busca todo el string y no palabra por palabra
-      filter = tmpl.find('#City').value.trim().toUpperCase();
+      var targetId = evt.target.id;
+      //alert(targetId)
+      filter = tmpl.find('#'+targetId).value.trim().toUpperCase();
       var re = /([a-zA-Z]+)/g;
-      var options = document.getElementsByClassName('city');
+      var options = document.getElementsByClassName(targetId);
       for (var i = 0; i < options.length; i++) {
 
         if (filter.match(re)){
@@ -168,7 +170,7 @@ if (Meteor.isClient) {
           //alert(name);
           if (name.toUpperCase().indexOf(filter) == 0)
               {
-                document.getElementById('CityOptions').style.display='inline';
+                document.getElementById(targetId+'Options').style.display='inline';
                 options[i].style.display = 'list-item';
               }
               
@@ -180,106 +182,25 @@ if (Meteor.isClient) {
         }
         else
         {
-          document.getElementById('CityOptions').style.display='none';
+          document.getElementById(targetId+'Options').style.display='none';
           options[i].style.display = 'none';
         }
           
       }
     },
 
-    'click .city' : function (evt, tmpl){
+    'click .City,.Skill,.College' : function (evt, tmpl){
       //alert(this._id);
-      Meteor.call('pushCity', Meteor.userId(), this._id);
-      tmpl.find('#City').value = "";
-      tmpl.find('#City').blur();
-      document.getElementById('CityOptions').style.display='none';
+      var targetClass = evt.target.getAttribute('class');
+      //alert (targetClass);
+      Meteor.call('pushTag', Meteor.userId(), this._id);
+      tmpl.find('#'+targetClass).value = "";
+      tmpl.find('#'+targetClass).blur();
+      document.getElementById(targetClass+'Options').style.display='none';
       return true;
     }
   });
 
-  Template.skillsInput.events({
-    'keyup #Skill' : function(evt, tmpl){
-      filter = tmpl.find('#Skill').value.trim().toUpperCase();
-      var re = /([a-zA-Z]+)/g;
-      var options = document.getElementsByClassName('skill');
-      for (var i = 0; i < options.length; i++) {
-
-        if (filter.match(re)){
-          var name = options[i].innerHTML;
-          //alert(name);
-          if (name.toUpperCase().indexOf(filter) == 0)
-              {
-                document.getElementById('SkillOptions').style.display='inline';
-                options[i].style.display = 'list-item';
-              }
-              
-          else
-              {
-                options[i].style.display = 'none';
-              }
-              
-        }
-        else
-        {
-          document.getElementById('SkillOptions').style.display='none';
-          options[i].style.display = 'none';
-        }
-          
-      }
-    },
-
-    'click .skill' : function (evt, tmpl){
-      //alert(this._id);
-      Meteor.call('pushSkill', Meteor.userId(), this._id);
-      tmpl.find('#Skill').value = "";
-      tmpl.find('#Skill').blur();
-      document.getElementById('SkillOptions').style.display='none';
-      return true;
-    }
-
-  });
-
-Template.collegesInput.events({
-    'keyup #College' : function(evt, tmpl){
-      filter = tmpl.find('#College').value.trim().toUpperCase();
-      var re = /([a-zA-Z]+)/g;
-      var options = document.getElementsByClassName('college');
-      for (var i = 0; i < options.length; i++) {
-
-        if (filter.match(re)){
-          var name = options[i].innerHTML;
-          //alert(name);
-          if (name.toUpperCase().indexOf(filter) == 0)
-              {
-                document.getElementById('CollegeOptions').style.display='inline';
-                options[i].style.display = 'list-item';
-              }
-              
-          else
-              {
-                options[i].style.display = 'none';
-              }
-              
-        }
-        else
-        {
-          document.getElementById('CollegeOptions').style.display='none';
-          options[i].style.display = 'none';
-        }
-          
-      }
-    },
-
-    'click .college' : function (evt, tmpl){
-      //alert(this._id);
-      Meteor.call('pushCollege', Meteor.userId(), this._id);
-      tmpl.find('#College').value = "";
-      tmpl.find('#College').blur();
-      document.getElementById('CollegeOptions').style.display='none';
-      return true;
-    }
-
-  });
 
   Template.portafolioInput.events({
     'click .addLink' : function (evt, tmpl){
@@ -317,12 +238,12 @@ Template.collegesInput.events({
     Template.locationInput.helpers ({
         cityOptions : function()
         {
-          return Cities.find();
+          return Tags.find({type:'City'});
         },
 
-        location: function(locationId)
+        location: function(tagId)
         {
-          return Cities.find({_id:locationId});
+          return Tags.find({_id:tagId, type:'City'});
         }
 
         
@@ -331,24 +252,24 @@ Template.collegesInput.events({
     Template.skillsInput.helpers({
        skillOptions : function()
         {
-          return Skills.find();
+          return Tags.find({type:'Skill'});
         },
 
-      skill: function(skillId)
+      skill: function(tagId)
         {
-          return Skills.find({_id:skillId});
+          return Tags.find({_id:tagId, type:'Skill'});
         }
     });
 
     Template.collegesInput.helpers({
        collegeOptions : function()
         {
-          return Colleges.find();
+          return Tags.find({type:'College'});
         },
 
-      college: function(collegeId)
+      college: function(tagId)
         {
-          return Colleges.find({_id:collegeId});
+          return Tags.find({_id:tagId, type:'College'});
         }
     });
 
@@ -463,71 +384,30 @@ if (Meteor.isServer) {
       },
 
 
-      pushCity: function(userId, cityId){
-          console.log('Pushing city with id '+ cityId +' to user ' + userId);
+      pushTag: function(userId, tagId){
+          console.log('Pushing tag with id '+ tagId +' to user ' + userId);
           Meteor.users.update({_id: userId},
-            {$push: {'profile.location_ids': cityId}});
+            {$push: {'profile.tag_ids': tagId}});
           return true
       },
 
-       pushSkill: function(userId, skillId){
-          console.log('Pushing skill with id '+ skillId +' to user ' + userId);
+    
+      pullTag: function (userId, tagId){
+          console.log('Unlink tag with id '+ tagId +' from user '+ userId);
           Meteor.users.update({_id: userId},
-            {$push: {'profile.skill_ids': skillId}});
+            {$pull: {'profile.tag_ids': tagId}});
           return true
       },
 
-       pushCollege: function(userId, collegeId){
-          console.log('Pushing college with id '+ collegeId +' to user ' + userId);
-          Meteor.users.update({_id: userId},
-            {$push: {'profile.college_ids': collegeId}});
-          return true
-      },
-
-      pullCity: function (userId, cityId){
-          console.log('Unlink city with id '+ cityId +' from user '+ userId);
-          Meteor.users.update({_id: userId},
-            {$pull: {'profile.location_ids': cityId}});
-          return true
-      },
-
-      pullSkill: function (userId, skillId){
-          console.log('Unlink skill with id '+ skillId +' from user '+ userId);
-          Meteor.users.update({_id: userId},
-            {$pull: {'profile.skill_ids': skillId}});
-          return true
-      },
-
-      pullCollege: function (userId, collegeId){
-          console.log('Unlink college with id '+ collegeId +' from user '+ userId);
-          Meteor.users.update({_id: userId},
-            {$pull: {'profile.college_ids': collegeId}});
-          return true
-      },
-
-      saveCity: function(doc){
+    
+      saveTag: function(doc){
         //some protection method against duplication
-        console.log('addingCity');
-        cityId = Cities.insert(doc);
-        console.log('new City has id '+ cityId);
-        Meteor.call('pushCity', Meteor.userId(), cityId);
-        return cityId;
+        console.log('addingTag');
+        tagId = Tags.insert(doc);
+        console.log('new tag has id '+ tagId);
+        Meteor.call('pushTag', Meteor.userId(), tagId);
+        return tagId;
       },
-      saveSkill: function(doc){
-        //some protection method against duplication
-        console.log('addingSkill');
-        skillId = Skills.insert(doc);
-        console.log('new Skill has id '+ skillId);
-        Meteor.call('pushSkill', Meteor.userId(), skillId);
-        return skillId;
-      },
-      saveCollege: function(doc){
-        //some protection method against duplication
-        console.log('addingCollege');
-        collegeId = Colleges.insert(doc);
-        console.log('new College has id '+ collegeId);
-        Meteor.call('pushCollege', Meteor.userId(), collegeId);
-        return collegeId;
-      }
+      
     });
 }

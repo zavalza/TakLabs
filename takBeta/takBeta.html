@@ -135,11 +135,11 @@
     </span>
     <ul class="dropdown-menu" style="display: none;" id="CityOptions">
     {{#each cityOptions}}
-      <a href="#"><li style="color: white; display: none;" class="city" id="{{name}}">{{name}}</li></a>
+      <a href="#"><li style="color: white; display: none;" class="City" id="{{name}}">{{name}}</li></a>
     {{/each}}
     </ul>
   </div>
-  {{#each currentUser.profile.location_ids}}
+  {{#each currentUser.profile.tag_ids}}
     {{#each location this}}
       <div class="input-group">
         <input type="text" class="form-control " id="location" value="{{name}}" disabled>
@@ -177,11 +177,11 @@
               </span>
               <ul class="dropdown-menu" style="display: none;" id="SkillOptions">
               {{#each skillOptions}}
-                <a href="#"><li style="color: white; display: none;" class="skill" id="{{name}}">{{name}}</li></a>
+                <a href="#"><li style="color: white; display: none;" class="Skill" id="{{name}}">{{name}}</li></a>
               {{/each}}
               </ul>
               </div>
-      {{#each currentUser.profile.skill_ids}}
+      {{#each currentUser.profile.tag_ids}}
                 {{#each skill this}}
                   <div class="input-group">
                   <input type="text" class="form-control " id="skill" value="{{name}}" disabled>
@@ -201,11 +201,11 @@
               </span>
               <ul class="dropdown-menu" style="display: none;" id="CollegeOptions">
               {{#each collegeOptions}}
-                <a href="#"><li style="color: white; display: none;" class="college" id="{{name}}">{{name}}</li></a>
+                <a href="#"><li style="color: white; display: none;" class="College" id="{{name}}">{{name}}</li></a>
               {{/each}}
               </ul>
               </div>
-      {{#each currentUser.profile.college_ids}}
+      {{#each currentUser.profile.tag_ids}}
                 {{#each college this}}
                   <div class="input-group">
                   <input type="text" class="form-control " id="college" value="{{name}}" disabled>
