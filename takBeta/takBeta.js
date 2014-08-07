@@ -75,7 +75,7 @@ if (Meteor.isClient) {
   Template.editProfile.events({
     'change #firstName,#lastName,#email' : function(evt, tmpl){
       var targetId = evt.target.id;
-      alert (targetId);
+      //alert (targetId);
       //verificar formato email
       var newValue = tmpl.find('#'+targetId).value.trim();
       Meteor.call('updateTextField', Meteor.userId(), targetId, newValue);
@@ -199,6 +199,14 @@ if (Meteor.isClient) {
   };
 
   Template.experienceInput.events({
+    'change #title,#startDate,#endDate': function(evt, tmpl){
+      alert(this.company_id);
+      var field = evt.target.id;
+      alert(field);
+      var value = evt.target.value.trim();
+      alert(value);
+      Meteor.call('updateExperience', Meteor.userId(),this.company_id, field, value);
+    },
     'click .addExperience' : function(evt, tmpl){
       var typeOfExperience = tmpl.find('#Experience').value.trim();
       var companyName = tmpl.find('#Company').value.trim()
@@ -374,6 +382,28 @@ if (Meteor.isServer) {
             {$set: {'profile.lastName':value}});
             break;
             case('email'):
+            Meteor.users.update({_id: userId},
+            {$set: {'profile.email':value}});
+            break;
+            default: break;
+          }
+          
+      },
+
+      updateExperience: function(userId, companyId, field, value){
+          console.log('Updating field '+ field +' of user '+userId + ' and company '+ companyId);
+          switch(field){
+            case ('title'):
+            Meteor.users.update({_id: userId,'profile.experience':{$elemMatch:{'company_id': companyId}}},
+             {$set: {'profile.experience.$.title':value}});
+            Companies.update({_id: companyId,'team':{$elemMatch:{'user_id': userId}}},
+             {$set: {'team.$.title':value}});
+            break;
+            case ('startedAt'):
+            Meteor.users.update({_id: userId},
+            {$set: {'profile.lastName':value}});
+            break;
+            case('endedAt'):
             Meteor.users.update({_id: userId},
             {$set: {'profile.email':value}});
             break;

@@ -313,37 +313,38 @@
     </div>
     </div>
     <br/>
+    <ul class="list-group">
     {{#each currentUser.profile.experience}}
+     <li class="list-group-item">
     <div class="row">
-      <div class="col-md-10 col-xs-12">
-        {{type}}
-      </div>
-     <div class="col-md-4 col-xs-6">
-      {{#each company company_id}}
-    <div class="input-group">
-                  <input type="text" class="form-control " id="role" value="{{name}}" disabled>
-                  </div>
+      <div class="col-md-3 col-xs-12">
+        {{type}} -
+        {{#each company company_id}}
+          {{name}}
         {{/each}}
-        </div>
-
+      </div>
     </div>
     <div class="row">
     <div class="col-md-4 col-xs-6">
-      <input type="text" class="form-control " id="title" placeholder="Puesto">
+      <input type="text" class="form-control " id="title" placeholder="Nombre del Puesto">
     </div>
      <div class="col-md-3 col-xs-6" >
         <div class="input-group date">
-          <input type="text" class="form-control" placeholder="Inicio"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+          <input type="text" id="startedAt" class="form-control" placeholder="Inicio"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
         </div>
       </div>
       <div class="col-md-3 col-xs-6" >
         <div class="input-group date">
-          <input type="text" class="form-control" placeholder="Fin"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+          <input type="text" id="endedAt" class="form-control" placeholder="Fin"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
         </div>
     </div>
+     <div class="col-md-2 col-xs-6" >
+    <button type="button" class="btn btn-danger">Eliminar</button>
+    </div>
   </div>
+    </li>
     {{/each}}
-    
+    </ul>
 
 </template>
 
