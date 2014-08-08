@@ -199,14 +199,20 @@ if (Meteor.isClient) {
   };
 
   Template.experienceInput.events({
-    'change #title,#startDate,#endDate': function(evt, tmpl){
-      alert(this.company_id);
+    'change #title,#startedAt,#endedAt': function(evt, tmpl){
+      //alert(this.company_id);
       var field = evt.target.id;
-      alert(field);
+      //alert(field);
       var value = evt.target.value.trim();
-      alert(value);
+      //alert(value);
       Meteor.call('updateExperience', Meteor.userId(),this.company_id, field, value);
     },
+
+    'click .deleteExperience': function(evt, tmpl){
+       //alert(this.company_id);
+       Meteor.call('deleteExperience', Meteor.userId(), this.company_id)
+    },
+
     'click .addExperience' : function(evt, tmpl){
       var typeOfExperience = tmpl.find('#Experience').value.trim();
       var companyName = tmpl.find('#Company').value.trim()
@@ -351,7 +357,7 @@ if (Meteor.isServer) {
                       facebook_url:fbLink,
                       tag_ids:[],
                       portafolio_urls:[],
-                      experience:[], //current and past jobs with title, started, endend and id of the company
+                      experience:[], //current and past jobs with title, started, ended and id of the company
                       //github_url:
                       //twitter_url:
                       //linkedin_url:
@@ -400,12 +406,16 @@ if (Meteor.isServer) {
              {$set: {'team.$.title':value}});
             break;
             case ('startedAt'):
-            Meteor.users.update({_id: userId},
-            {$set: {'profile.lastName':value}});
+            Meteor.users.update({_id: userId,'profile.experience':{$elemMatch:{'company_id': companyId}}},
+             {$set: {'profile.experience.$.startedAt':value}});
+            Companies.update({_id: companyId,'team':{$elemMatch:{'user_id': userId}}},
+             {$set: {'team.$.startedAt':value}});
             break;
             case('endedAt'):
-            Meteor.users.update({_id: userId},
-            {$set: {'profile.email':value}});
+            Meteor.users.update({_id: userId,'profile.experience':{$elemMatch:{'company_id': companyId}}},
+             {$set: {'profile.experience.$.endedAt':value}});
+            Companies.update({_id: companyId,'team':{$elemMatch:{'user_id': userId}}},
+             {$set: {'team.$.endedAt':value}});
             break;
             default: break;
           }
@@ -441,6 +451,15 @@ if (Meteor.isServer) {
           {$push:{'profile.experience': experience}});
 
       },
+
+      deleteExperience: function(userId, companyId){
+         Meteor.users.update({_id: userId},
+             {$pull: {'profile.experience':{'company_id':companyId}}});
+         Companies.update({_id: companyId},
+             {$pull: {'team':{'user_id':userId}}});
+      },
+
+
 
       pushTag: function(userId, tagId){
           console.log('Pushing tag with id '+ tagId +' to user ' + userId);
