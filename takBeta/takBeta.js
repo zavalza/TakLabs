@@ -15,11 +15,12 @@ Images = new FS.Collection("images", {
 });
 
 Router.map(function() {
-  this.route('editProfile', {path: '/'});
+  this.route('welcome', {path: '/'});
   this.route('loginForm', {path: '/entrar'});
   this.route('newUserForm', {path: '/registro'});
   this.route('news', {path: '/noticias'});
-  this.route('projects', {path: '/proyectos'});
+  this.route('startups', {path: '/startups'});
+  this.route('people', {path: '/personas'});
   this.route('editProfile', {path: '/editarPerfil'});
 });
 
@@ -345,6 +346,13 @@ if (Meteor.isClient) {
         
     });
 
+  Template.headerwrap.peopleAmount = function(){
+    return 25;
+  }
+
+  Template.headerwrap.startupsAmount = function(){
+    return 10;
+  }
 
   Template.experienceInput.selectedExperience = function(){
     return Session.get('selectedExperience');

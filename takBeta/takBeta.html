@@ -23,8 +23,11 @@
 <template name="news">
 	{{>footer}}
 </template>
-<template name="projects">
-	<h1>PROYECTOS</h1>
+<template name="startups">
+	<h1>Startups</h1>
+</template>
+<template name="people">
+  <h1>Personas</h1>
 </template>
 
 
@@ -53,12 +56,14 @@
       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="btn img-responsive" width="60" src="{{currentUser.profile.picture}}"><b class="caret"></b></a>
       <ul class="dropdown-menu">
         <li><a href="#profile">{{currentUser.profile.firstName}}  {{currentUser.profile.lastName}} </a></li>
+        <li><a href="{{pathFor 'editProfile'}}">EDITAR PERFIL</a></li>
         <li><a href="#logout" class="tryLogout">SALIR</a></li>
       </ul>
     </li>
         {{else}}
         <li><a href="{{pathFor 'welcome'}}">INICIO</a></li>
-        <li><a href="{{pathFor 'projects'}}">STARTUPS</a></li>
+        <li><a href="{{pathFor 'startups'}}">STARTUPS</a></li>
+        <li><a href="{{pathFor 'people'}}">PERSONAS</a></li>
         <li><a href="{{pathFor 'newUserForm'}}">UNIRME</a></li>
         <li><a href="{{pathFor 'loginForm'}}">INGRESAR</a></li>
         {{/if}}
@@ -72,6 +77,7 @@
 <template name="editProfile">
   <div class="wrap">
     <div class="panel panel-primary col-md-8 col-xs-12 col-md-offset-2">
+      <a href="{{pathFor 'news'}}" class="btn btn-success pull-right">Hecho</a>
       <div class="panel-heading">
           <h3 class="panel-title text-center">Editar Perfil</h3>
       </div>
@@ -164,7 +170,11 @@
                   </div>
               </form>
             </div>
-
+            <div class="row">
+              <ul class="pager">
+              <li><a href="{{pathFor 'news'}}">Hecho</a></li>
+              </ul>
+            </div>
           </div>
         </form>
       </div>
@@ -317,7 +327,7 @@
     {{#each currentUser.profile.experience}}
      <li class="list-group-item">
     <div class="row">
-      <div class="col-md-3 col-xs-12">
+      <div class="col-md-6 col-xs-12">
         {{type}} -
         {{#each company company_id}}
           {{name}}
@@ -352,15 +362,23 @@
 <div id="headerwrap">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-10 col-lg-offset-1">
-				<h3>Todo proyecto comienza con una idea</h3>
-				<h1>Colaboración para hacer que las cosas sucedan </h1>
-				<h5>Mantenemos ideas en la realidad </h5>				
+			<div class="col-lg-8 col-lg-offset-2">
+				<h3>Explora el ecosistema emprendedor latino</h3>
+				<h1>Conecta con personas y Startups que hacen que las cosas sucedan</h1>
+				<!--<h5>Crea contactos que te ayuden a cumplir tu sueño</h5>-->			
 			</div>
 		</div>
 		<div class="row">
 		<a class="btn btn-lg btn-default" href="{{pathFor 'newUserForm'}}">Unirme</a>
 		</div>
+    <div class="row">
+      <div class="col-lg-4 col-lg-offset-2">
+        <h1>{{startupsAmount}}</h1><h3>Startups</h3>
+      </div>
+      <div class="col-lg-4">
+        <h1>{{peopleAmount}}</h1><h3>Personas</h3>
+      </div>
+    </div>
 	</div>
 </div><!-- /headerwrap -->
 </template>
