@@ -208,6 +208,39 @@ if (Meteor.isClient) {
       Meteor.call('updateExperience', Meteor.userId(),this.company_id, field, value);
     },
 
+    'click .Company': function(evt, tmpl){
+      var companyName = evt.target.id.trim();
+      //alert (this._id);
+      var typeOfExperience = tmpl.find('#Experience').value.trim();
+      if (typeOfExperience != "")
+      {
+        var personDoc = {
+                    type:typeOfExperience,
+                    title:null,
+                    startedAt:null,
+                    endedAt:null,
+                    confirmed:false,
+                    user_id: Meteor.userId()
+                  };
+        var companyDoc = {
+                    type:typeOfExperience,
+                    title:null,
+                    startedAt:null,
+                    endedAt:null,
+                    confirmed:false,
+                    company_id: this._id
+        };
+      Meteor.call('pushExperience', Meteor.userId(), this._id, companyDoc, personDoc);
+      tmpl.find('#Company').value = "";
+      tmpl.find('#Company').blur();
+      document.getElementById('CompanyOptions').style.display='none';
+      }
+      else
+      {
+        alert ("Selecciona un tipo de experiencia");
+      }
+    },
+
     'click .deleteExperience': function(evt, tmpl){
        //alert(this.company_id);
        Meteor.call('deleteExperience', Meteor.userId(), this.company_id)
@@ -420,6 +453,15 @@ if (Meteor.isServer) {
             default: break;
           }
           
+      },
+
+      pushExperience: function(userId, companyId, companyDoc, personDoc){
+          console.log('Pushing experience to both '+userId+' and '+companyId);
+          Meteor.users.update({_id: userId},
+          {$push:{'profile.experience': companyDoc}});
+
+          Companies.update({_id: companyId},
+          {$push:{'team': personDoc}});
       },
 
       addLink: function(userId, link){
