@@ -30,6 +30,45 @@
   <h1>Personas</h1>
 </template>
 
+<template name="userProfile">
+<div class="wrap">
+  {{#each user}}
+  <div class="row">
+    <div class="col-md-1 col-xs-4 col-md-offset-1">
+      <div class="row">
+      <img class="img-circle" src="{{profile.picture}}">
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-xs-6">
+      <a href="{{profile.facebook_url}}"><img src="fbLogo.png"></a>
+      </div>
+    </div>
+     {{#each profile.tag_ids}}
+       
+       {{#each role this}} 
+       <div class="row"> 
+       <h5 style="color: gray">{{name}}</h5>
+       </div>
+       {{/each}}
+       {{#each city this}}
+       <div class="row">
+        <h5 style="color: gray">{{name}}</h5>
+        </div>
+       {{/each}}
+       
+     {{/each}}
+    </div>
+     <div class="col-md-6 col-xs-6 col-md-offset-1" >
+        <h2>{{profile.firstName}} {{profile.lastName}}</h2>
+      </div>
+      <div class="col-md-1 col-xs-6" >
+        <h1>Otra cosa</h1>
+      </div>
+</div>
+  {{/each}}
+</div>
+</template>
+
 
 <template name="navigation">
 <!-- Fixed navbar -->
@@ -77,7 +116,7 @@
 <template name="editProfile">
   <div class="wrap">
     <div class="panel panel-primary col-md-8 col-xs-12 col-md-offset-2">
-      <a href="{{pathFor 'news'}}" class="btn btn-success pull-right">Hecho</a>
+      <a href="{{pathFor 'userProfile'}}" class="btn btn-success pull-right">Hecho</a>
       <div class="panel-heading">
           <h3 class="panel-title text-center">Editar Perfil</h3>
       </div>
@@ -172,7 +211,7 @@
             </div>
             <div class="row">
               <ul class="pager">
-              <li><a href="{{pathFor 'news'}}">Hecho</a></li>
+              <li><a href="{{pathFor 'userProfile'}}">Hecho</a></li>
               </ul>
             </div>
           </div>

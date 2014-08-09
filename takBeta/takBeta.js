@@ -22,6 +22,7 @@ Router.map(function() {
   this.route('startups', {path: '/startups'});
   this.route('people', {path: '/personas'});
   this.route('editProfile', {path: '/editarPerfil'});
+  this.route('userProfile', {path: '/algo'})
 });
 
 
@@ -346,6 +347,23 @@ if (Meteor.isClient) {
         
     });
 
+    Template.userProfile.helpers({
+       user: function()
+       {
+        return Meteor.users.find({_id: Meteor.userId()})
+       },
+
+       role: function(tagId)
+       {
+          return Tags.find({_id: tagId, type: 'Role'}); 
+       },
+
+      city: function(tagId)
+      {
+        return Tags.find({_id:tagId, type:'City'});
+      }
+    });
+
   Template.headerwrap.peopleAmount = function(){
     return 25;
   }
@@ -353,6 +371,7 @@ if (Meteor.isClient) {
   Template.headerwrap.startupsAmount = function(){
     return 10;
   }
+
 
   Template.experienceInput.selectedExperience = function(){
     return Session.get('selectedExperience');
