@@ -43,26 +43,32 @@
       <a href="{{profile.facebook_url}}"><img src="fbLogo.png"></a>
       </div>
     </div>
-     {{#each profile.tag_ids}}
-       
-       {{#each role this}} 
-       <div class="row"> 
-       <h5 style="color: gray">{{name}}</h5>
-       </div>
-       {{/each}}
-       {{#each city this}}
-       <div class="row">
-        <h5 style="color: gray">{{name}}</h5>
-        </div>
-       {{/each}}
-       
+    <div class="row"> 
+     {{#each role profile.tag_ids}}
+       <div style="color: gray">{{name}}</div>
      {{/each}}
+    </div>
+    <div class="row">
+     {{#each city profile.tag_ids}}
+         <div style="color: blue">{{name}}</div>
+    {{/each}}
+     </div>
+    <div class="row">
+     {{#each college profile.tag_ids}}
+         <div style="color: orange">{{name}}</div>
+    {{/each}}
+     </div>
     </div>
      <div class="col-md-6 col-xs-6 col-md-offset-1" >
         <h2>{{profile.firstName}} {{profile.lastName}}</h2>
       </div>
       <div class="col-md-1 col-xs-6" >
-        <h1>Otra cosa</h1>
+        <h4>Habilidades</h4>
+        <div class="row">
+         {{#each skill profile.tag_ids}}
+             <div style="color: blue">{{name}}</div>
+        {{/each}}
+        </div>
       </div>
 </div>
   {{/each}}

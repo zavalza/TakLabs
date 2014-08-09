@@ -353,14 +353,24 @@ if (Meteor.isClient) {
         return Meteor.users.find({_id: Meteor.userId()})
        },
 
-       role: function(tagId)
+       role: function(tagsArray)
        {
-          return Tags.find({_id: tagId, type: 'Role'}); 
+          return Tags.find({_id:{$in:tagsArray}, type: 'Role'}); 
        },
 
-      city: function(tagId)
+      city: function(tagsArray)
       {
-        return Tags.find({_id:tagId, type:'City'});
+        return Tags.find({_id:{$in:tagsArray}, type:'City'});
+      },
+
+      college: function(tagsArray)
+      {
+        return Tags.find({_id:{$in:tagsArray}, type:'College'});
+      },
+
+      skill: function(tagsArray)
+      {
+        return Tags.find({_id:{$in:tagsArray}, type:'Skill'});
       }
     });
 
