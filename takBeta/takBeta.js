@@ -365,6 +365,11 @@ if (Meteor.isClient) {
         return Meteor.users.find({_id: Meteor.userId()})
        },
 
+       company: function(companyId)
+       {
+        return Companies.find({_id:companyId});
+       },
+
        role: function(tagsArray)
        {
           return Tags.find({_id:{$in:tagsArray}, type: 'Role'}); 

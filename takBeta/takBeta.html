@@ -59,17 +59,30 @@
     {{/each}}
      </div>
     </div>
-     <div class="col-md-6 col-xs-6 col-md-offset-1" >
+     <div class="col-md-6 col-xs-12 col-md-offset-1" >
         <h2>{{profile.firstName}} {{profile.lastName}}</h2>
-      </div>
-      <div class="col-md-1 col-xs-6" >
-        <h4>Habilidades</h4>
+        <h4>Experiencia</h4>
         <div class="row">
-         {{#each skill profile.tag_ids}}
-             <div style="color: blue">{{name}}</div>
-        {{/each}}
+        {{#each profile.experience}}
+         <div class="col-md-3 col-xs-10">
+           <div class="thumbnail">
+          {{#each company company_id}}
+             <a href="#"><img class="img-responsive" src="{{logo_url}}"></a>
+            <h4 class="text-center">{{name}}</h4>
+          {{/each}}
+          <h6>{{type}}</h6>
+          {{title}}
+          </div>
         </div>
+        {{/each}}
       </div>
+      <h4>Habilidades</h4>
+      <div class="row" style="color: blue">
+         {{#each skill profile.tag_ids}}
+            {{name}}
+        {{/each}}
+      </div>
+    </div>
 </div>
   {{/each}}
 </div>
