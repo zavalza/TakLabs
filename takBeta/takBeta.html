@@ -13,7 +13,6 @@
 
 <body>
 {{>navigation}}
-
 </body>
 
 <template name="welcome">
@@ -174,6 +173,7 @@
             <div class="row">
               <div class="col-md-4 col-xs-6">
                 {{>locationInput}}
+                {{>currentUserLocations}}
               </div>
             </div>
             <div class="row">
@@ -261,6 +261,9 @@
     {{/each}}
     </ul>
   </div>
+</template>
+
+<template name="currentUserLocations">
   {{#each currentUser.profile.tag_ids}}
     {{#each location this}}
       <div class="input-group">
@@ -272,7 +275,6 @@
     {{/each}}
   {{/each}}
 </template>
-
 
 <template name="portafolioInput">
   <div class="input-group">
