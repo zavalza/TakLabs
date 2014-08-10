@@ -21,6 +21,7 @@ Router.map(function() {
   this.route('news', {path: '/noticias'});
   this.route('startups', {path: '/startups'});
   this.route('people', {path: '/personas'});
+  this.route('editCompany', {path: '/editarCompania'});
   this.route('editProfile', {path: '/editarPerfil'});
   this.route('userProfile', {path: '/algo'})
 });
@@ -255,13 +256,17 @@ if (Meteor.isClient) {
       if (typeOfExperience != "" && companyName.match(re))
       {
         var newCompany={
-                  type: "", //specify if it is a startup
+                  type: "", //specify if it is a startup or incubator
                   name:companyName,
-                  logoUrl:"", //path to default image
+                  logo_url:"companyLogo.png", //path to default image
                   description:"",
                   highConcept:"",
                   company_url:"",
+                  fb_url:"",
+                  twitter_url:"",
                   tag_ids:[],
+                  video_url:"",
+                  screenshots:[],
                   team:[{
                     type:typeOfExperience,
                     title:null,
@@ -345,6 +350,13 @@ if (Meteor.isClient) {
         }
 
         
+    });
+
+    Template.editCompany.helpers ({
+        company: function()
+        {
+          return Companies.find({_id:"ygfidGRhcEvcSNRWw"});
+        }
     });
 
     Template.userProfile.helpers({
