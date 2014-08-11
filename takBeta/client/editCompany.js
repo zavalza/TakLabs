@@ -7,6 +7,10 @@ Template.editCompany.events({
 
 'change #logo' : function(evt, tmpl) {
     var error = false;
+    if(this.logo){
+      //alert('Ya tenía un logo');
+      Meteor.call('deleteCompanyLogo', Session.get('currentCompanyId'), this.logo)
+    }
     FS.Utility.eachFile(evt, function(file) {
       im = Images.insert(file, function (err, fileObj) {
         //Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
@@ -27,6 +31,7 @@ Template.editCompany.events({
 
 'change #image' : function(evt, tmpl) {
     var error = false;
+    //Esto no debería de ir en el server??
     FS.Utility.eachFile(evt, function(file) {
       im = Images.insert(file, function (err, fileObj) {
         //Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
@@ -73,6 +78,18 @@ else
 'click .pullCompanyType': function(evt, tmpl){
   //alert(this);
   Meteor.call('pullCompanyType', Session.get('currentCompanyId'), this.toString());
+},
+
+'click .deleteScreenshot': function(evt, tmpl){
+  //alert(this._id)
+
+  Meteor.call('deleteScreenshot', Session.get('currentCompanyId'), this._id);
+},
+
+'click .deleteLogo': function(evt, tmpl){
+  //alert(this._id)
+
+  Meteor.call('deleteCompanyLogo', Session.get('currentCompanyId'), this._id);
 },
 
 'keyup #City' : function(evt, tmpl){

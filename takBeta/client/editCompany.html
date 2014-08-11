@@ -16,9 +16,15 @@
             <div class="row">
               <div class="col-md-2 col-xs-4">
                 {{#each image logo}}
+                <a href="#">
+                <span class="badge pull-right deleteLogo">x</span>
                 <img src="{{url}}">
+                 </a>
                 {{else}}
-                <img src="companyLogo.png">
+                <a href="#">
+                <span class="badge pull-right">Default</span>
+               <img src="companyLogo.png">
+                </a>
                 {{/each}}
               </div>
             </div>
@@ -106,8 +112,11 @@
             </div>
           <div class="row">
           {{#each image screenshots}}
-          <div class="col-md-3 col-xs-10">
+          <div class="col-md-4 col-xs-10">
+            <a href="#">
+            <span class="badge pull-right deleteScreenshot">x</span>
             <img src="{{url}}">
+             </a>
              {{name}}
           </div>
           {{/each}}

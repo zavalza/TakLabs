@@ -74,12 +74,28 @@
           {$push:{'screenshots':imageId}});
       },
 
+      deleteScreenshot: function(companyId, imageId)
+      {
+        console.log('Deleting image '+ imageId + ' from '+companyId);
+        Companies.update({_id: companyId},
+          {$pull:{'screenshots':imageId}});
+        Images.remove({_id: imageId});
+      },
+
       updateCompanyLogo: function(companyId, imageId)
       {
         //Borrar el anterior?
         console.log('New logo'+ imageId + ' in '+companyId);
         Companies.update({_id: companyId},
           {$set:{'logo':imageId}});
+      },
+
+       deleteCompanyLogo: function(companyId, imageId)
+      {
+        console.log('Deleting logo '+ imageId + ' from '+companyId);
+        Companies.update({_id: companyId},
+          {$set:{'logo':null}});
+        Images.remove({_id: imageId});
       },
 
       addExperience: function(userId, typeOfExperience, companyDoc){
