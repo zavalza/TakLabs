@@ -67,6 +67,21 @@
           {$pull:{'profile.portafolio_urls': link}});
       },
 
+      addScreenshot: function(companyId, imageId)
+      {
+        console.log('Adding image '+ imageId + ' to '+companyId);
+        Companies.update({_id: companyId},
+          {$push:{'screenshots':imageId}});
+      },
+
+      updateCompanyLogo: function(companyId, imageId)
+      {
+        //Borrar el anterior?
+        console.log('New logo'+ imageId + ' in '+companyId);
+        Companies.update({_id: companyId},
+          {$set:{'logo':imageId}});
+      },
+
       addExperience: function(userId, typeOfExperience, companyDoc){
         console.log("Creating a new company")
         //Validar nombre no repetido?

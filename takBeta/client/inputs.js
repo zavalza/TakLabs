@@ -91,7 +91,7 @@
         var newCompany={
                   types: [], //startup, incubator, accelerator, cowork etc.
                   name:companyName,
-                  logo_url:"companyLogo.png", //path to default image
+                  logo:"", //id of logo image
                   description:"",
                   highConcept:"",
                   company_url:"",

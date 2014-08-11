@@ -15,12 +15,16 @@
             </div>
             <div class="row">
               <div class="col-md-2 col-xs-4">
-                <img src="{{logo_url}}">
+                {{#each image logo}}
+                <img src="{{url}}">
+                {{else}}
+                <img src="companyLogo.png">
+                {{/each}}
               </div>
             </div>
             <div class="row">
               <div class="col-md-8 col-xs-4">
-                 <input type="file" id="image" name="image" class="image"><br>
+                 <input type="file" id="logo"><br>
               </div>
             </div>
             <div class="row">
@@ -33,7 +37,7 @@
             </div>
             <div class="row">
               <div class="col-md-8 col-xs-12">
-                <input type="text" class="form-control col-md-5 " id="highConcept" placeholder="Describe tu compañía en máximo 6 palabras" value="{{highConcept}}">
+                <input type="text" class="form-control col-md-5 " id="highConcept" placeholder="Describe tu compañía en menos de 10 palabras" value="{{highConcept}}">
               </div>
               <div class="col-md-8 col-xs-6">
                   <input type="text" class="form-control dropdown-toggle" id="City" placeholder="Ciudad" value="{{city}}" data-toggle="dropdown">
@@ -89,7 +93,7 @@
               </div>
             </div>
             <div class="row">
-              <h4>Descripción</h4>
+              <h4>Video</h4>
             </div>
             <div class="row">
             <div class="col-md-8 col-xs-6">
@@ -98,8 +102,22 @@
               </div>
             </div>
             <div class="row">
-            <label for="image"> <input type="file" id="image" name="image" class="image"> </label><br>
+              <h4>Imágenes / Screenshots</h4>
             </div>
+          <div class="row">
+          {{#each image screenshots}}
+          <div class="col-md-3 col-xs-10">
+            <img src="{{url}}">
+             {{name}}
+          </div>
+          {{/each}}
+          </div>
+            <div class="row">
+              <input type="file" id="image" name="image">
+          </div>
+          <div class="row">
+              <h4>Descripción</h4>
+          </div>
             <div class="row">
              <textarea class="form-control" id="description" placeholder="Tu pitch: ¿Qué es lo que haces? ¿Qué problema resuelves?" value="{{description}}"></textarea>
             </div>

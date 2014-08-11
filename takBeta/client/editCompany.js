@@ -5,6 +5,44 @@ Template.editCompany.events({
   Meteor.call('pushCompanyType', this._id, value);
 },
 
+'change #logo' : function(evt, tmpl) {
+    var error = false;
+    FS.Utility.eachFile(evt, function(file) {
+      im = Images.insert(file, function (err, fileObj) {
+        //Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
+        if(err){
+          error = true;
+        }
+      });
+      if(!error)
+      {
+
+        //alert(EJSON.stringify(im));
+        Meteor.call("updateCompanyLogo", Session.get('currentCompanyId'), im._id);
+        //var encontrada = Images.findOne({_id : im._id});
+        //alert(encontrada._id)
+      }   
+    });
+  },
+
+'change #image' : function(evt, tmpl) {
+    var error = false;
+    FS.Utility.eachFile(evt, function(file) {
+      im = Images.insert(file, function (err, fileObj) {
+        //Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
+        if(err){
+          error = true;
+        }
+      });
+      if(!error)
+      {
+        Meteor.call("addScreenshot", Session.get('currentCompanyId'), im._id);
+        //var encontrada = Images.findOne({_id : im._id});
+        //alert(encontrada._id)
+      }   
+    });
+  },
+
 'change #name,#highConcept,#City,#description' :function (evt, tmpl){
   var targetId = evt.target.id;
   var value= tmpl.find('#'+targetId).value;
@@ -91,6 +129,18 @@ else
         company: function()
         {
           return Companies.find({_id:Session.get('currentCompanyId')});
+        },
+
+        image: function(ids)
+        {
+          if (typeof (ids) == 'object')
+          return Images.find({_id:{$in: ids}});
+          else
+          {
+            //alert(typeof (ids)) string
+            return Images.find({_id:ids})
+          }
+          
         },
 
         founder: function(teamArray)
