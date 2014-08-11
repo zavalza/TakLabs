@@ -92,7 +92,67 @@
              {$pull: {'team':{'user_id':userId}}});
       },
 
+      pushCompanyType: function(companyId, type){
+          console.log('Pushing type '+ type +' to company ' + companyId);
+          Companies.update({_id: companyId},
+            {$push: {'types': type}});
+          return true
+      },
 
+      pullCompanyType: function(companyId, type){
+          console.log('Pulling type '+ type +' to company ' + companyId);
+          Companies.update({_id: companyId},
+            {$pull: {'types': type}});
+          return true
+      },
+
+      updateCompanyLink: function(companyId, field, link){
+        console.log('Updating field '+ field +' of company '+companyId);
+          switch(field){
+            case ('company_url'):
+            Companies.update({_id: companyId},
+            {$set: {'company_url': link}});
+            break;
+            case ('fb_url'):
+            Companies.update({_id: companyId},
+            {$set: {'fb_url': link}});
+            break;
+            case ('twitter_url'):
+             Companies.update({_id: companyId},
+            {$set: {'twitter_url': link}});
+            break;
+            case ('video_url'):
+             Companies.update({_id: companyId},
+            {$set: {'video_url': link}});
+            break;
+            default:
+            break;
+          }
+      },
+
+      updateCompanyText: function(companyId, field, value){
+        console.log('Updating field '+ field +' of company '+companyId);
+          switch(field){
+            case ('name'):
+            Companies.update({_id: companyId},
+            {$set: {'name': value}});
+            break;
+            case ('city'):
+            Companies.update({_id: companyId},
+            {$set: {'city': value}});
+            break;
+            case ('highConcept'):
+             Companies.update({_id: companyId},
+            {$set: {'highConcept': value}});
+            break;
+            case ('description'):
+             Companies.update({_id: companyId},
+            {$set: {'description': value}});
+            break;
+            default:
+            break;
+          }
+      },
 
       pushTag: function(userId, tagId){
           console.log('Pushing tag with id '+ tagId +' to user ' + userId);

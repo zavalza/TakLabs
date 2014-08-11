@@ -1,43 +1,43 @@
 Template.editCompany.events({
+'change #type' : function(evt, tmpl){
+  var value = tmpl.find('#type').value;
+  //alert(this._id);
+  Meteor.call('pushCompanyType', this._id, value);
+},
 
-    'click .pullTag' : function(evt, tmpl){
-      var targetName = evt.target.name;
-      //alert (targetName)
-      if(Meteor.userId())
-      {
-        var sucess = Meteor.call('pullTag', Meteor.userId(), this._id);
-      }
-      else
-      {
-        alert("Error al borrar etiqueta");
-      }
-    },
+'change #name,#highConcept,#City,#description' :function (evt, tmpl){
+  var targetId = evt.target.id;
+  var value= tmpl.find('#'+targetId).value;
+  var re = /([a-zA-Z]+)/g;
 
-    'click .saveTag' : function(evt, tmpl){
-      var targetName = evt.target.name;
-      //alert (targetName)
-      var value = tmpl.find('#'+targetName).value.trim();
-       var re = /([a-zA-Z]+)/g;
-      if(Meteor.userId() && value.match(re))
-      {
-        var doc={
-                  type: targetName,
-                  name:value,
-                  referrer: document.referrer, 
-                  timestamp: new Date(),
-                }
-        var tagId = Meteor.call('saveTag', doc);
-        tmpl.find('#'+targetName).value = "";
-        tmpl.find('#'+targetName).blur();
-        document.getElementById(targetName+'options').style.display='none';
-      }
-      else
-      {
-        alert("Error al guardar etiqueta");
-      }
-    },
+  if(value.match(re))
+  { if (targetId=='City')
+    {
+      targetId = targetId.toLowerCase();
+    }
+    Meteor.call('updateCompanyText', Session.get('currentCompanyId'), targetId, value);
+  }
+},
 
-'keyup #City,#Skill,#College,#Role,#Company' : function(evt, tmpl){
+'change #company_url,#fb_url,#twitter_url,#video_url': function (evt, tmpl){
+var targetId = evt.target.id;
+var link = tmpl.find('#'+targetId).value;
+var re = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+if(!link.match(re))
+{
+  alert("No es una liga válida");
+}
+else
+{
+  Meteor.call('updateCompanyLink', Session.get('currentCompanyId'), targetId, link);
+}
+},
+'click .pullCompanyType': function(evt, tmpl){
+  //alert(this);
+  Meteor.call('pullCompanyType', Session.get('currentCompanyId'), this.toString());
+},
+
+'keyup #City' : function(evt, tmpl){
       //busca todo el string y no palabra por palabra
       var targetId = evt.target.id;
       //alert(targetId)
@@ -70,21 +70,66 @@ Template.editCompany.events({
       }
     },
 
-    'click .City,.Skill,.College,.Role' : function (evt, tmpl){
+    'click .City' : function (evt, tmpl){
       //alert(this._id);
       var targetClass = evt.target.getAttribute('class');
       //alert (targetClass);
-      Meteor.call('pushTag', Meteor.userId(), this._id);
-      tmpl.find('#'+targetClass).value = "";
-      tmpl.find('#'+targetClass).blur();
+      //Meteor.call('pushTag', Meteor.userId(), this._id);
+      tmpl.find('#'+targetClass).value = this.name;
+      Meteor.call('updateCompanyText', Session.get('currentCompanyId'), 'city', this.name);
       document.getElementById(targetClass+'Options').style.display='none';
       return true;
     }
   });
 
     Template.editCompany.helpers ({
+        cityOptions : function()
+        {
+          return Tags.find({type:'City'});
+        },
+
         company: function()
         {
-          return Companies.find({_id:"ygfidGRhcEvcSNRWw"});
+          return Companies.find({_id:Session.get('currentCompanyId')});
+        },
+
+        founder: function(teamArray)
+        {
+          var idsToFind=[];
+          for(var i=0; i < teamArray.length; i++)
+          {
+            if (teamArray[i].type=="Fundador")
+            {
+              idsToFind.push(teamArray[i].user_id);
+            }
+          }
+          return Meteor.users.find({_id:{$in:idsToFind}});
+        },
+
+        teamMember: function(teamArray)
+        {
+          var idsToFind=[];
+          for(var i=0; i < teamArray.length; i++)
+          {
+            //alert(teamArray[i].type)
+            if (teamArray[i].type=="Miembro del equipo")
+            {
+              idsToFind.push(teamArray[i].user_id);
+            }
+          }
+          return Meteor.users.find({_id:{$in:idsToFind}});
+        },
+
+        investor: function(teamArray)
+        {
+          var idsToFind=[];
+          for(var i=0; i < teamArray.length; i++)
+          {
+            if (teamArray[i].type=="Inversionista")
+            {
+              idsToFind.push(teamArray[i].user_id);
+            }
+          }
+          return Meteor.users.find({_id:{$in:idsToFind}});
         }
     });

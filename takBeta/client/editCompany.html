@@ -20,7 +20,7 @@
             </div>
             <div class="row">
               <div class="col-md-8 col-xs-4">
-                 <label for="image"> Seleccionar Imagen <input type="file" id="image" name="image" class="image"> </label><br>
+                 <input type="file" id="image" name="image" class="image"><br>
               </div>
             </div>
             <div class="row">
@@ -35,36 +35,56 @@
               <div class="col-md-8 col-xs-12">
                 <input type="text" class="form-control col-md-5 " id="highConcept" placeholder="Describe tu compañía en máximo 6 palabras" value="{{highConcept}}">
               </div>
-              <br/><br/>
               <div class="col-md-8 col-xs-6">
-                {{>locationInput}}
+                  <input type="text" class="form-control dropdown-toggle" id="City" placeholder="Ciudad" value="{{city}}" data-toggle="dropdown">
+                  <ul class="dropdown-menu" style="display: none;" id="CityOptions">
+                  {{#each cityOptions}}
+                    <a href="#"><li style="color: white; display: none;" class="City" id="{{name}}">{{name}}</li></a>
+                  {{/each}}
+                  </ul>
               </div>
             </div>
             <div class="row">
               <div class="col-md-8 col-xs-6">
+                Tipo de empresa:
                 <select id="type">
-                    <option value="">Tipo de empresa</option>
+                    <option value="">Selecciona</option>
                     <option value="Startup">Startup</option>
                     <option value="Cowork">Cowork</option>
                     <option value="Incubadora">Incubadora</option>
                     <option value="Aceleradora">Aceleradora</option>
                     <option value="Capital de Riesgo">Capital de Riesgo</option>
+                    <option value="Pública">Pública</option>
                 </select>
               </div>
             </div>
             <div class="row">
+              {{#each types}}
+                <div class="col-md-4 col-xs-6">
+                  <div class="input-group">
+                  <input type="text" class="form-control " id="type" value="{{this}}" disabled>
+                  <span class="input-group-btn">
+                    <button name="Type" class="btn btn-danger pullCompanyType" type="button">x</button>
+                  </span>
+                  </div>
+                </div>
+              {{/each}}
+            </div>
+            <div class="row">
                <div class="col-md-8 col-xs-6">
-                <input type="text" class="form-control col-md-5 " id="email" placeholder="Sitio web" value="{{company_url}}">
+                <input type="text" class="form-control col-md-5 " id="company_url" placeholder="Sitio web" value="{{company_url}}">
               </div>
             </div>
             <div class="row">
               <h4>Redes</h4>
             </div>
             <div class="row">
-             <div class="col-md-4 col-xs-6">
+             <div class="col-md-8 col-xs-6">
                 <input type="text" class="form-control col-md-5 " id="fb_url" placeholder="Facebook" value="{{fb_url}}">
               </div>
-            <div class="col-md-4 col-xs-6">
+            </div>
+            <div class="row">
+            <div class="col-md-8 col-xs-6">
                 <input type="text" class="form-control col-md-5 " id="twitter_url" placeholder="Twitter" value="{{twitter_url}}">
               </div>
             </div>
@@ -74,22 +94,32 @@
             <div class="row">
             <div class="col-md-8 col-xs-6">
                 <input type="text" class="form-control col-md-5 " id="video_url" placeholder="Liga a Video" value="{{video_url}}">
+                 De Vimeo o Youtube. En Youtube selecciona compartir y pega la liga aquí, de lo contrario no se aceptará el formato.
               </div>
             </div>
             <div class="row">
             <label for="image"> <input type="file" id="image" name="image" class="image"> </label><br>
             </div>
             <div class="row">
-             <textarea class="form-control" id="pitch" placeholder="Tu pitch: ¿Qué es lo que haces? ¿Qué problema resuelves?"></textarea>
+             <textarea class="form-control" id="description" placeholder="Tu pitch: ¿Qué es lo que haces? ¿Qué problema resuelves?" value="{{description}}"></textarea>
             </div>
              <div class="row">
               <h4>Fundadores</h4>
+                {{#each founder team}}
+                {{profile.firstName}} {{profile.lastName}}
+                {{/each}}
             </div>
              <div class="row">
               <h4>Equipo</h4>
+                {{#each teamMember team}}
+                {{profile.firstName}} {{profile.lastName}}
+                {{/each}}
             </div>
              <div class="row">
               <h4>Inversión</h4>
+               {{#each investor team}}
+              {{profile.firstName}} {{profile.lastName}}
+               {{/each}}
             </div>
             <div class="row">
               <ul class="pager">

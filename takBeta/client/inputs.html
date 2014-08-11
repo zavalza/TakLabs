@@ -12,19 +12,6 @@
   </div>
 </template>
 
-<template name="currentUserLocations">
-  {{#each currentUser.profile.tag_ids}}
-    {{#each location this}}
-      <div class="input-group">
-        <input type="text" class="form-control " id="location" value="{{name}}" disabled>
-        <span class="input-group-btn">
-          <button name="City" class="btn btn-danger pullTag" type="button">x</button>
-        </span>
-      </div>
-    {{/each}}
-  {{/each}}
-</template>
-
 <template name="portafolioInput">
   <div class="input-group">
     <input type="url" class="form-control " id="newLink" placeholder="Nuevo Enlace">

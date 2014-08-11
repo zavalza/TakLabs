@@ -89,7 +89,7 @@
       if (typeOfExperience != "" && companyName.match(re))
       {
         var newCompany={
-                  type: "", //specify if it is a startup or incubator
+                  types: [], //startup, incubator, accelerator, cowork etc.
                   name:companyName,
                   logo_url:"companyLogo.png", //path to default image
                   description:"",
@@ -125,15 +125,9 @@
         cityOptions : function()
         {
           return Tags.find({type:'City'});
-        },
+        }
     });
 
-    Template.currentUserLocations.helpers({
-      location: function(tagId)
-        {
-          return Tags.find({_id:tagId, type:'City'});
-        }
-    })
 
     Template.skillsInput.helpers({
        skillOptions : function()
@@ -184,8 +178,3 @@
 
         
     });
-
-
-  Template.experienceInput.selectedExperience = function(){
-    return Session.get('selectedExperience');
-  }
