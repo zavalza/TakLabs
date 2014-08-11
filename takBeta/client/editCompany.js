@@ -160,6 +160,26 @@ else
           
         },
 
+         videoCode: function(video_url)
+        {
+          var array=[];
+
+          var videoCode = video_url.substr(video_url.lastIndexOf('/')+1);
+          array.push(videoCode);
+          //alert(videoCode)
+          return array;
+        },
+
+        isYoutube: function(video_url)
+        {
+          return (video_url.search('youtu') != -1);
+        },
+
+        isVimeo: function(video_url)
+        {
+          return (video_url.search('vimeo') != -1);
+        },
+
         founder: function(teamArray)
         {
           var idsToFind=[];
