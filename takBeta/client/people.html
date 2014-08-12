@@ -1,0 +1,23 @@
+<template name="people">
+<div class="wrap row">
+	<div class="col-md-3 col-xs-10">
+		<h3>Filtros</h3>
+	</div>
+	<div class="col-md-6 col-xs-10">
+		<h3>Personas</h3>
+		<div class="row">
+		{{#each person}}
+		<div class="col-md-2 col-xs-10">
+		<img class="img-circle" src="{{profile.picture}}">
+		</div>
+		<div class="col-md-3 col-xs-10">
+		<h6>{{profile.firstName}} {{profile.lastName}}</h6>
+			{{#each miniCV profile.experience}}
+		        {{string}} <a href="#">@{{#each company company_id}}{{name}}{{/each}}</a>;
+		    {{/each}}
+		 </div>
+		{{/each}}
+	</div>
+	</div>
+</div>
+</template>

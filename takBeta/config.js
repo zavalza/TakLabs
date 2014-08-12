@@ -19,7 +19,7 @@ Router.map(function() {
   this.route('loginForm', {path: '/entrar'});
   this.route('newUserForm', {path: '/registro'});
   this.route('news', {path: '/noticias'});
-  this.route('startups', {path: '/startups'});
+  this.route('companies', {path: '/startups'});
   this.route('people', {path: '/personas'});
   this.route('editCompany', {path: '/editarCompania'});
   this.route('editProfile', {path: '/editarPerfil'});

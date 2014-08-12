@@ -18,6 +18,13 @@
       <a href="{{twitter_url}}"><img src="twitterLogo.png"></a>
       </div>
     </div>
+    {{#if company_url}}
+    <div class="row">
+      {{#each externalLink company_url}}
+      <a href="{{this}}">{{this}}</a>
+      {{/each}}
+    </div>
+    {{/if}}
     <div class="row"> 
      {{#each types}}
        <div style="color: gray">{{this}}</div>
@@ -76,6 +83,9 @@
               <div class="thumbnail">
                 <img class="img-circle" src="{{profile.picture}}">
                 <h6 class="text-center">{{profile.firstName}} {{profile.lastName}}</h6>
+                {{#each miniCV profile.experience}}
+                    {{string}} <a href="#">@{{#each company company_id}}{{name}}{{/each}}</a>;
+                {{/each}}
               </div>
              </div>
           {{/each}}  
@@ -101,6 +111,9 @@
               <div class="thumbnail">
                 <img class="img-circle" src="{{profile.picture}}">
                 <h6 class="text-center">{{profile.firstName}} {{profile.lastName}}</h6>
+                {{#each miniCV profile.experience}}
+                    {{string}} <a href="#">@{{#each company company_id}}{{name}}{{/each}}</a>;
+                {{/each}}
               </div>
              </div>
           {{/each}}  
