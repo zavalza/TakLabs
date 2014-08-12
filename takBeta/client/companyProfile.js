@@ -1,3 +1,10 @@
+Template.companyProfile.events({
+  'mouseenter .screenshot':function(evt, tmpl){
+    Session.set("screenshotToShow",this._id);
+  }
+});
+
+
  Template.companyProfile.screenshotToShow = function() {
     return Session.get("screenshotToShow");
   };
