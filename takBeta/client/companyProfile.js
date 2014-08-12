@@ -1,3 +1,7 @@
+ Template.companyProfile.screenshotToShow = function() {
+    return Session.get("screenshotToShow");
+  };
+
 Template.companyProfile.helpers ({
 
         company: function(companyId)
