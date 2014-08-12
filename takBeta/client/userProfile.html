@@ -35,7 +35,15 @@
          <div class="col-md-3 col-xs-10">
            <div class="thumbnail">
           {{#each company company_id}}
-             <a href="#"><img class="img-responsive" src="{{logo_url}}"></a>
+                {{#each image logo}}
+                <a href="#">
+                <img src="{{url}}">
+                 </a>
+                {{else}}
+                <a href="#">
+               <img src="companyLogo.png">
+                </a>
+                {{/each}}
             <h4 class="text-center">{{name}}</h4>
           {{/each}}
           <h6>{{type}}</h6>

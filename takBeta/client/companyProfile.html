@@ -1,0 +1,74 @@
+<template name="companyProfile">
+<div class="wrap">
+  {{#each company}}
+  <div class="row">
+    <div class="col-md-1 col-xs-4 col-md-offset-1">
+      <div class="row">
+         {{#each image logo}}
+                 <img  src="{{url}}">
+                {{else}}
+               <img  src="companyLogo.png">
+           {{/each}}
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-xs-6">
+      <a href="{{fb_url}}"><img src="fbLogo.png"></a>
+      </div>
+      <div class="col-md-6 col-xs-6">
+      <a href="{{twitter_url}}"><img src="twitterLogo.png"></a>
+      </div>
+    </div>
+    <div class="row"> 
+     {{#each types}}
+       <div style="color: gray">{{this}}</div>
+     {{/each}}
+    </div>
+    <div class="row">
+         <div style="color: blue">{{city}}</div>
+     </div>
+    </div>
+     <div class="col-md-6 col-xs-12 col-md-offset-1" >
+        <h2>{{name}}</h2>
+        <i><h6>{{highConcept}}</h6></i>
+        <h4>Descripción</h4>
+        <h4>Fundadores</h4>
+        <div class="row">
+          {{#each founder team}}
+            <div class="col-md-3 col-xs-10">
+              <div class="thumbnail">
+                <img class="img-circle" src="{{profile.picture}}">
+                <h6 class="text-center">{{profile.firstName}} {{profile.lastName}}</h6>
+              </div>
+             </div>
+          {{/each}}  
+        </div>
+        <h4>Equipo</h4>
+         <div class="row">
+          {{#each teamMember team}}
+            <div class="col-md-3 col-xs-10">
+              <div class="thumbnail">
+                <img class="img-circle" src="{{profile.picture}}">
+                <h6 class="text-center">{{profile.firstName}} {{profile.lastName}}</h6>
+                {{#each miniCV profile.experience}}
+                    {{string}} <a href="#">@{{#each company company_id}}{{name}}{{/each}}</a>;
+                {{/each}}
+              </div>
+             </div>
+          {{/each}}  
+        </div>
+        <h4>Inversion</h4>
+        <div class="row">
+          {{#each investor team}}
+            <div class="col-md-3 col-xs-10">
+              <div class="thumbnail">
+                <img class="img-circle" src="{{profile.picture}}">
+                <h6 class="text-center">{{profile.firstName}} {{profile.lastName}}</h6>
+              </div>
+             </div>
+          {{/each}}  
+        </div>
+    </div>
+</div>
+  {{/each}}
+</div>
+</template>

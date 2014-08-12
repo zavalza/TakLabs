@@ -4,6 +4,18 @@ Template.userProfile.helpers({
         return Meteor.users.find({_id: Meteor.userId()})
        },
 
+       image: function(ids)
+        {
+          if (typeof (ids) == 'object')
+          return Images.find({_id:{$in: ids}});
+          else
+          {
+            //alert(typeof (ids)) string
+            return Images.find({_id:ids})
+          }
+          
+        },
+
        company: function(companyId)
        {
         return Companies.find({_id:companyId});
