@@ -23,6 +23,6 @@ Router.map(function() {
   this.route('people', {path: '/personas'});
   this.route('editCompany', {path: '/editarCompania'});
   this.route('editProfile', {path: '/editarPerfil'});
-  this.route('userProfile', {path: '/algo'})
+  this.route('userProfile', {path: '/user'});
   this.route('companyProfile', {path: '/algomas'})
 });

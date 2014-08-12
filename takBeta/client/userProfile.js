@@ -1,7 +1,14 @@
 Template.userProfile.helpers({
-       user: function()
+       user: function(userId)
        {
-        return Meteor.users.find({_id: Meteor.userId()})
+        if(userId)
+            return Meteor.users.find({_id:userId});
+          else
+          {
+            alert(Session.get('userToShow'))
+             return Meteor.users.find({_id:Session.get('userToShow')});
+          }
+           
        },
 
        image: function(ids)
