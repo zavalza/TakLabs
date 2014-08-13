@@ -9,6 +9,50 @@ Template.companyProfile.events({
     return Session.get("screenshotToShow");
   };
 
+Template.profileThumbnail.helpers({
+  company: function(companyId)
+        {
+          if(companyId)
+            return Companies.find({_id:companyId});
+          else
+          {
+            alert(Session.get('currentCompanyId'));
+             return Companies.find({_id:Session.get('currentCompanyId')});
+          }
+           
+        },
+    miniCV: function(experience)
+  {
+    var CV = [];
+    for(var i = 0; i < experience.length; i++)
+    { 
+      var text;
+      if(experience[i].title)
+      {
+        text = experience[i].title;
+      }
+      else
+      {
+        text = experience[i].type;
+      }
+      var doc= {string: text,
+                company_id: experience[i].company_id}
+      if(experience[i].company_id == Session.get('currentCompanyId'))
+      {
+        CV.splice(0,0,doc);
+      }
+      else
+      {
+
+        CV.push(doc);
+      }
+        
+    }
+    //alert(EJSON.stringify(CV))
+    return CV;
+  }
+})
+
 Template.companyProfile.helpers ({
 
         company: function(companyId)
@@ -17,7 +61,7 @@ Template.companyProfile.helpers ({
             return Companies.find({_id:companyId});
           else
           {
-            alert(Session.get('currentCompanyId'));
+            //alert(Session.get('currentCompanyId'));
              return Companies.find({_id:Session.get('currentCompanyId')});
           }
            
@@ -112,35 +156,4 @@ Template.companyProfile.helpers ({
           Meteor.subscribe("manyUserProfiles", idsToFind);
           return Meteor.users.find({_id:{$in:idsToFind}});
         },
-
-        miniCV: function(experience)
-        {
-          var CV = [];
-          for(var i = 0; i < experience.length; i++)
-          { 
-            var text;
-            if(experience[i].title)
-            {
-              text = experience[i].title;
-            }
-            else
-            {
-              text = experience[i].type;
-            }
-            var doc= {string: text,
-                      company_id: experience[i].company_id}
-            if(experience[i].company_id == Session.get('currentCompanyId'))
-            {
-              CV.splice(0,0,doc);
-            }
-            else
-            {
-
-              CV.push(doc);
-            }
-              
-          }
-          //alert(EJSON.stringify(CV))
-          return CV;
-        }
     });

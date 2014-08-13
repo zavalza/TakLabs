@@ -36,15 +36,15 @@
           <div class="thumbnail">
             {{#each company company_id}}
             {{#each image logo}}
-            <a href="#">
+            <a href="{{pathFor 'companyProfile'}}">
               <img src="{{url}}">
             </a>
             {{else}}
-            <a href="#">
+            <a href="{{pathFor 'companyProfile'}}">
               <img src="http://localhost:3000/companyLogo.png">
             </a>
             {{/each}}
-            <h4 class="text-center">{{name}}</h4>
+            <a href="{{pathFor 'companyProfile'}}"><h4 class="text-center">{{name}}</h4></a>
             {{/each}}
             <h6>{{type}}</h6>
             {{title}}<br>

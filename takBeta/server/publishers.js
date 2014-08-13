@@ -1,5 +1,5 @@
   Meteor.publish("companyProfile", function (companyId) {
-  console.log("publishing company with id: " +companyId);
+  //console.log("publishing company with id: " +companyId);
     return Companies.find({_id: companyId});
     //limitar campos a los que sean públicos para seguridad
   });
@@ -13,12 +13,12 @@
  })
 
  Meteor.publish('allImages', function(){
-  console.log('Images');
+  //console.log('Images');
  	return Images.find({});
  })
 
   Meteor.publish("userProfile", function (userId) {
-  console.log("publishing user with id: " +userId);
+  //console.log("publishing user with id: " +userId);
     return Meteor.users.find({_id: userId});
     //limitar campos a los que sean públicos para seguridad
   });

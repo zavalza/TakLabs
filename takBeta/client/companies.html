@@ -10,17 +10,17 @@
 				<div class="row">
 					<div class="col-md-2 col-xs-10">
 				 		{{#each image logo}}
-	                		<a href="#">
+	                		<a href="{{pathFor 'companyProfile'}}">
 	                		<img src="{{url}}">
 	                 		</a>
 	                	{{else}}
-	                		<a href="#">
-	               			<img src="companyLogo.png">
+	                		<a href="{{pathFor 'companyProfile'}}">
+	               			<img src="http://localhost:3000/companyLogo.png">
 	                		</a>
 	                	{{/each}}
         			</div>
 					<div class="col-md-6 col-xs-10">
-						<h6>{{name}}</h6>
+						<a href="{{pathFor 'companyProfile'}}"><h6>{{name}}</h6></a>
 						{{highConcept}}
 					</div>
 		 		</div>
