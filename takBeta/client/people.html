@@ -13,7 +13,7 @@
 			<div class="col-md-6 col-xs-10">
 				<a href="{{pathFor 'userProfile'}}"><h6>{{profile.firstName}} {{profile.lastName}}</h6></a>
 				{{#each miniCV profile.experience}}
-				{{string}} <a href="#">@{{#each company company_id}}{{name}}{{/each}}</a>;
+				{{string}} {{#each company company_id}}<a href="{{pathFor 'companyProfile'}}">@{{name}}</a>{{/each}};
 				{{/each}}
 			</div>
 		</div>

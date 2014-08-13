@@ -1,3 +1,9 @@
+  Meteor.publish("companyProfile", function (companyId) {
+  console.log("publishing company with id: " +companyId);
+    return Companies.find({_id: companyId});
+    //limitar campos a los que sean públicos para seguridad
+  });
+
  Meteor.publish('allCompanies', function(){
  	return Companies.find({});
  })

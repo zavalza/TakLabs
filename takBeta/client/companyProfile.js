@@ -16,7 +16,11 @@ Template.companyProfile.helpers ({
           if(companyId)
             return Companies.find({_id:companyId});
           else
-            return Companies.find({_id:Session.get('currentCompanyId')});
+          {
+            alert(Session.get('currentCompanyId'));
+             return Companies.find({_id:Session.get('currentCompanyId')});
+          }
+           
         },
 
           externalLink: function(url)

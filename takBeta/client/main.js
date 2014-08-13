@@ -1,6 +1,6 @@
 Meteor.startup(function () {
 
-Session.set('currentCompanyId',"ygfidGRhcEvcSNRWw");
+Session.set('currentCompanyId',"");
 Session.set('userToShow',"");
 Session.set('screenshotToShow',"eErQMmbEvSQpjCRXs");
 Meteor.subscribe("allCompanies");

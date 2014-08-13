@@ -35,5 +35,11 @@ Router.map(function() {
       return Meteor.subscribe('userProfile', this.params._id);
     }
     });
-  this.route('companyProfile', {path: '/algomas'})
+  this.route('companyProfile', {path: '/company/:_id',
+    waitOn: function()
+    { 
+      Session.set("currentCompanyId", this.params._id);
+      return Meteor.subscribe('companyProfile', this.params._id);
+    }
+    });
 });
