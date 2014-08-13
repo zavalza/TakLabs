@@ -7,16 +7,16 @@
 		<h3>Personas</h3>
 		{{#each person}}
 		<div class="row">
-		<div class="col-md-2 col-xs-10">
-		<img class="img-circle" src="{{profile.picture}}">
+			<div class="col-md-2 col-xs-10">
+				<img class="img-circle" src="{{profile.picture}}">
+			</div>
+			<div class="col-md-6 col-xs-10">
+				<h6>{{profile.firstName}} {{profile.lastName}}</h6>
+				{{#each miniCV profile.experience}}
+				{{string}} <a href="#">@{{#each company company_id}}{{name}}{{/each}}</a>;
+				{{/each}}
+			</div>
 		</div>
-		<div class="col-md-6 col-xs-10">
-		<h6>{{profile.firstName}} {{profile.lastName}}</h6>
-			{{#each miniCV profile.experience}}
-		        {{string}} <a href="#">@{{#each company company_id}}{{name}}{{/each}}</a>;
-		    {{/each}}
-		 </div>
-		 </div>
 		{{/each}}
 	</div>
 </div>

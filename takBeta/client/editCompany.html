@@ -1,181 +1,180 @@
 <template name="editCompany">
-  <div class="wrap">
-    <div class="panel panel-primary col-md-8 col-xs-12 col-md-offset-2">
-      <a href="{{pathFor 'welcome'}}" class="btn btn-success pull-right">Hecho</a>
-      <div class="panel-heading">
-          <h3 class="panel-title text-center">Editar Compañía</h3>
-      </div>
-      <div class="panel-body">
-
-        {{#each company}}
-        <form class="form col-md-8 col-xs-12 col-md-offset-2 " name="editCompany">
-          <div class="form-group">
-            <div class="row">
-              <h4>Logo</h4>
-            </div>
-            <div class="row">
-              <div class="col-md-2 col-xs-4">
-                {{#each image logo}}
-                <a href="#">
+<div class="wrap">
+  <div class="panel panel-primary col-md-8 col-xs-12 col-md-offset-2">
+    <a href="{{pathFor 'welcome'}}" class="btn btn-success pull-right">Hecho</a>
+    <div class="panel-heading">
+      <h3 class="panel-title text-center">Editar Compañía</h3>
+    </div>
+    <div class="panel-body">
+      {{#each company}}
+      <form class="form col-md-8 col-xs-12 col-md-offset-2 " name="editCompany">
+        <div class="form-group">
+          <div class="row">
+            <h4>Logo</h4>
+          </div>
+          <div class="row">
+            <div class="col-md-2 col-xs-4">
+              {{#each image logo}}
+              <a href="#">
                 <span class="badge pull-right deleteLogo">x</span>
                 <img src="{{url}}">
-                 </a>
-                {{else}}
-                <a href="#">
+              </a>
+              {{else}}
+              <a href="#">
                 <span class="badge pull-right">Default</span>
-               <img src="companyLogo.png">
-                </a>
-                {{/each}}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-8 col-xs-4">
-                 <input type="file" id="logo"><br>
-              </div>
-            </div>
-            <div class="row">
-              <h4>Información Básica</h4>
-            </div>
-              <div class="row">
-              <div class="col-md-8 col-xs-6">
-                <input type="text" class="form-control " id="name" placeholder="Nombre" value="{{name}}">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-8 col-xs-12">
-                <input type="text" class="form-control col-md-5 " id="highConcept" placeholder="Describe tu compañía en menos de 10 palabras" value="{{highConcept}}">
-              </div>
-              <div class="col-md-8 col-xs-6">
-                  <input type="text" class="form-control dropdown-toggle" id="City" placeholder="Ciudad" value="{{city}}" data-toggle="dropdown">
-                  <ul class="dropdown-menu" style="display: none;" id="CityOptions">
-                  {{#each cityOptions}}
-                    <a href="#"><li style="color: white; display: none;" class="City" id="{{name}}">{{name}}</li></a>
-                  {{/each}}
-                  </ul>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-8 col-xs-6">
-                Tipo de empresa:
-                <select id="type">
-                    <option value="">Selecciona</option>
-                    <option value="Startup">Startup</option>
-                    <option value="Cowork">Cowork</option>
-                    <option value="Incubadora">Incubadora</option>
-                    <option value="Aceleradora">Aceleradora</option>
-                    <option value="Capital de Riesgo">Capital de Riesgo</option>
-                    <option value="Pública">Pública</option>
-                </select>
-              </div>
-            </div>
-            <div class="row">
-              {{#each types}}
-                <div class="col-md-4 col-xs-6">
-                  <div class="input-group">
-                  <input type="text" class="form-control " id="type" value="{{this}}" disabled>
-                  <span class="input-group-btn">
-                    <button name="Type" class="btn btn-danger pullCompanyType" type="button">x</button>
-                  </span>
-                  </div>
-                </div>
+                <img src="companyLogo.png">
+              </a>
               {{/each}}
             </div>
-            <div class="row">
-               <div class="col-md-8 col-xs-6">
-                <input type="text" class="form-control col-md-5 " id="company_url" placeholder="Sitio web" value="{{company_url}}">
-              </div>
-            </div>
-            <div class="row">
-              <h4>Redes Sociales</h4>
-            </div>
-            <div class="row">
-             <div class="col-md-8 col-xs-6">
-                <input type="text" class="form-control col-md-5 " id="fb_url" placeholder="Facebook" value="{{fb_url}}">
-              </div>
-            </div>
-            <div class="row">
-            <div class="col-md-8 col-xs-6">
-                <input type="text" class="form-control col-md-5 " id="twitter_url" placeholder="Twitter" value="{{twitter_url}}">
-              </div>
-            </div>
-            <div class="row">
-              <h4>Video</h4>
-            </div>
-            <div class="row">
-            <div class="col-md-8 col-xs-6">
-                {{#if isYoutube video_url}}
-                  {{#each videoCode video_url}}
-                  <div class="embed-responsive embed-responsive-4by3">
-                <iframe class="embed-responsive-item" width="420" height="315" src="//www.youtube.com/embed/{{this}}" frameborder="0" allowfullscreen></iframe>
-               </div>
-                  {{/each}}
-                {{/if}}
-                {{#if isVimeo video_url}}
-                {{#each videoCode video_url}}
-                <div class="embed-responsive embed-responsive-4by3">
-                <iframe class="embed-responsive-item" src="//player.vimeo.com/video/{{this}}" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-              </div>
-                {{/each}}
-                {{/if}}
-            </div>
-          </div>
-            <div class="row">
-            <div class="col-md-8 col-xs-6">
-                <input type="text" class="form-control col-md-5 " id="video_url" placeholder="Liga a Video" value="{{video_url}}">
-                 De Vimeo o Youtube. En Youtube selecciona compartir y pega la liga aquí, de lo contrario no se aceptará el formato.
-              </div>
-            </div>
-            <div class="row">
-              <h4>Imágenes / Screenshots</h4>
-            </div>
-          <div class="row">
-          {{#each image screenshots}}
-          <div class="col-md-4 col-xs-10">
-            <a href="#">
-            <span class="badge pull-right deleteScreenshot">x</span>
-            <img src="{{url}}">
-             </a>
-             {{name}}
-          </div>
-          {{/each}}
-          </div>
-            <div class="row">
-              <input type="file" id="image" name="image">
           </div>
           <div class="row">
-              <h4>Descripción</h4>
+            <div class="col-md-8 col-xs-4">
+              <input type="file" id="logo"><br>
+            </div>
           </div>
-            <div class="row">
-             <textarea class="form-control" id="description" placeholder="Tu pitch: ¿Qué es lo que haces? ¿Qué problema resuelves?" value="{{description}}"></textarea>
+          <div class="row">
+            <h4>Información Básica</h4>
+          </div>
+          <div class="row">
+            <div class="col-md-8 col-xs-6">
+              <input type="text" class="form-control " id="name" placeholder="Nombre" value="{{name}}">
             </div>
-             <div class="row">
-              <h4>Fundadores</h4>
-                {{#each founder team}}
-                {{profile.firstName}} {{profile.lastName}}
+          </div>
+          <div class="row">
+            <div class="col-md-8 col-xs-12">
+              <input type="text" class="form-control col-md-5 " id="highConcept" placeholder="Describe tu compañía en menos de 10 palabras" value="{{highConcept}}">
+            </div>
+            <div class="col-md-8 col-xs-6">
+              <input type="text" class="form-control dropdown-toggle" id="City" placeholder="Ciudad" value="{{city}}" data-toggle="dropdown">
+              <ul class="dropdown-menu" style="display: none;" id="CityOptions">
+                {{#each cityOptions}}
+                <a href="#"><li style="color: white; display: none;" class="City" id="{{name}}">{{name}}</li></a>
                 {{/each}}
-            </div>
-             <div class="row">
-              <h4>Equipo</h4>
-                {{#each teamMember team}}
-                {{profile.firstName}} {{profile.lastName}}
-                {{/each}}
-            </div>
-             <div class="row">
-              <h4>Inversión</h4>
-               {{#each investor team}}
-              {{profile.firstName}} {{profile.lastName}}
-               {{/each}}
-            </div>
-            <div class="row">
-              <ul class="pager">
-              <li><a href="{{pathFor 'welcome'}}">Hecho</a></li>
               </ul>
             </div>
           </div>
-        </form>
-        {{/each}}
+          <div class="row">
+            <div class="col-md-8 col-xs-6">
+              Tipo de empresa:
+              <select id="type">
+                <option value="">Selecciona</option>
+                <option value="Startup">Startup</option>
+                <option value="Cowork">Cowork</option>
+                <option value="Incubadora">Incubadora</option>
+                <option value="Aceleradora">Aceleradora</option>
+                <option value="Capital de Riesgo">Capital de Riesgo</option>
+                <option value="Pública">Pública</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            {{#each types}}
+            <div class="col-md-4 col-xs-6">
+              <div class="input-group">
+                <input type="text" class="form-control " id="type" value="{{this}}" disabled>
+                <span class="input-group-btn">
+                <button name="Type" class="btn btn-danger pullCompanyType" type="button">x</button>
+                </span>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+          <div class="row">
+            <div class="col-md-8 col-xs-6">
+              <input type="text" class="form-control col-md-5 " id="company_url" placeholder="Sitio web" value="{{company_url}}">
+            </div>
+          </div>
+          <div class="row">
+            <h4>Redes Sociales</h4>
+          </div>
+          <div class="row">
+            <div class="col-md-8 col-xs-6">
+              <input type="text" class="form-control col-md-5 " id="fb_url" placeholder="Facebook" value="{{fb_url}}">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-8 col-xs-6">
+              <input type="text" class="form-control col-md-5 " id="twitter_url" placeholder="Twitter" value="{{twitter_url}}">
+            </div>
+          </div>
+          <div class="row">
+            <h4>Video</h4>
+          </div>
+          <div class="row">
+            <div class="col-md-8 col-xs-6">
+              {{#if isYoutube video_url}}
+              {{#each videoCode video_url}}
+              <div class="embed-responsive embed-responsive-4by3">
+                <iframe class="embed-responsive-item" width="420" height="315" src="//www.youtube.com/embed/{{this}}" frameborder="0" allowfullscreen></iframe>
+              </div>
+              {{/each}}
+              {{/if}}
+              {{#if isVimeo video_url}}
+              {{#each videoCode video_url}}
+              <div class="embed-responsive embed-responsive-4by3">
+                <iframe class="embed-responsive-item" src="//player.vimeo.com/video/{{this}}" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+              </div>
+              {{/each}}
+              {{/if}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-8 col-xs-6">
+              <input type="text" class="form-control col-md-5 " id="video_url" placeholder="Liga a Video" value="{{video_url}}">
+              De Vimeo o Youtube. En Youtube selecciona compartir y pega la liga aquí, de lo contrario no se aceptará el formato.
+            </div>
+          </div>
+          <div class="row">
+            <h4>Imágenes / Screenshots</h4>
+          </div>
+          <div class="row">
+            {{#each image screenshots}}
+            <div class="col-md-4 col-xs-10">
+              <a href="#">
+                <span class="badge pull-right deleteScreenshot">x</span>
+                <img src="{{url}}">
+              </a>
+              {{name}}
+            </div>
+            {{/each}}
+          </div>
+          <div class="row">
+            <input type="file" id="image" name="image">
+          </div>
+          <div class="row">
+            <h4>Descripción</h4>
+          </div>
+          <div class="row">
+            <textarea class="form-control" id="description" placeholder="Tu pitch: ¿Qué es lo que haces? ¿Qué problema resuelves?" value="{{description}}"></textarea>
+          </div>
+          <div class="row">
+            <h4>Fundadores</h4>
+            {{#each founder team}}
+            {{profile.firstName}} {{profile.lastName}}
+            {{/each}}
+          </div>
+          <div class="row">
+            <h4>Equipo</h4>
+            {{#each teamMember team}}
+            {{profile.firstName}} {{profile.lastName}}
+            {{/each}}
+          </div>
+          <div class="row">
+            <h4>Inversión</h4>
+            {{#each investor team}}
+            {{profile.firstName}} {{profile.lastName}}
+            {{/each}}
+          </div>
+          <div class="row">
+            <ul class="pager">
+              <li><a href="{{pathFor 'welcome'}}">Hecho</a></li>
+            </ul>
+          </div>
+        </div>
+      </form>
+      {{/each}}
       
-      </div>
     </div>
   </div>
+</div>
 </template>
