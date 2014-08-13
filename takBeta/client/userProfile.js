@@ -14,9 +14,14 @@ Template.userProfile.helpers({
        image: function(ids)
         {
           if (typeof (ids) == 'object')
-          return Images.find({_id:{$in: ids}});
+          {
+            //alert(EJSON.stringify(ids));
+            return Images.find({_id:{$in: ids}});
+          }
+          
           else
           {
+            //alert(ids);
             //alert(typeof (ids)) string
             return Images.find({_id:ids})
           }

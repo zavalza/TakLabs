@@ -13,6 +13,7 @@
  })
 
  Meteor.publish('allImages', function(){
+  console.log('Images');
  	return Images.find({});
  })
 
