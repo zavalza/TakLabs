@@ -12,3 +12,12 @@ Template.navigation.events({
         return false
       }
   });
+
+Template.navigation.helpers ({
+
+  thisUser: function()
+  {
+    Meteor.subscribe("userProfile", Meteor.userId());
+    return Meteor.users.find({_id: Meteor.userId()});
+  }
+});

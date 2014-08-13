@@ -21,9 +21,19 @@ Router.map(function() {
   this.route('newUserForm', {path: '/registro'});
   this.route('news', {path: '/noticias'});
   this.route('companies', {path: '/startups'});
-  this.route('people', {path: '/personas'});
+  this.route('people', 
+  {path: '/personas',
+  waitOn: function() { return Meteor.subscribe('allUserProfiles')},
+  });
   this.route('editCompany', {path: '/editarCompania'});
   this.route('editProfile', {path: '/editarPerfil'});
-  this.route('userProfile', {path: '/user'});
+  this.route('userProfile', 
+    {path: '/profile/:_id',
+    waitOn: function()
+    { 
+      Session.set("userToShow", this.params._id);
+      return Meteor.subscribe('userProfile', this.params._id);
+    }
+    });
   this.route('companyProfile', {path: '/algomas'})
 });

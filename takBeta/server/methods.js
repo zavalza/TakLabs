@@ -1,9 +1,3 @@
- /*Meteor.publish("user", function (userId) {
-  console.log("publishing user with id: " +userId);
-    return Meteor.users.find({_id: userId});
-  });*/
-
-
  Meteor.methods({
 
       updateTextField: function(userId, field, value){

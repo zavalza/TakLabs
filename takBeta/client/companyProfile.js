@@ -76,6 +76,7 @@ Template.companyProfile.helpers ({
               idsToFind.push(teamArray[i].user_id);
             }
           }
+          Meteor.subscribe("manyUserProfiles", idsToFind);
           return Meteor.users.find({_id:{$in:idsToFind}});
         },
 
@@ -90,6 +91,7 @@ Template.companyProfile.helpers ({
               idsToFind.push(teamArray[i].user_id);
             }
           }
+          Meteor.subscribe("manyUserProfiles", idsToFind);
           return Meteor.users.find({_id:{$in:idsToFind}});
         },
 
@@ -103,6 +105,7 @@ Template.companyProfile.helpers ({
               idsToFind.push(teamArray[i].user_id);
             }
           }
+          Meteor.subscribe("manyUserProfiles", idsToFind);
           return Meteor.users.find({_id:{$in:idsToFind}});
         },
 
