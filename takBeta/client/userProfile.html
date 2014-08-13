@@ -29,6 +29,9 @@
     </div>
     <div class="col-md-6 col-xs-12 col-md-offset-1" >
       <h2>{{profile.firstName}} {{profile.lastName}}</h2>
+      {{#if canEdit}}
+      <a href="{{pathFor 'editProfile'}}"><button class="btn btn-info" type="button">Editar</button></a>
+      {{/if}}
       <h4>Experiencia</h4>
       <div class="row">
         {{#each profile.experience}}

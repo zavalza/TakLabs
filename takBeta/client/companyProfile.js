@@ -21,6 +21,7 @@ Template.profileThumbnail.helpers({
           }
            
         },
+
     miniCV: function(experience)
   {
     var CV = [];
@@ -54,6 +55,12 @@ Template.profileThumbnail.helpers({
 })
 
 Template.companyProfile.helpers ({
+        canEdit: function()
+    {
+      //return true;
+      return (Meteor.users.find({_id: Meteor.userId(),
+        'profile.experience':{$elemMatch:{'company_id': Session.get('currentCompanyId'), 'type':'Fundador'}}}).count() > 0);
+    },
 
         company: function(companyId)
         {

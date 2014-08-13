@@ -26,10 +26,14 @@
             <ul class="dropdown-menu">
               {{#each thisUser}}
               <li><a href="{{pathFor 'userProfile'}}">{{profile.firstName}}  {{profile.lastName}} </a></li>
+              <li class="divider"></li>
+              {{#each profile.experience}}
+                    {{#each company company_id}}
+                      <li><a href="{{pathFor 'companyProfile'}}">{{name}}</a></li>
+                    {{/each}}
               {{/each}}
-              <li><a href="{{pathFor 'companyProfile'}}">Perfil Compañia </a></li>
-              <li><a href="{{pathFor 'editProfile'}}">EDITAR PERFIL</a></li>
-              <li><a href="{{pathFor 'editCompany'}}">EDITAR COMPAÑIA</a></li>
+              {{/each}}
+              <li class="divider"></li>
               <li><a href="#" class="tryLogout">SALIR</a></li>
             </ul>
           </li>

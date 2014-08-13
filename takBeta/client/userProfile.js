@@ -11,6 +11,11 @@ Template.userProfile.helpers({
            
        },
 
+       canEdit: function()
+       {
+        return Meteor.userId()== this._id;
+       },
+
        image: function(ids)
         {
           if (typeof (ids) == 'object')

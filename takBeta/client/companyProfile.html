@@ -41,6 +41,9 @@
         <div class="col-md-6 col-xs-12 col-md-offset-1" >
           <h2>{{name}}</h2>
           <i><h6>{{highConcept}}</h6></i>
+          {{#if canEdit}}
+          <a href="{{pathFor 'editCompany'}}"><button class="btn btn-info" type="button">Editar</button></a>
+          {{/if}}
           <div class="row">
             <div class="col-md-8 col-xs-6">
               {{#if video_url}}

@@ -19,5 +19,10 @@ Template.navigation.helpers ({
   {
     Meteor.subscribe("userProfile", Meteor.userId());
     return Meteor.users.find({_id: Meteor.userId()});
-  }
+  },
+
+   company: function(companyId)
+        {
+          return Companies.find({_id:companyId});
+        }
 });
