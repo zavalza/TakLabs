@@ -1,9 +1,9 @@
-
+//MongoDB
 Jobs = new Meteor.Collection("jobs");
 Companies = new Meteor.Collection("companies");
 Tags = new Meteor.Collection("tags");
 
-//File Storage
+//File Storage in MongoDb using FS
 var imageStore = new FS.Store.GridFS("images");
 Images = new FS.Collection("images", {
   stores: [imageStore],
@@ -14,6 +14,7 @@ Images = new FS.Collection("images", {
     }
 });
 
+//Iron Router configuration, specify which templates are loaded under which path
 Router.map(function() {
   this.route('welcome', {path: '/'});
   this.route('loginForm', {path: '/entrar'});
