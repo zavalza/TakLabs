@@ -3,7 +3,7 @@
       generateUrl: function(name){
         //console.log('creating a url');
         var cNum = Companies.find({'name': name}).count();
-        var uNum =  Meteor.users.find({'lastName': name}).cout();
+        var uNum =  Meteor.users.find({'lastName': name}).count();
         var url = name;
         if(uNum != 0 || cNum !=0)
         {
