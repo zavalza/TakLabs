@@ -6,7 +6,11 @@ Template.companyProfile.events({
 
 
  Template.companyProfile.screenshotToShow = function() {
-    return Session.get("screenshotToShow");
+    var selection = Session.get("screenshotToShow");
+    if(selection)
+      return selection
+    else
+      return this.screenshots[0]
   };
 
 Template.profileThumbnail.helpers({
