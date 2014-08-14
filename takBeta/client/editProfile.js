@@ -1,10 +1,21 @@
 Template.editProfile.events({
-    'change #firstName,#lastName,#email' : function(evt, tmpl){
+    'change #firstName,#lastName' : function(evt, tmpl){
       var targetId = evt.target.id;
       //alert (targetId);
-      //verificar formato email
       var newValue = tmpl.find('#'+targetId).value.trim();
       Meteor.call('updateTextField', Meteor.userId(), targetId, newValue);
+    },
+
+    'change #url': function(evt, tmpl){
+      var newUrl = tmpl.find('#url').value.trim();
+      Meteor.call('validateUserUrl', Meteor.userId(), newUrl, 
+        function(error, result)
+        {
+          if(error)
+          {
+             alert('La url ya está siendo usada');
+          }
+        });
     },
 
     'click .pullTag' : function(evt, tmpl){

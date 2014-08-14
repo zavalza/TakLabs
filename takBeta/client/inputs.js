@@ -88,9 +88,11 @@
       var re = /([a-zA-Z]+)/g;
       if (typeOfExperience != "" && companyName.match(re))
       {
+        var newUrl = Meteor.call('generateUrl', companyName);
         var newCompany={
                   types: [], //startup, incubator, accelerator, cowork etc.
                   name:companyName,
+                  url:newUrl,
                   logo:"", //id of logo image
                   description:"",
                   highConcept:"",

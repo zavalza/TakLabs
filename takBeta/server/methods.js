@@ -1,5 +1,30 @@
  Meteor.methods({
 
+      generateUrl: function(name){
+        //console.log('creating a url');
+        var cNum = Companies.find({'name': name}).count();
+        var uNum =  Meteor.users.find({'lastName': name}).cout();
+        var url = name;
+        if(uNum != 0 || cNum !=0)
+        {
+          url = name + uNum.toString() + cNum.toString();
+        }
+
+        return url;
+      },
+
+      validateUserUrl: function(userId, url){
+        var urls = Companies.find({'url': url}).count() 
+        + Meteor.users.find({'profile.url':url}).count();
+        console.log(urls);
+        if(urls==0)
+        {
+          Meteor.call('updateTextField', userId , 'url', url);
+        } 
+        else
+          throw "Used";
+      },
+
       updateTextField: function(userId, field, value){
           console.log('Updating field '+ field +' of user '+userId);
           switch(field){
@@ -14,6 +39,10 @@
             case('email'):
             Meteor.users.update({_id: userId},
             {$set: {'profile.email':value}});
+            break;
+            case('url'):
+            Meteor.users.update({_id: userId},
+            {$set: {'profile.url':value}});
             break;
             default: break;
           }

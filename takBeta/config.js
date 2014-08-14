@@ -38,7 +38,6 @@ Router.map(function() {
   this.route('companyProfile', {path: '/company/:_id',
     waitOn: function()
     { 
-      Session.set('screenshotToShow', "");
       Session.set("currentCompanyId", this.params._id);
       return Meteor.subscribe('companyProfile', this.params._id);
     }

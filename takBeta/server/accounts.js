@@ -13,7 +13,9 @@
     else{
       console.log("Error");
     }
+    var newUrl = Meteor.call('generateUrl', lastName);
     var profile ={
+                      url:newUrl,
                       firstName:firstName,
                       lastName:lastName,
                       email:email,

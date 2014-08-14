@@ -9,15 +9,13 @@
 			{{#each company}}
 				<div class="row">
 					<div class="col-md-2 col-xs-10">
+						<a href="{{pathFor 'companyProfile'}}">
 				 		{{#each image logo}}
-	                		<a href="{{pathFor 'companyProfile'}}">
 	                		<img src="{{url}}">
-	                 		</a>
 	                	{{else}}
-	                		<a href="{{pathFor 'companyProfile'}}">
 	               			<img src="http://localhost:3000/companyLogo.png">
-	                		</a>
 	                	{{/each}}
+	                	</a>
         			</div>
 					<div class="col-md-6 col-xs-10">
 						<a href="{{pathFor 'companyProfile'}}"><h6>{{name}}</h6></a>
