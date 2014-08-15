@@ -1,9 +1,12 @@
 
 
   Template.headerwrap.peopleAmount = function(){
-    return 25;
+  	Meteor.subscribe("allUserProfiles");
+    return Meteor.users.find({}).count();
   }
 
   Template.headerwrap.startupsAmount = function(){
-    return 10;
+    Meteor.subscribe("allCompanies");
+    //maybe just type=startup
+    return Companies.find({}).count();
   }

@@ -125,7 +125,7 @@ Template.companyProfile.helpers ({
           return (video_url.search('vimeo') != -1);
         },
 
-        founder: function(teamArray)
+         founder: function(teamArray)
         {
           var idsToFind=[];
           for(var i=0; i < teamArray.length; i++)

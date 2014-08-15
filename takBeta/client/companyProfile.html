@@ -84,7 +84,9 @@
               {{/each}}
             </div>
           {{/if}}
-          <h4>Fundadores</h4>
+          {{#if team}}
+          <h4>Equipo</h4>
+          {{/if}}
           <div class="row">
             {{#each founder team}}
               <div class="col-md-3 col-xs-10">
@@ -92,7 +94,6 @@
               </div>
             {{/each}}  
           </div>
-          <h4>Equipo</h4>
           <div class="row">
             {{#each teamMember team}}
               <div class="col-md-3 col-xs-10">
@@ -100,7 +101,6 @@
               </div>
             {{/each}}  
           </div>
-          <h4>Inversion</h4>
           <div class="row">
             {{#each investor team}}
               <div class="col-md-3 col-xs-10">
