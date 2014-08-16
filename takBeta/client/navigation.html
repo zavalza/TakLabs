@@ -20,19 +20,19 @@
         <ul class="nav navbar-nav">
           <li><a href="{{pathFor 'companies'}}">STARTUPS</a></li>
           <li><a href="{{pathFor 'people'}}">PERSONAS</a></li>
-          {{#if currentUser}}
+          {{#each thisUser currentUser.person_id}}
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="btn img-responsive" width="60" src="{{currentUser.profile.picture}}"><b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="btn img-responsive" width="60" src="{{picture}}"><b class="caret"></b></a>
             <ul class="dropdown-menu">
-              {{#each thisUser}}
-              <li><a href="{{pathFor 'userProfile'}}">{{profile.firstName}}  {{profile.lastName}} </a></li>
+              <li><a href="{{pathFor 'userProfile'}}">{{name}} </a></li>
+              {{#if experience}}
               <li class="divider"></li>
-              {{#each profile.experience}}
+              {{#each experience}}
                     {{#each company company_id}}
                       <li><a href="{{pathFor 'companyProfile'}}">{{name}}</a></li>
                     {{/each}}
               {{/each}}
-              {{/each}}
+              {{/if}}
               <li class="divider"></li>
               <li><a href="#" class="tryLogout">SALIR</a></li>
             </ul>
@@ -40,7 +40,7 @@
           {{else}}
           <li><a href="{{pathFor 'newUserForm'}}">UNIRME</a></li>
           <li><a href="{{pathFor 'loginForm'}}">INGRESAR</a></li>
-          {{/if}}
+          {{/each}}
         </ul>
         </div><!--/.nav-collapse -->
       </div>

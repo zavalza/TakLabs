@@ -1,3 +1,13 @@
+  Meteor.publish("userData", function () {
+  if (this.userId) {
+    return Meteor.users.find({_id: this.userId},
+                             {fields: {'person_id': 1}});
+  } else {
+    this.ready();
+  }
+});
+
+
   Meteor.publish("companyProfile", function (companyId) {
   //console.log("publishing company with id: " +companyId);
     return Companies.find({_id: companyId});
@@ -25,6 +35,11 @@
 
    Meteor.publish("person", function (personId) {
     return People.find({_id: personId});
+    //Todos los campos deberían ser públicos
+  });
+
+   Meteor.publish("people", function (personId) {
+    return People.find({});
     //Todos los campos deberían ser públicos
   });
 

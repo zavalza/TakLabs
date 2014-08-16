@@ -6,4 +6,5 @@ Session.set('screenshotToShow',"");
 Meteor.subscribe("allCompanies");
 Meteor.subscribe("allTags");
 Meteor.subscribe("allImages");
+Meteor.subscribe("userData");
 });

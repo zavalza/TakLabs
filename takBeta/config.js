@@ -33,7 +33,7 @@ Router.map(function() {
     waitOn: function()
     { 
       Session.set("userToShow", this.params._id);
-      return Meteor.subscribe('userProfile', this.params._id);
+      return Meteor.subscribe('person', this.params._id);
     }
     });
   this.route('companyProfile', {path: '/company/:_id',

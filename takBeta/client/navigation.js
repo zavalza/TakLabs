@@ -15,10 +15,10 @@ Template.navigation.events({
 
 Template.navigation.helpers ({
 
-  thisUser: function()
+  thisUser: function(personId)
   {
-    Meteor.subscribe("userProfile", Meteor.userId());
-    return Meteor.users.find({_id: Meteor.userId()});
+    Meteor.subscribe("person", personId);
+    return People.find({_id: personId});
   },
 
    company: function(companyId)
