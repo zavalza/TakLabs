@@ -7,7 +7,7 @@
       var re = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
       if (link.match(re))
       {
-        Meteor.call('addLink', Meteor.userId(), link);
+        Meteor.call('addLink', Session.get('userToShow'), link);
         tmpl.find('#newLink').value = "";
       }
       else
@@ -17,33 +17,9 @@
       //document.getElementById('SkillOptions').style.display='none';
       return true;
     },
-
-    'click .deleteLink' : function (evt, tmpl){
-      //alert(this.toString());
-      Meteor.call('deleteLink', Meteor.userId(), this.toString());
-      return true;
-    }
   });
 
-  Template.experienceInput.rendered=function() {
-    $('.input-group.date').datepicker({
-      format: "M-yyyy",
-      minViewMode: 1, 
-      language: "es",
-      autoclose: true
-      });
-  };
-
   Template.experienceInput.events({
-    'change #title,#startedAt,#endedAt': function(evt, tmpl){
-      //alert(this.company_id);
-      var field = evt.target.id;
-      //alert(field);
-      var value = evt.target.value.trim();
-      //alert(value);
-      Meteor.call('updateExperience', Meteor.userId(),this.company_id, field, value);
-    },
-
     'click .Company': function(evt, tmpl){
       var companyName = evt.target.id.trim();
       //alert (this._id);
@@ -56,7 +32,7 @@
                     startedAt:null,
                     endedAt:null,
                     confirmed:false,
-                    user_id: Meteor.userId()
+                    person_id: Session.get('userToShow')
                   };
         var companyDoc = {
                     type:typeOfExperience,
@@ -66,7 +42,7 @@
                     confirmed:false,
                     company_id: this._id
         };
-      Meteor.call('pushExperience', Meteor.userId(), this._id, companyDoc, personDoc);
+      Meteor.call('pushExperience', Session.get('userToShow'), this._id, companyDoc, personDoc);
       tmpl.find('#Company').value = "";
       tmpl.find('#Company').blur();
       document.getElementById('CompanyOptions').style.display='none';
@@ -77,22 +53,16 @@
       }
     },
 
-    'click .deleteExperience': function(evt, tmpl){
-       //alert(this.company_id);
-       Meteor.call('deleteExperience', Meteor.userId(), this.company_id)
-    },
-
     'click .addExperience' : function(evt, tmpl){
       var typeOfExperience = tmpl.find('#Experience').value.trim();
       var companyName = tmpl.find('#Company').value.trim()
       var re = /([a-zA-Z]+)/g;
       if (typeOfExperience != "" && companyName.match(re))
       {
-        var newUrl = Meteor.call('generateUrl', companyName);
         var newCompany={
                   types: [], //startup, incubator, accelerator, cowork etc.
                   name:companyName,
-                  url:newUrl,
+                  url:null,
                   logo:"", //id of logo image
                   description:"",
                   highConcept:"",
@@ -108,13 +78,13 @@
                     startedAt:null,
                     endedAt:null,
                     confirmed:false,
-                    user_id: Meteor.userId()
+                    person_id: Session.get('userToShow')
                   }],
                   followers:{count:0, user_ids:[]},
                   referrer: document.referrer, 
                   timestamp: new Date(),
                 }
-          Meteor.call('addExperience', Meteor.userId(), typeOfExperience, newCompany);
+          Meteor.call('addExperience', Session.get('userToShow'), typeOfExperience, newCompany);
       }
       else
       {
@@ -136,11 +106,6 @@
         {
           return Tags.find({type:'Skill'});
         },
-
-      skill: function(tagId)
-        {
-          return Tags.find({_id:tagId, type:'Skill'});
-        }
     });
 
     Template.collegesInput.helpers({
@@ -148,22 +113,12 @@
         {
           return Tags.find({type:'College'});
         },
-
-      college: function(tagId)
-        {
-          return Tags.find({_id:tagId, type:'College'});
-        }
     });
 
     Template.rolesInput.helpers({
        roleOptions : function()
         {
           return Tags.find({type:'Role'});
-        },
-
-      role: function(tagId)
-        {
-          return Tags.find({_id:tagId, type:'Role'});
         }
     });
 
@@ -171,12 +126,5 @@
         companyOptions : function()
         {
           return Companies.find();
-        },
-
-        company: function(companyId)
-        {
-          return Companies.find({_id:companyId});
         }
-
-        
     });

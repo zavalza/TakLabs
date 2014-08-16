@@ -12,6 +12,7 @@
             {$set:{'user_id':Meteor.userId(), 'url':url}});
           Meteor.users.update({_id:Meteor.userId()},
             {$set:{'person_id':personId,'profile':emptyProfile}});
+          return personId;
         },
 
         generateUrl: function(name){
@@ -30,17 +31,17 @@
             return url;
             },
 
-      /*validateUserUrl: function(userId, url){
+      validatePersonUrl: function(personId, url){
         var urls = Companies.find({'url': url}).count() 
         + People.find({'url':url}).count();
         console.log(urls);
         if(urls==0)
         {
-          //Meteor.call('updateTextField', userId , 'url', url);
+          Meteor.call('updateTextField', personId , 'url', url);
         } 
         else
           throw "Used";
-      },*/
+      },
       addMember: function(companyId, typeOfExperience, userDoc){
       console.log("Creating a new person")
       //Validar nombre no repetido?
@@ -59,49 +60,45 @@
       {$push:{'team': experience}});
       },
 
-      updateTextField: function(userId, field, value){
-          console.log('Updating field '+ field +' of user '+userId);
+      updateTextField: function(personId, field, value){
+          console.log('Updating field '+ field +' of person '+personId);
           switch(field){
-            case ('firstName'):
-            Meteor.users.update({_id: userId},
-            {$set: {'profile.firstName':value}});
-            break;
-            case ('lastName'):
-            Meteor.users.update({_id: userId},
-            {$set: {'profile.lastName':value}});
+            case ('name'):
+            People.update({_id: personId},
+            {$set: {'name':value}});
             break;
             case('email'):
-            Meteor.users.update({_id: userId},
-            {$set: {'profile.email':value}});
+            People.update({_id: personId},
+            {$set: {'email':value}});
             break;
             case('url'):
-            Meteor.users.update({_id: userId},
-            {$set: {'profile.url':value}});
+            People.update({_id: personId},
+            {$set: {'url':value}});
             break;
             default: break;
           }
           
       },
 
-      updateExperience: function(userId, companyId, field, value){
-          console.log('Updating field '+ field +' of user '+userId + ' and company '+ companyId);
+      updateExperience: function(personId, companyId, field, value){
+          console.log('Updating field '+ field +' of person '+personId + ' and company '+ companyId);
           switch(field){
             case ('title'):
-            Meteor.users.update({_id: userId,'profile.experience':{$elemMatch:{'company_id': companyId}}},
-             {$set: {'profile.experience.$.title':value}});
-            Companies.update({_id: companyId,'team':{$elemMatch:{'user_id': userId}}},
+            People.update({_id: personId,'experience':{$elemMatch:{'company_id': companyId}}},
+             {$set: {'experience.$.title':value}});
+            Companies.update({_id: companyId,'team':{$elemMatch:{'person_id': personId}}},
              {$set: {'team.$.title':value}});
             break;
             case ('startedAt'):
-            Meteor.users.update({_id: userId,'profile.experience':{$elemMatch:{'company_id': companyId}}},
-             {$set: {'profile.experience.$.startedAt':value}});
-            Companies.update({_id: companyId,'team':{$elemMatch:{'user_id': userId}}},
+            People.update({_id: personId,'experience':{$elemMatch:{'company_id': companyId}}},
+             {$set: {'experience.$.startedAt':value}});
+            Companies.update({_id: companyId,'team':{$elemMatch:{'person_id': personId}}},
              {$set: {'team.$.startedAt':value}});
             break;
             case('endedAt'):
-            Meteor.users.update({_id: userId,'profile.experience':{$elemMatch:{'company_id': companyId}}},
-             {$set: {'profile.experience.$.endedAt':value}});
-            Companies.update({_id: companyId,'team':{$elemMatch:{'user_id': userId}}},
+            People.update({_id: personId,'experience':{$elemMatch:{'company_id': companyId}}},
+             {$set: {'experience.$.endedAt':value}});
+            Companies.update({_id: companyId,'team':{$elemMatch:{'person_id': personId}}},
              {$set: {'team.$.endedAt':value}});
             break;
             default: break;
@@ -109,25 +106,25 @@
           
       },
 
-      pushExperience: function(userId, companyId, companyDoc, personDoc){
-          console.log('Pushing experience to both '+userId+' and '+companyId);
-          Meteor.users.update({_id: userId},
-          {$push:{'profile.experience': companyDoc}});
+      pushExperience: function(personId, companyId, companyDoc, personDoc){
+          console.log('Pushing experience to both '+personId+' and '+companyId);
+          People.update({_id: personId},
+          {$push:{'experience': companyDoc}});
 
           Companies.update({_id: companyId},
           {$push:{'team': personDoc}});
       },
 
-      addLink: function(userId, link){
-          console.log('Adding a link to profile '+ userId);
-          Meteor.users.update({_id: userId},
-          {$push:{'profile.portafolio_urls': link}});
+      addLink: function(personId, link){
+          console.log('Adding a link to profile '+ personId);
+          People.update({_id: personId},
+          {$push:{'portafolio_urls': link}});
       },
 
-      deleteLink: function(userId, link){
-          console.log('Deleting the link '+link +' of profile '+ userId);
-          Meteor.users.update({_id: userId},
-          {$pull:{'profile.portafolio_urls': link}});
+      deleteLink: function(personId, link){
+          console.log('Deleting the link '+link +' of profile '+ personId);
+          People.update({_id: personId},
+          {$pull:{'portafolio_urls': link}});
       },
 
       addScreenshot: function(companyId, imageId)
@@ -161,11 +158,13 @@
         Images.remove({_id: imageId});
       },
 
-      addExperience: function(userId, typeOfExperience, companyDoc){
+      addExperience: function(personId, typeOfExperience, companyDoc){
         console.log("Creating a new company")
         //Validar nombre no repetido?
         var companyId = Companies.insert(companyDoc);
-        console.log('Adding experience to '+ userId);
+        var url = Meteor.call('generateUrl', companyDoc.name);
+        Companies.update({_id: companyId},{$set:{'url': url}});
+        console.log('Adding experience to '+ personId);
         var experience = {
                     type:typeOfExperience,
                     title:null,
@@ -174,16 +173,16 @@
                     confirmed:false,
                     company_id: companyId
                   }
-        Meteor.users.update({_id: userId},
-          {$push:{'profile.experience': experience}});
+        People.update({_id: personId},
+          {$push:{'experience': experience}});
 
       },
 
-      deleteExperience: function(userId, companyId){
-         Meteor.users.update({_id: userId},
-             {$pull: {'profile.experience':{'company_id':companyId}}});
+      deleteExperience: function(personId, companyId){
+         People.update({_id: personId},
+             {$pull: {'experience':{'company_id':companyId}}});
          Companies.update({_id: companyId},
-             {$pull: {'team':{'user_id':userId}}});
+             {$pull: {'team':{'person_id':personId}}});
       },
 
       pushCompanyType: function(companyId, type){
@@ -248,28 +247,28 @@
           }
       },
 
-      pushTag: function(userId, tagId){
-          console.log('Pushing tag with id '+ tagId +' to user ' + userId);
-          Meteor.users.update({_id: userId},
-            {$push: {'profile.tag_ids': tagId}});
+      pushTag: function(personId, tagId){
+          console.log('Pushing tag with id '+ tagId +' to person ' + personId);
+          People.update({_id: personId},
+            {$push: {'tag_ids': tagId}});
           return true
       },
 
     
-      pullTag: function (userId, tagId){
-          console.log('Unlink tag with id '+ tagId +' from user '+ userId);
-          Meteor.users.update({_id: userId},
-            {$pull: {'profile.tag_ids': tagId}});
+      pullTag: function (personId, tagId){
+          console.log('Unlink tag with id '+ tagId +' from person '+ personId);
+          People.update({_id: personId},
+            {$pull: {'tag_ids': tagId}});
           return true
       },
 
     
-      saveTag: function(doc){
+      saveTag: function(personId, doc){
         //some protection method against duplication
         console.log('addingTag');
         tagId = Tags.insert(doc);
         console.log('new tag has id '+ tagId);
-        Meteor.call('pushTag', Meteor.userId(), tagId);
+        Meteor.call('pushTag', personId, tagId);
         return tagId;
       },
       

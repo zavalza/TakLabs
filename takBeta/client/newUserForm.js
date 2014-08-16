@@ -11,6 +11,8 @@ Template.newUserForm.events({
             Meteor.call('newUserToPerson', Meteor.userId(), function(error, result)
               {
                 if(!error){
+                  Session.set('userToShow', result);
+                  //alert(result);
                   Router.go('editProfile');
                 }
               });

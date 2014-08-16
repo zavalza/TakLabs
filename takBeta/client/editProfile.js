@@ -1,14 +1,23 @@
+Template.editProfile.rendered=function() {
+    $('.input-group.date').datepicker({
+      format: "M-yyyy",
+      minViewMode: 1, 
+      language: "es",
+      autoclose: true
+      });
+  };
+
 Template.editProfile.events({
-    'change #firstName,#lastName' : function(evt, tmpl){
+    'change #name' : function(evt, tmpl){
       var targetId = evt.target.id;
-      //alert (targetId);
+      //alert (Session.get('userToShow'));
       var newValue = tmpl.find('#'+targetId).value.trim();
-      Meteor.call('updateTextField', Meteor.userId(), targetId, newValue);
+      Meteor.call('updateTextField', Session.get('userToShow'), targetId, newValue);
     },
 
     'change #url': function(evt, tmpl){
       var newUrl = tmpl.find('#url').value.trim();
-      Meteor.call('validateUserUrl', Meteor.userId(), newUrl, 
+      Meteor.call('validatePersonUrl', Session.get('userToShow'), newUrl, 
         function(error, result)
         {
           if(error)
@@ -23,7 +32,7 @@ Template.editProfile.events({
       //alert (targetName)
       if(Meteor.userId())
       {
-        var sucess = Meteor.call('pullTag', Meteor.userId(), this._id);
+        var sucess = Meteor.call('pullTag', Session.get('userToShow'), this._id);
       }
       else
       {
@@ -44,7 +53,7 @@ Template.editProfile.events({
                   referrer: document.referrer, 
                   timestamp: new Date(),
                 }
-        var tagId = Meteor.call('saveTag', doc);
+        var tagId = Meteor.call('saveTag', Session.get('userToShow'), doc);
         tmpl.find('#'+targetName).value = "";
         tmpl.find('#'+targetName).blur();
         document.getElementById(targetName+'options').style.display='none';
@@ -53,6 +62,26 @@ Template.editProfile.events({
       {
         alert("Error al guardar etiqueta");
       }
+    },
+
+    'click .deleteLink' : function (evt, tmpl){
+      //alert(this.toString());
+      Meteor.call('deleteLink', Session.get('userToShow'), this.toString());
+      return true;
+    },
+
+    'click .deleteExperience': function(evt, tmpl){
+       //alert(this.company_id);
+       Meteor.call('deleteExperience', Session.get('userToShow'), this.company_id)
+    },
+
+    'change #title,#startedAt,#endedAt': function(evt, tmpl){
+      //alert(this.company_id);
+      var field = evt.target.id;
+      //alert(field);
+      var value = evt.target.value.trim();
+      //alert(value);
+      Meteor.call('updateExperience', Session.get('userToShow'),this.company_id, field, value);
     },
 
 'keyup #City,#Skill,#College,#Role,#Company' : function(evt, tmpl){
@@ -92,10 +121,43 @@ Template.editProfile.events({
       //alert(this._id);
       var targetClass = evt.target.getAttribute('class');
       //alert (targetClass);
-      Meteor.call('pushTag', Meteor.userId(), this._id);
+      Meteor.call('pushTag', Session.get('userToShow'), this._id);
       tmpl.find('#'+targetClass).value = "";
       tmpl.find('#'+targetClass).blur();
       document.getElementById(targetClass+'Options').style.display='none';
       return true;
     }
   });
+
+Template.editProfile.helpers({
+  person: function(personId){
+          Session.set('userToShow', personId);
+          Meteor.subscribe('person', personId);
+    return People.find({_id:personId});
+  },
+
+  city: function(tagId)
+  {
+    return Tags.find({_id:tagId, type:'City'});
+  },
+
+  role: function(tagId)
+  {
+    return Tags.find({_id:tagId, type:'Role'});
+  },
+
+  skill: function(tagId)
+  {
+    return Tags.find({_id:tagId, type:'Skill'});
+  },
+
+  company: function(companyId)
+  {
+    return Companies.find({_id:companyId});
+  },
+
+ college: function(tagId)
+  {
+    return Tags.find({_id:tagId, type:'College'});
+  }
+})

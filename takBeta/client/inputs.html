@@ -18,14 +18,6 @@
   <button class="btn btn-info addLink" type="button">+</button>
   </span>
 </div>
-{{#each currentUser.profile.portafolio_urls}}
-<div class="input-group">
-  <input type="text" class="form-control " id="link" value="{{this}}" disabled>
-  <span class="input-group-btn">
-  <button name="Link" class="btn btn-danger deleteLink" type="button">x</button>
-  </span>
-</div>
-{{/each}}
 </template>
 <template name="skillsInput">
 <div class="input-group">
@@ -39,16 +31,6 @@
     {{/each}}
   </ul>
 </div>
-{{#each currentUser.profile.tag_ids}}
-{{#each skill this}}
-<div class="input-group">
-  <input type="text" class="form-control " id="skill" value="{{name}}" disabled>
-  <span class="input-group-btn">
-  <button name="Skill" class="btn btn-danger pullTag" type="button">x</button>
-  </span>
-</div>
-{{/each}}
-{{/each}}
 </template>
 <template name="collegesInput">
 <div class="input-group">
@@ -62,16 +44,6 @@
     {{/each}}
   </ul>
 </div>
-{{#each currentUser.profile.tag_ids}}
-{{#each college this}}
-<div class="input-group">
-  <input type="text" class="form-control " id="college" value="{{name}}" disabled>
-  <span class="input-group-btn">
-  <button name="College" class="btn btn-danger pullTag" type="button">x</button>
-  </span>
-</div>
-{{/each}}
-{{/each}}
 </template>
 <template name="rolesInput">
 <div class="input-group">
@@ -85,16 +57,6 @@
     {{/each}}
   </ul>
 </div>
-{{#each currentUser.profile.tag_ids}}
-{{#each role this}}
-<div class="input-group">
-  <input type="text" class="form-control " id="role" value="{{name}}" disabled>
-  <span class="input-group-btn">
-  <button name="Role" class="btn btn-danger pullTag" type="button">x</button>
-  </span>
-</div>
-{{/each}}
-{{/each}}
 </template>
 <template name="experienceInput">
 <div class="row">
@@ -123,36 +85,4 @@
   </div>
 </div>
 <br/>
-<ul class="list-group">
-  {{#each currentUser.profile.experience}}
-  <li class="list-group-item">
-    <div class="row">
-      <div class="col-md-6 col-xs-12">
-        {{type}} -
-        {{#each company company_id}}
-        {{name}}
-        {{/each}}
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4 col-xs-6">
-        <input type="text" class="form-control " id="title" placeholder="Nombre del Puesto" value="{{title}}">
-      </div>
-      <div class="col-md-3 col-xs-6" >
-        <div class="input-group date">
-          <input type="text" id="startedAt" class="form-control" placeholder="Inicio" value="{{startedAt}}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-        </div>
-      </div>
-      <div class="col-md-3 col-xs-6" >
-        <div class="input-group date">
-          <input type="text" id="endedAt" class="form-control" placeholder="Fin" value="{{endedAt}}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-        </div>
-      </div>
-      <div class="col-md-2 col-xs-6" >
-        <button type="button" class="btn btn-danger deleteExperience">Eliminar</button>
-      </div>
-    </div>
-  </li>
-  {{/each}}
-</ul>
 </template>

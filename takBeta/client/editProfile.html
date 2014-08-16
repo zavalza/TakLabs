@@ -6,17 +6,18 @@
           <h3 class="panel-title text-center">Editar Perfil</h3>
       </div>
       <div class="panel-body">
+        {{#each person currentUser.person_id}}
         <form class="form col-md-12 col-xs-12" name="editProfile">
           <div class="form-group">
             <div class="row">
               <div class="col-md-2 col-xs-4">
-                <img src="{{currentUser.profile.picture}}">
+                <img src="{{picture}}">
               </div>
               <div class="col-md-4 col-xs-6">
-                <input type="text" class="form-control " id="firstName" placeholder="Nombre" value="{{currentUser.profile.firstName}}">
+                <input type="text" class="form-control " id="name" placeholder="Nombre" value="{{name}}">
               </div>
               <div class="col-md-4 col-xs-6">
-                <input type="text" class="form-control col-md-5 " id="lastName" placeholder="Apellido" value="{{currentUser.profile.lastName}}">
+                <input type="text" class="form-control col-md-5 " id="url" placeholder="Usuario" value="{{url}}">
               </div>
               <br/><br/>
               <!--
@@ -33,7 +34,16 @@
             <div class="row">
               <div class="col-md-4 col-xs-6">
                 {{>locationInput}}
-                {{>currentUserCities}}
+                {{#each tag_ids}}
+                  {{#each city this}}
+                    <div class="input-group">
+                      <input type="text" class="form-control " id="location" value="{{name}}" disabled>
+                      <span class="input-group-btn">
+                        <button name="City" class="btn btn-danger pullTag" type="button">x</button>
+                      </span>
+                    </div>
+                  {{/each}}
+                {{/each}}
               </div>
             </div>
             <div class="row">
@@ -44,6 +54,16 @@
             <div class="row">
               <div class="col-md-4 col-xs-6">
               {{>rolesInput}}
+              {{#each tag_ids}}
+              {{#each role this}}
+              <div class="input-group">
+                <input type="text" class="form-control " id="role" value="{{name}}" disabled>
+                <span class="input-group-btn">
+                <button name="Role" class="btn btn-danger pullTag" type="button">x</button>
+                </span>
+              </div>
+              {{/each}}
+              {{/each}}
               </div>
               <div class="col-md-4 hidden-xs" >
                   Más comunes: <br/> Administración, Desarrollo, Diseño, Inversión, Mentoría, Mercadotecnia, Ventas
@@ -61,6 +81,16 @@
               <form name="skills" role="form">
                 <div class="col-md-4 col-xs-6">
                   {{>skillsInput}}
+                  {{#each tag_ids}}
+                    {{#each skill this}}
+                    <div class="input-group">
+                      <input type="text" class="form-control " id="skill" value="{{name}}" disabled>
+                      <span class="input-group-btn">
+                      <button name="Skill" class="btn btn-danger pullTag" type="button">x</button>
+                      </span>
+                    </div>
+                    {{/each}}
+                  {{/each}}
                 </div>
               </form>
               <div class="col-md-2 hidden-xs" >
@@ -69,6 +99,14 @@
               <form name="portafolio" role="form">
                 <div class="col-md-4 col-xs-6">
                   {{>portafolioInput}}
+                  {{#each portafolio_urls}}
+                    <div class="input-group">
+                      <input type="text" class="form-control " id="link" value="{{this}}" disabled>
+                      <span class="input-group-btn">
+                      <button name="Link" class="btn btn-danger deleteLink" type="button">x</button>
+                      </span>
+                    </div>
+              {{/each}}
                 </div>
                 <div class="col-md-2 hidden-xs" >
                   Ejemplos: <br/> Github, Behance, Página personal
@@ -83,6 +121,38 @@
             <div class="row">
               <form name="experience" role="form" class="col-md-12 col-xs-12">
                 {{>experienceInput}}
+                <ul class="list-group">
+                  {{#each experience}}
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-md-6 col-xs-12">
+                        {{type}} -
+                        {{#each company company_id}}
+                        {{name}}
+                        {{/each}}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4 col-xs-6">
+                        <input type="text" class="form-control " id="title" placeholder="Nombre del Puesto" value="{{title}}">
+                      </div>
+                      <div class="col-md-3 col-xs-6" >
+                        <div class="input-group date">
+                          <input type="text" id="startedAt" class="form-control" placeholder="Inicio" value="{{startedAt}}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-6" >
+                        <div class="input-group date">
+                          <input type="text" id="endedAt" class="form-control" placeholder="Fin" value="{{endedAt}}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                        </div>
+                      </div>
+                      <div class="col-md-2 col-xs-6" >
+                        <button type="button" class="btn btn-danger deleteExperience">Eliminar</button>
+                      </div>
+                    </div>
+                  </li>
+                  {{/each}}
+                </ul>
               </form>
             </div>
             <div class="row">
@@ -94,6 +164,16 @@
               <form name="education" role="form" class="col-md-12 col-xs-12">
                   <div class="col-md-4 col-xs-6">
                     {{>collegesInput}}
+                    {{#each tag_ids}}
+                    {{#each college this}}
+                    <div class="input-group">
+                      <input type="text" class="form-control " id="college" value="{{name}}" disabled>
+                      <span class="input-group-btn">
+                      <button name="College" class="btn btn-danger pullTag" type="button">x</button>
+                      </span>
+                    </div>
+                    {{/each}}
+                    {{/each}}
                   </div>
               </form>
             </div>
@@ -104,6 +184,7 @@
             </div>
           </div>
         </form>
+        {{/each}}
       </div>
     </div>
   </div>
