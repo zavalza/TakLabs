@@ -1,6 +1,7 @@
 //MongoDB
 Jobs = new Meteor.Collection("jobs");
 Companies = new Meteor.Collection("companies");
+People =  new Meteor.Collection("people");
 Tags = new Meteor.Collection("tags");
 
 //File Storage in MongoDb using FS

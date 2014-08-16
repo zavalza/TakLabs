@@ -137,6 +137,95 @@ else
     }
   });
 
+  Template.addMember.events({
+    'click .addMember' : function(evt, tmpl){
+      //alert("click")
+    var typeOfExperience = tmpl.find('#Experience').value.trim();
+    var name = tmpl.find('#User').value.trim()
+    var re = /([a-zA-Z]+)/g;
+    if (typeOfExperience != "" && name.match(re))
+    {
+    //alert (name);
+    Meteor.call('generateUrl', name, function(error, result){
+    if(!error)
+    {
+    var person={
+    url: result,
+    name: name,
+    email: null,
+    picture:"http://localhost:3000/defaultPic.png", //url of picture
+    facebook_url: null,
+    tag_ids:[],
+    portafolio_urls:[],
+    experience:[{
+    type:typeOfExperience,
+    title:null,
+    startedAt:null,
+    endedAt:null,
+    confirmed:false,
+    company_id: Session.get('currentCompanyId')
+    }], 
+    followers:{count:0, user_ids:[]},
+    following:{count: 0, user_ids:[], company_ids:[]}
+    }
+     Meteor.call('addMember', Session.get('currentCompanyId'), typeOfExperience, person);
+    }
+    });
+    }
+    else
+    {
+    alert ("Selecciona un tipo de experiencia y escribe un nombre");
+    }
+    },
+    /*'click .User': function(evt, tmpl){
+    var name = evt.target.id.trim();
+    //alert (this._id);
+    var typeOfExperience = tmpl.find('#Experience').value.trim();
+    if (typeOfExperience != "")
+    {
+    var personDoc = {
+    type:typeOfExperience,
+    title:null,
+    startedAt:null,
+    endedAt:null,
+    confirmed:false,
+    user_id: Meteor.userId()
+    };
+    var companyDoc = {
+    type:typeOfExperience,
+    title:null,
+    startedAt:null,
+    endedAt:null,
+    confirmed:false,
+    company_id: this._id
+    };
+    Meteor.call('pushExperience', Meteor.userId(), this._id, companyDoc, personDoc);
+    tmpl.find('#Company').value = "";
+    tmpl.find('#Company').blur();
+    document.getElementById('CompanyOptions').style.display='none';
+    }
+    else
+    {
+    alert ("Selecciona un tipo de experiencia");
+    }
+    },*/
+})
+
+Template.addMember.helpers({
+    userOptions : function()
+    {
+    return People.find({});
+    },
+})
+Template.member.helpers({
+  user: function(userId)
+  {
+  Meteor.subscribe("userProfile", userId);
+  return Meteor.users.find({_id: userId});
+  }
+})
+
+
     Template.editCompany.helpers ({
         cityOptions : function()
         {

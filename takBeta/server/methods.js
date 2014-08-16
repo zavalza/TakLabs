@@ -1,28 +1,49 @@
  Meteor.methods({
 
-      generateUrl: function(name){
-        //console.log('creating a url');
-        var cNum = Companies.find({'name': name}).count();
-        var uNum =  Meteor.users.find({'lastName': name}).count();
-        var url = name;
-        if(uNum != 0 || cNum !=0)
-        {
-          url = name + uNum.toString() + cNum.toString();
-        }
+        generateUrl: function(name){
+            //console.log('creating a url');
+            var url = name.toLowerCase().replace(' ', '-');
+            var notValid = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç";
+            var valid = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc";
+            for (var i=0; i<notValid.length; i++) {
+            url = url.replace(notValid.charAt(i), valid.charAt(i));
+            }
+             var cNum = Companies.find({'url': url}).count();
+            var uNum =  People.find({'url': url}).count();
+            if(uNum != 0 || cNum !=0)
+            {
+              url = name + uNum.toString() + cNum.toString();
+            }
+            return url;
+            },
 
-        return url;
-      },
-
-      validateUserUrl: function(userId, url){
+      /*validateUserUrl: function(userId, url){
         var urls = Companies.find({'url': url}).count() 
-        + Meteor.users.find({'profile.url':url}).count();
+        + People.find({'url':url}).count();
         console.log(urls);
         if(urls==0)
         {
-          Meteor.call('updateTextField', userId , 'url', url);
+          //Meteor.call('updateTextField', userId , 'url', url);
         } 
         else
           throw "Used";
+      },*/
+      addMember: function(companyId, typeOfExperience, userDoc){
+      console.log("Creating a new person")
+      //Validar nombre no repetido?
+      var personId= People.insert(userDoc);
+      console.log('Adding experience to '+ companyId);
+      var experience = {
+      type:typeOfExperience,
+      title:null,
+      startedAt:null,
+      endedAt:null,
+      confirmed:false,
+      user_id: null,
+      person_id: personId
+      }
+      Companies.update({_id: companyId},
+      {$push:{'experience': experience}});
       },
 
       updateTextField: function(userId, field, value){
