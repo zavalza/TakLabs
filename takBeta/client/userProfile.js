@@ -1,19 +1,12 @@
 Template.userProfile.helpers({
-       user: function(userId)
-       {
-        if(userId)
-            return Meteor.users.find({_id:userId});
-          else
-          {
-            //alert(Session.get('userToShow'))
-             return Meteor.users.find({_id:Session.get('userToShow')});
-          }
-           
-       },
+      user: function(personId)
+        {
+            return People.find({_id:personId}); 
+        },
 
        canEdit: function()
        {
-        return Meteor.userId()== this._id;
+        return Meteor.userId()== this.user_id;
        },
 
        image: function(ids)

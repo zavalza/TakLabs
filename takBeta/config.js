@@ -24,23 +24,16 @@ Router.map(function() {
   this.route('companies', {path: '/startups'});
   this.route('people', 
   {path: '/personas',
-  waitOn: function() { return Meteor.subscribe('allUserProfiles')},
+  waitOn: function() { return Meteor.subscribe('allRegistredPeople')},
   });
   this.route('editCompany', {path: '/editarCompania'});
   this.route('editProfile', {path: '/editarPerfil'});
-  this.route('userProfile', 
-    {path: '/profile/:_id',
+  this.route('profile', 
+    {path: '/:url',
     waitOn: function()
     { 
-      Session.set("userToShow", this.params._id);
-      return Meteor.subscribe('person', this.params._id);
-    }
-    });
-  this.route('companyProfile', {path: '/company/:_id',
-    waitOn: function()
-    { 
-      Session.set("currentCompanyId", this.params._id);
-      return Meteor.subscribe('companyProfile', this.params._id);
+      Session.set("url", this.params.url);
+      return Meteor.subscribe('personUrl', this.params.url);
     }
     });
 });

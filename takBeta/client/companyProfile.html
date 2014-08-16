@@ -1,6 +1,5 @@
 <template name="companyProfile">
   <div class="wrap">
-    {{#each company}}
       <div class="row">
         <div class="col-md-1 col-xs-4 col-md-offset-1">
           <div class="row">
@@ -41,7 +40,7 @@
         <div class="col-md-6 col-xs-12 col-md-offset-1" >
           <h2>{{name}}</h2>
           <i><h6>{{highConcept}}</h6></i>
-          {{#if canEdit}}
+          {{#if canEdit currentUser.person_id}}
           <a href="{{pathFor 'editCompany'}}"><button class="btn btn-info" type="button">Editar</button></a>
           {{/if}}
           <div class="row">
@@ -110,14 +109,13 @@
           </div>
         </div>
       </div>
-    {{/each}}
   </div>
 </template>
 
 <template name="profileThumbnail">
 <div class="thumbnail">
-  <a href="{{pathFor 'userProfile'}}"><img class="img-circle" src="{{profile.picture}}"></a>
-  <h6 class="text-center"><a href="{{pathFor 'userProfile'}}">{{profile.firstName}} {{profile.lastName}}</a></h6>
+  <a href="{{pathFor 'profile'}}"><img class="img-circle" src="{{profile.picture}}"></a>
+  <h6 class="text-center"><a href="{{pathFor 'profile'}}">{{profile.firstName}} {{profile.lastName}}</a></h6>
   {{#each miniCV profile.experience}}
     {{string}}{{#each company company_id}}<a href="{{pathFor 'companyProfile'}}">@{{name}};</a>{{/each}}
   {{/each}}

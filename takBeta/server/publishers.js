@@ -7,6 +7,13 @@
   }
 });
 
+  Meteor.publish('allRegistredPeople', function(){
+    return People.find({user_id:{$ne:null}});
+  });
+
+  Meteor.publish('personUrl', function(urlToFind){
+    return People.find({url:urlToFind});
+  });
 
   Meteor.publish("companyProfile", function (companyId) {
   //console.log("publishing company with id: " +companyId);

@@ -2,14 +2,14 @@ Template.editCompany.events({
 'change #type' : function(evt, tmpl){
   var value = tmpl.find('#type').value;
   //alert(this._id);
-  Meteor.call('pushCompanyType', this._id, value);
+  Meteor.call('pushCompanyType', Session.get('url'), value);
 },
 
 'change #logo' : function(evt, tmpl) {
     var error = false;
     if(this.logo){
       //alert('Ya tenía un logo');
-      Meteor.call('deleteCompanyLogo', Session.get('currentCompanyId'), this.logo)
+      Meteor.call('deleteCompanyLogo', Session.get('url'), this.logo)
     }
     FS.Utility.eachFile(evt, function(file) {
       im = Images.insert(file, function (err, fileObj) {
@@ -22,7 +22,7 @@ Template.editCompany.events({
       {
 
         //alert(EJSON.stringify(im));
-        Meteor.call("updateCompanyLogo", Session.get('currentCompanyId'), im._id);
+        Meteor.call("updateCompanyLogo", Session.get('url'), im._id);
         //var encontrada = Images.findOne({_id : im._id});
         //alert(encontrada._id)
       }   
@@ -41,7 +41,7 @@ Template.editCompany.events({
       });
       if(!error)
       {
-        Meteor.call("addScreenshot", Session.get('currentCompanyId'), im._id);
+        Meteor.call("addScreenshot", Session.get('url'), im._id);
         //var encontrada = Images.findOne({_id : im._id});
         //alert(encontrada._id)
       }   
@@ -58,7 +58,7 @@ Template.editCompany.events({
     {
       targetId = targetId.toLowerCase();
     }
-    Meteor.call('updateCompanyText', Session.get('currentCompanyId'), targetId, value);
+    Meteor.call('updateCompanyText', Session.get('url'), targetId, value);
   }
 },
 
@@ -72,24 +72,24 @@ if(!link.match(re))
 }
 else
 {
-  Meteor.call('updateCompanyLink', Session.get('currentCompanyId'), targetId, link);
+  Meteor.call('updateCompanyLink', Session.get('url'), targetId, link);
 }
 },
 'click .pullCompanyType': function(evt, tmpl){
   //alert(this);
-  Meteor.call('pullCompanyType', Session.get('currentCompanyId'), this.toString());
+  Meteor.call('pullCompanyType', Session.get('url'), this.toString());
 },
 
 'click .deleteScreenshot': function(evt, tmpl){
   //alert(this._id)
 
-  Meteor.call('deleteScreenshot', Session.get('currentCompanyId'), this._id);
+  Meteor.call('deleteScreenshot', Session.get('url'), this._id);
 },
 
 'click .deleteLogo': function(evt, tmpl){
   //alert(this._id)
 
-  Meteor.call('deleteCompanyLogo', Session.get('currentCompanyId'), this._id);
+  Meteor.call('deleteCompanyLogo', Session.get('url'), this._id);
 },
 
 'keyup #City' : function(evt, tmpl){
@@ -131,7 +131,7 @@ else
       //alert (targetClass);
       //Meteor.call('pushTag', Meteor.userId(), this._id);
       tmpl.find('#'+targetClass).value = this.name;
-      Meteor.call('updateCompanyText', Session.get('currentCompanyId'), 'city', this.name);
+      Meteor.call('updateCompanyText', Session.get('url'), 'city', this.name);
       document.getElementById(targetClass+'Options').style.display='none';
       return true;
     }
@@ -163,12 +163,12 @@ else
     startedAt:null,
     endedAt:null,
     confirmed:false,
-    company_id: Session.get('currentCompanyId')
+    company_id: Session.get('url')
     }], 
     followers:{count:0, user_ids:[]},
     following:{count: 0, user_ids:[], company_ids:[]}
     }
-     Meteor.call('addMember', Session.get('currentCompanyId'), typeOfExperience, person);
+     Meteor.call('addMember', Session.get('url'), typeOfExperience, person);
     }
     });
     }
@@ -240,7 +240,7 @@ Template.member.helpers({
 
         company: function()
         {
-          return Companies.find({_id:Session.get('currentCompanyId')});
+          return Companies.find({url:Session.get('url')});
         },
 
         image: function(ids)

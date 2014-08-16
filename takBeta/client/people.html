@@ -8,12 +8,12 @@
 		{{#each person}}
 		<div class="row">
 			<div class="col-md-2 col-xs-10">
-				<a href="{{pathFor 'userProfile'}}"><img class="img-circle" src="{{profile.picture}}"></a>
+				<a href="{{pathFor 'profile'}}"><img class="img-circle" src="{{picture}}"></a>
 			</div>
 			<div class="col-md-6 col-xs-10">
-				<a href="{{pathFor 'userProfile'}}"><h6>{{profile.firstName}} {{profile.lastName}}</h6></a>
-				{{#each miniCV profile.experience}}
-				{{string}} {{#each company company_id}}<a href="{{pathFor 'companyProfile'}}">@{{name}}</a>{{/each}};
+				<a href="{{pathFor 'profile'}}"><h6>{{name}}</h6></a>
+				{{#each miniCV experience}}
+				{{string}} {{#each company company_id}}<a href="{{pathFor 'profile'}}">@{{name}}</a>{{/each}};
 				{{/each}}
 			</div>
 		</div>

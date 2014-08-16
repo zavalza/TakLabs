@@ -42,11 +42,11 @@
         else
           throw "Used";
       },
-      addMember: function(companyId, typeOfExperience, userDoc){
+      addMember: function(companyUrl, typeOfExperience, userDoc){
       console.log("Creating a new person")
       //Validar nombre no repetido?
       var personId= People.insert(userDoc);
-      console.log('Adding experience to '+ companyId);
+      console.log('Adding experience to '+ companyUrl);
       var experience = {
       type:typeOfExperience,
       title:null,
@@ -56,7 +56,7 @@
       user_id: null,
       person_id: personId
       }
-      Companies.update({_id: companyId},
+      Companies.update({url: companyUrl},
       {$push:{'team': experience}});
       },
 
@@ -127,33 +127,33 @@
           {$pull:{'portafolio_urls': link}});
       },
 
-      addScreenshot: function(companyId, imageId)
+      addScreenshot: function(companyUrl, imageId)
       {
-        console.log('Adding image '+ imageId + ' to '+companyId);
-        Companies.update({_id: companyId},
+        console.log('Adding image '+ imageId + ' to '+companyUrl);
+        Companies.update({url: companyUrl},
           {$push:{'screenshots':imageId}});
       },
 
-      deleteScreenshot: function(companyId, imageId)
+      deleteScreenshot: function(companyUrl, imageId)
       {
-        console.log('Deleting image '+ imageId + ' from '+companyId);
-        Companies.update({_id: companyId},
+        console.log('Deleting image '+ imageId + ' from '+companyUrl);
+        Companies.update({url: companyUrl},
           {$pull:{'screenshots':imageId}});
         Images.remove({_id: imageId});
       },
 
-      updateCompanyLogo: function(companyId, imageId)
+      updateCompanyLogo: function(companyUrl, imageId)
       {
         //Borrar el anterior?
-        console.log('New logo'+ imageId + ' in '+companyId);
-        Companies.update({_id: companyId},
+        console.log('New logo'+ imageId + ' in '+companyUrl);
+        Companies.update({url: companyUrl},
           {$set:{'logo':imageId}});
       },
 
-       deleteCompanyLogo: function(companyId, imageId)
+       deleteCompanyLogo: function(companyUrl, imageId)
       {
-        console.log('Deleting logo '+ imageId + ' from '+companyId);
-        Companies.update({_id: companyId},
+        console.log('Deleting logo '+ imageId + ' from '+companyUrl);
+        Companies.update({url: companyUrl},
           {$set:{'logo':null}});
         Images.remove({_id: imageId});
       },
@@ -185,37 +185,37 @@
              {$pull: {'team':{'person_id':personId}}});
       },
 
-      pushCompanyType: function(companyId, type){
-          console.log('Pushing type '+ type +' to company ' + companyId);
-          Companies.update({_id: companyId},
+      pushCompanyType: function(companyUrl, type){
+          console.log('Pushing type '+ type +' to company ' + companyUrl);
+          Companies.update({url: companyUrl},
             {$push: {'types': type}});
           return true
       },
 
-      pullCompanyType: function(companyId, type){
-          console.log('Pulling type '+ type +' to company ' + companyId);
-          Companies.update({_id: companyId},
+      pullCompanyType: function(companyUrl, type){
+          console.log('Pulling type '+ type +' to company ' + companyUrl);
+          Companies.update({url: companyUrl},
             {$pull: {'types': type}});
           return true
       },
 
-      updateCompanyLink: function(companyId, field, link){
-        console.log('Updating field '+ field +' of company '+companyId);
+      updateCompanyLink: function(companyUrl, field, link){
+        console.log('Updating field '+ field +' of company '+companyUrl);
           switch(field){
             case ('company_url'):
-            Companies.update({_id: companyId},
+            Companies.update({url: companyUrl},
             {$set: {'company_url': link}});
             break;
             case ('fb_url'):
-            Companies.update({_id: companyId},
+            Companies.update({url: companyUrl},
             {$set: {'fb_url': link}});
             break;
             case ('twitter_url'):
-             Companies.update({_id: companyId},
+             Companies.update({url: companyUrl},
             {$set: {'twitter_url': link}});
             break;
             case ('video_url'):
-             Companies.update({_id: companyId},
+             Companies.update({url: companyUrl},
             {$set: {'video_url': link}});
             break;
             default:
@@ -223,23 +223,23 @@
           }
       },
 
-      updateCompanyText: function(companyId, field, value){
-        console.log('Updating field '+ field +' of company '+companyId);
+      updateCompanyText: function(companyUrl, field, value){
+        console.log('Updating field '+ field +' of company '+companyUrl);
           switch(field){
             case ('name'):
-            Companies.update({_id: companyId},
+            Companies.update({url: companyUrl},
             {$set: {'name': value}});
             break;
             case ('city'):
-            Companies.update({_id: companyId},
+            Companies.update({url: companyUrl},
             {$set: {'city': value}});
             break;
             case ('highConcept'):
-             Companies.update({_id: companyId},
+             Companies.update({url: companyUrl},
             {$set: {'highConcept': value}});
             break;
             case ('description'):
-             Companies.update({_id: companyId},
+             Companies.update({url: companyUrl},
             {$set: {'description': value}});
             break;
             default:

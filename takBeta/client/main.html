@@ -12,3 +12,12 @@
 <template name="news">
 {{>footer}}
 </template>
+
+<template name="profile">
+{{#each user}}
+{{>userProfile}}
+{{/each}}
+{{#each company}}
+{{>companyProfile}}
+{{/each}}
+</template>

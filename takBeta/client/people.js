@@ -1,7 +1,8 @@
 Template.people.helpers({
 	person: function()
         {
-            return Meteor.users.find({});
+            Meteor.subscribe('allRegistredPeople');
+            return People.find({user_id:{$ne:null}});
         },
     company: function(companyId)
         {

@@ -24,12 +24,12 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="btn img-responsive" width="60" src="{{picture}}"><b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="{{pathFor 'userProfile'}}">{{name}} </a></li>
+              <li><a href="{{pathFor 'profile'}}">{{name}} </a></li>
               {{#if experience}}
               <li class="divider"></li>
               {{#each experience}}
                     {{#each company company_id}}
-                      <li><a href="{{pathFor 'companyProfile'}}">{{name}}</a></li>
+                      <li><a href="{{pathFor 'profile'}}">{{name}}</a></li>
                     {{/each}}
               {{/each}}
               {{/if}}

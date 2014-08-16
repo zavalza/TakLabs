@@ -16,14 +16,7 @@ Template.companyProfile.events({
 Template.profileThumbnail.helpers({
   company: function(companyId)
         {
-          if(companyId)
-            return Companies.find({_id:companyId});
-          else
-          {
-            alert(Session.get('currentCompanyId'));
-             return Companies.find({_id:Session.get('currentCompanyId')});
-          }
-           
+            return Companies.find({_id:companyId}); 
         },
 
     miniCV: function(experience)
@@ -59,11 +52,11 @@ Template.profileThumbnail.helpers({
 })
 
 Template.companyProfile.helpers ({
-        canEdit: function()
+        canEdit: function(personId)
     {
       //return true;
-      return (Meteor.users.find({_id: Meteor.userId(),
-        'profile.experience':{$elemMatch:{'company_id': Session.get('currentCompanyId'), 'type':'Fundador'}}}).count() > 0);
+      return (People.find({_id: personId,
+        'experience':{$elemMatch:{'company_id': this._id, 'type':'Fundador'}}}).count() > 0);
     },
 
         company: function(companyId)
