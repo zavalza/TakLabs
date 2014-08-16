@@ -1,5 +1,19 @@
  Meteor.methods({
 
+          newUserToPerson: function(userId){
+          var userDoc = Meteor.users.findOne({_id:userId}, {'profile':1,'_id':0});
+          //console.log(userDoc);
+          var emptyProfile={followers:{count:0, user_ids:[]},
+                            following:{count: 0, user_ids:[], company_ids:[]}
+                            };
+          personId = People.insert(userDoc.profile);
+          var url = Meteor.call('generateUrl', userDoc.profile.name); 
+          People.update({_id:personId}, 
+            {$set:{'user_id':Meteor.userId(), 'url':url}});
+          Meteor.users.update({_id:Meteor.userId()},
+            {$set:{'person_id':personId,'profile':emptyProfile}});
+        },
+
         generateUrl: function(name){
             //console.log('creating a url');
             var url = name.toLowerCase().replace(' ', '-');

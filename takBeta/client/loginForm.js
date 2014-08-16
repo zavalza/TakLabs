@@ -9,6 +9,7 @@ Template.loginForm.events({
           else
           {
             //Success
+            
             Router.go('news');
           }
       }); 

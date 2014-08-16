@@ -8,7 +8,13 @@ Template.newUserForm.events({
             Session.set('errorMessage', err.reason || 'Unknown error');
           else
           {
-            Router.go('editProfile');
+            Meteor.call('newUserToPerson', Meteor.userId(), function(error, result)
+              {
+                if(!error){
+                  Router.go('editProfile');
+                }
+              });
+            
           }
         }); 
         }

@@ -13,11 +13,10 @@
     else{
       console.log("Error");
     }
-    var newUrl = Meteor.call('generateUrl', lastName);
+    var name = firstName+" "+lastName;
     var profile ={
-                      url:newUrl,
-                      firstName:firstName,
-                      lastName:lastName,
+                      url:null,
+                      name:name,
                       email:email,
                       picture:fbPicture, //url of picture
                       facebook_url:fbLink,
@@ -28,10 +27,7 @@
                       //twitter_url:
                       //linkedin_url:
                       //behance_url
-                      followers:{count:0, user_ids:[]},
-                      following:{count: 0, user_ids:[], company_ids:[]}
                     }
-    //console.log(location);
     user.profile = profile;
     return user;
   });
