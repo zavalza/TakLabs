@@ -222,6 +222,12 @@ Template.member.helpers({
   {
   Meteor.subscribe("userProfile", userId);
   return Meteor.users.find({_id: userId});
+  },
+
+  person: function(personId)
+  {
+  Meteor.subscribe("person", personId);
+  return People.find({_id: personId});
   }
 })
 

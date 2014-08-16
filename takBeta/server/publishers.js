@@ -23,6 +23,11 @@
     //limitar campos a los que sean públicos para seguridad
   });
 
+   Meteor.publish("person", function (personId) {
+    return People.find({_id: personId});
+    //Todos los campos deberían ser públicos
+  });
+
   Meteor.publish('manyUserProfiles', function(idsToFind){
  	return Meteor.users.find({_id:{$in:idsToFind}});
  })

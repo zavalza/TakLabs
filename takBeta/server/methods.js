@@ -8,11 +8,10 @@
             for (var i=0; i<notValid.length; i++) {
             url = url.replace(notValid.charAt(i), valid.charAt(i));
             }
-             var cNum = Companies.find({'url': url}).count();
-            var uNum =  People.find({'url': url}).count();
-            if(uNum != 0 || cNum !=0)
+             var existing = Companies.find({'url': url}).count()+ People.find({'url': url}).count();
+            if(existing !=0)
             {
-              url = name + uNum.toString() + cNum.toString();
+              url = url + existing.toString();
             }
             return url;
             },
@@ -43,7 +42,7 @@
       person_id: personId
       }
       Companies.update({_id: companyId},
-      {$push:{'experience': experience}});
+      {$push:{'team': experience}});
       },
 
       updateTextField: function(userId, field, value){
