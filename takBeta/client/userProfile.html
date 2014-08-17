@@ -37,16 +37,14 @@
         <div class="col-md-4 col-xs-10">
           <div class="thumbnail">
             {{#each company company_id}}
+            <a href="{{pathFor 'profile'}}">
             {{#each image logo}}
-            <a href="{{pathFor 'companyProfile'}}">
               <img src="{{url}}">
-            </a>
             {{else}}
-            <a href="{{pathFor 'companyProfile'}}">
               <img src="http://localhost:3000/companyLogo.png">
-            </a>
             {{/each}}
-            <a href="{{pathFor 'companyProfile'}}"><h4 class="text-center">{{name}}</h4></a>
+            </a>
+            <a href="{{pathFor 'profile'}}"><h4 class="text-center">{{name}}</h4></a>
             {{/each}}
             <h6>{{type}}</h6>
             {{title}}<br>

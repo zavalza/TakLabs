@@ -42,10 +42,32 @@
         else
           throw "Used";
       },
-      addMember: function(companyUrl, typeOfExperience, userDoc){
+      addMember: function(companyUrl, typeOfExperience, name){
+      console.log('requesting new url');
+      var url = Meteor.call('generateUrl', name);
+      var companyDoc = Companies.findOne({url:companyUrl});
       console.log("Creating a new person")
+      var person={
+                url: url,
+                name: name,
+                email: null,
+                picture:"http://localhost:3000/defaultPic.png", //url of picture
+                facebook_url: null,
+                tag_ids:[],
+                portafolio_urls:[],
+                experience:[{
+                type:typeOfExperience,
+                title:null,
+                startedAt:null,
+                endedAt:null,
+                confirmed:false,
+                company_id: companyDoc._id,
+                }], 
+                followers:{count:0, user_ids:[]},
+                following:{count: 0, user_ids:[], company_ids:[]}
+                }
       //Validar nombre no repetido?
-      var personId= People.insert(userDoc);
+      var personId= People.insert(person);
       console.log('Adding experience to '+ companyUrl);
       var experience = {
       type:typeOfExperience,

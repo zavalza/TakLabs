@@ -114,10 +114,10 @@
 
 <template name="profileThumbnail">
 <div class="thumbnail">
-  <a href="{{pathFor 'profile'}}"><img class="img-circle" src="{{profile.picture}}"></a>
-  <h6 class="text-center"><a href="{{pathFor 'profile'}}">{{profile.firstName}} {{profile.lastName}}</a></h6>
-  {{#each miniCV profile.experience}}
-    {{string}}{{#each company company_id}}<a href="{{pathFor 'companyProfile'}}">@{{name}};</a>{{/each}}
+  <a href="{{pathFor 'profile'}}"><img class="img-circle" src="{{picture}}"></a>
+  <h6 class="text-center"><a href="{{pathFor 'profile'}}">{{name}}</a></h6>
+  {{#each miniCV experience}}
+    {{string}}{{#each company company_id}}<a href="{{pathFor 'profile'}}">@{{name}};</a>{{/each}}
   {{/each}}
 </div>
 </template>

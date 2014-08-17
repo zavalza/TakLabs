@@ -9,7 +9,7 @@
 			{{#each company}}
 				<div class="row">
 					<div class="col-md-2 col-xs-10">
-						<a href="{{pathFor 'companyProfile'}}">
+						<a href="{{pathFor 'profile'}}">
 				 		{{#each image logo}}
 	                		<img src="{{url}}">
 	                	{{else}}
@@ -18,7 +18,7 @@
 	                	</a>
         			</div>
 					<div class="col-md-6 col-xs-10">
-						<a href="{{pathFor 'companyProfile'}}"><h6>{{name}}</h6></a>
+						<a href="{{pathFor 'profile'}}"><h6>{{name}}</h6></a>
 						{{highConcept}}
 					</div>
 		 		</div>

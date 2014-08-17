@@ -45,6 +45,11 @@
     //Todos los campos deberían ser públicos
   });
 
+   Meteor.publish("manyPersons", function (idsToFind) {
+    return People.find({_id:{$in:idsToFind}});
+    //Todos los campos deberían ser públicos
+  });
+
    Meteor.publish("people", function (personId) {
     return People.find({});
     //Todos los campos deberían ser públicos

@@ -125,11 +125,11 @@ Template.companyProfile.helpers ({
           {
             if (teamArray[i].type=="Fundador")
             {
-              idsToFind.push(teamArray[i].user_id);
+              idsToFind.push(teamArray[i].person_id);
             }
           }
-          Meteor.subscribe("manyUserProfiles", idsToFind);
-          return Meteor.users.find({_id:{$in:idsToFind}});
+          Meteor.subscribe("manyPersons", idsToFind);
+          return People.find({_id:{$in:idsToFind}});
         },
 
         teamMember: function(teamArray)
@@ -140,11 +140,11 @@ Template.companyProfile.helpers ({
             //alert(teamArray[i].type)
             if (teamArray[i].type=="Miembro del equipo")
             {
-              idsToFind.push(teamArray[i].user_id);
+              idsToFind.push(teamArray[i].person_id);
             }
           }
-          Meteor.subscribe("manyUserProfiles", idsToFind);
-          return Meteor.users.find({_id:{$in:idsToFind}});
+          Meteor.subscribe("manyPersons", idsToFind);
+          return People.find({_id:{$in:idsToFind}});
         },
 
         investor: function(teamArray)
@@ -154,10 +154,10 @@ Template.companyProfile.helpers ({
           {
             if (teamArray[i].type=="Inversionista")
             {
-              idsToFind.push(teamArray[i].user_id);
+              idsToFind.push(teamArray[i].person_id);
             }
           }
-          Meteor.subscribe("manyUserProfiles", idsToFind);
-          return Meteor.users.find({_id:{$in:idsToFind}});
+          Meteor.subscribe("manyPersons", idsToFind);
+          return People.find({_id:{$in:idsToFind}});
         },
     });

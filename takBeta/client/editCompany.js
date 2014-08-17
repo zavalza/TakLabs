@@ -146,31 +146,7 @@ else
     if (typeOfExperience != "" && name.match(re))
     {
     //alert (name);
-    Meteor.call('generateUrl', name, function(error, result){
-    if(!error)
-    {
-    var person={
-    url: result,
-    name: name,
-    email: null,
-    picture:"http://localhost:3000/defaultPic.png", //url of picture
-    facebook_url: null,
-    tag_ids:[],
-    portafolio_urls:[],
-    experience:[{
-    type:typeOfExperience,
-    title:null,
-    startedAt:null,
-    endedAt:null,
-    confirmed:false,
-    company_id: Session.get('url')
-    }], 
-    followers:{count:0, user_ids:[]},
-    following:{count: 0, user_ids:[], company_ids:[]}
-    }
-     Meteor.call('addMember', Session.get('url'), typeOfExperience, person);
-    }
-    });
+     Meteor.call('addMember', Session.get('url'), typeOfExperience, name);
     }
     else
     {
