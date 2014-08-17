@@ -39,7 +39,7 @@
         </div>
         <div class="col-md-6 col-xs-12 col-md-offset-1" >
           <h2>{{name}}</h2>
-          <i><h6>{{highConcept}}</h6></i>
+          <i><h4>{{highConcept}}</h4></i>
           {{#if canEdit currentUser.person_id}}
           <a href="{{pathFor 'editCompany'}}"><button class="btn btn-info" type="button">Editar</button></a>
           {{/if}}
@@ -91,21 +91,22 @@
               <div class="col-md-3 col-xs-10">
                 {{>profileThumbnail}}
               </div>
-            {{/each}}  
-          </div>
-          <div class="row">
+            {{/each}} 
             {{#each teamMember team}}
               <div class="col-md-3 col-xs-10">
                 {{>profileThumbnail}}
               </div>
             {{/each}}  
-          </div>
-          <div class="row">
             {{#each investor team}}
               <div class="col-md-3 col-xs-10">
                 {{>profileThumbnail}}
               </div>
-            {{/each}}  
+            {{/each}}
+            {{#each otherRole team}}
+              <div class="col-md-3 col-xs-10">
+                {{>profileThumbnail}}
+              </div>
+            {{/each}} 
           </div>
         </div>
       </div>
@@ -117,7 +118,7 @@
   <a href="{{pathFor 'profile'}}"><img class="img-circle" src="{{picture}}"></a>
   <h6 class="text-center"><a href="{{pathFor 'profile'}}">{{name}}</a></h6>
   {{#each miniCV experience}}
-    {{string}}{{#each company company_id}}<a href="{{pathFor 'profile'}}">@{{name}};</a>{{/each}}
+    {{string}}{{#each company company_id}}<a href="{{pathFor 'profile'}}"> @{{name}};</a>{{/each}}
   {{/each}}
 </div>
 </template>

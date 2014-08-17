@@ -17,6 +17,10 @@ Template.profile.helpers({
         },
     company: function()
        {
+       	     Meteor.call('getCompanyId',Session.get('url'), function(error, result){
+       	     	if(!error)
+       	     		Session.set('currentCompanyId', result)
+       	     } );
              return Companies.find({url:Session.get('url')});
      	}
 })

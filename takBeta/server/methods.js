@@ -207,6 +207,11 @@
              {$pull: {'team':{'person_id':personId}}});
       },
 
+      getCompanyId: function(companyUrl){
+          var companyDoc = Companies.findOne({url: companyUrl});
+          return companyDoc._id;
+      },
+
       pushCompanyType: function(companyUrl, type){
           console.log('Pushing type '+ type +' to company ' + companyUrl);
           Companies.update({url: companyUrl},

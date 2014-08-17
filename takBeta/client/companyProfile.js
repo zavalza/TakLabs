@@ -47,7 +47,7 @@ Template.profileThumbnail.helpers({
         
     }
     //alert(EJSON.stringify(CV))
-    return CV;
+    return CV.slice(0,4);
   }
 })
 
@@ -153,6 +153,19 @@ Template.companyProfile.helpers ({
           for(var i=0; i < teamArray.length; i++)
           {
             if (teamArray[i].type=="Inversionista")
+            {
+              idsToFind.push(teamArray[i].person_id);
+            }
+          }
+          Meteor.subscribe("manyPersons", idsToFind);
+          return People.find({_id:{$in:idsToFind}});
+        },
+        otherRole: function(teamArray)
+        {
+          var idsToFind=[];
+          for(var i=0; i < teamArray.length; i++)
+          {
+            if (teamArray[i].type=="Asesor" || teamArray[i].type=="Miembro del consejo" )
             {
               idsToFind.push(teamArray[i].person_id);
             }
