@@ -1,4 +1,37 @@
 Template.newUserForm.events({
+    'keyup #User' : function(evt, tmpl){
+      //busca todo el string y no palabra por palabra
+      var targetId = evt.target.id;
+      //alert(targetId)
+      filter = tmpl.find('#'+targetId).value.trim().toUpperCase();
+      var re = /([a-zA-Z]+)/g;
+      var options = document.getElementsByClassName(targetId);
+      for (var i = 0; i < options.length; i++) {
+
+        if (filter.match(re)){
+          var name = options[i].innerHTML;
+          //alert(name);
+          if (name.toUpperCase().indexOf(filter) == 0)
+              {
+                document.getElementById(targetId+'Options').style.display='inline';
+                options[i].style.display = 'list-item';
+              }
+              
+          else
+              {
+                options[i].style.display = 'none';
+              }
+              
+        }
+        else
+        {
+          document.getElementById(targetId+'Options').style.display='none';
+          options[i].style.display = 'none';
+        }
+          
+      }
+    },
+
     'click .tryFacebookLogin': function(evt, tmpl){
         if(Accounts.loginServicesConfigured()){
         Meteor.loginWithFacebook({
@@ -26,3 +59,11 @@ Template.newUserForm.events({
       
     }
   });
+
+Template.newUserForm.helpers({
+  userOptions : function()
+    {
+      Meteor.subscribe('people');
+    return People.find({});
+    }
+})

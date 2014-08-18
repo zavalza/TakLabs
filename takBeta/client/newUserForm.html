@@ -1,15 +1,31 @@
 <template name="newUserForm">
 <div class="wrap">
-  <div class="panel panel-primary col-md-8 col-md-offset-2">
+  <div class="panel panel-default col-md-8 col-md-offset-2">
     <div class="panel-heading">
       <h3 class="panel-title text-center">Nuevo Usuario</h3>
     </div>
     <div class="panel-body">
-      <form class="form col-md-10 col-md-offset-1" name="newUserForm">
-        <div class="col-lg-6 col-lg-offset-3 centered">
+       <div class="row">
+      <div class="col-lg-4 col-lg-offset-4 centered">
+      <h4>Busca tu perfil</h4>
+      <div class="input-group">
+        <input type="text" class="form-control dropdown-toggle" id="User" placeholder="Nombre" data-toggle="dropdown">
+        <ul class="dropdown-menu" style="display: none;" id="UserOptions">
+          {{#each userOptions}}
+          <a href="{{pathFor 'profile'}}"><li style="display: none;" class="User" id="{{url}}">{{name}}</li></a>
+          {{/each}}
+        </ul>
+      </div>
+      </div>
+    </div>
+        <div class="row">
+        <h6 class="text-center">¿No te encuentras?</h6>
+        </div>
+        <div class="row">
+        <div class="col-lg-4 col-lg-offset-4 centered">
           <img class="btn tryFacebookLogin img-responsive"  src="http://localhost:3000/facebookButton.png">
         </div>
-      </form>
+        </div>
     </div>
   </div>
 </div>
