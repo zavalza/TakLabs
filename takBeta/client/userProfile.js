@@ -6,8 +6,25 @@ Template.userProfile.helpers({
 
        canEdit: function()
        {
-        return Meteor.userId()== this.user_id;
+        if(Meteor.userId())
+          return Meteor.userId()== this.user_id;
+        else
+          return false;
        },
+
+       hasNoUser: function()
+       {
+        if(this.user_id)
+          return false;
+        else
+          return true;
+       },
+
+       isFirst:function(pos)
+       {
+        return (pos == 0);
+       },
+
 
        image: function(ids)
         {
@@ -48,6 +65,9 @@ Template.userProfile.helpers({
 
       skill: function(tagsArray)
       {
-        return Tags.find({_id:{$in:tagsArray}, type:'Skill'});
+        return Tags.find({_id:{$in:tagsArray}, type:'Skill'}).map(function(skill, index) {
+          skill.position = index;
+          return skill;
+          });
       }
     });

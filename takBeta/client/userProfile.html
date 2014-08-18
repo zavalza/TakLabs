@@ -5,11 +5,13 @@
       <div class="row">
         <img class="img-circle img-responsive" src="{{picture}}">
       </div>
+      {{#if facebook_url}}
       <div class="row">
         <div class="col-md-6 col-xs-3">
-          <a href="{{facebook_url}}"><img class)="img-responsive" src="http://localhost:3000/fbLogo.png"></a>
-        </div>
+          <a href="{{facebook_url}}"><img class="img-responsive" src="http://localhost:3000/fbLogo.png"></a>
       </div>
+      </div>
+      {{/if}}
       <div class="row">
         {{#each role tag_ids}}
         <div style="color: gray">{{name}}</div>
@@ -30,6 +32,9 @@
       <h2>{{name}}</h2>
       {{#if canEdit}}
       <a href="{{pathFor 'editProfile'}}"><button class="btn btn-info" type="button">Editar</button></a>
+      {{/if}}
+      {{#if hasNoUser}}
+      <a href="{{pathFor 'editProfile'}}"><button class="btn btn-warning" type="button">Soy yo</button></a>
       {{/if}}
       <div class="row">
       <div class="col-md-8 col-xs-12" >
@@ -55,9 +60,11 @@
         </div>
       </div>
       <div class="col-md-3 col-xs-12" >
-      <h4>Habilidades</h4>
       <div class="row" style="color: blue">
         {{#each skill tag_ids}}
+        {{#if isFirst position}}
+        <h4>Habilidades</h4>
+        {{/if}}
         {{name}}
         {{/each}}
       </div>
