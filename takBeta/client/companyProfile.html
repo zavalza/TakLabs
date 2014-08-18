@@ -37,14 +37,16 @@
             <div style="color: blue">{{city}}</div>
           </div>
         </div>
-        <div class="col-md-6 col-xs-12 col-md-offset-1" >
+        <div class="col-md-9 col-xs-12 col-md-offset-1" >
           <h2>{{name}}</h2>
           <i><h4>{{highConcept}}</h4></i>
           {{#if canEdit currentUser.person_id}}
           <a href="{{pathFor 'editCompany'}}"><button class="btn btn-info" type="button">Editar</button></a>
           {{/if}}
           <div class="row">
-            <div class="col-md-8 col-xs-6">
+          <div class="col-md-8 col-xs-6">
+            <div class="row">
+              <div class="col-md-8 col-xs-6 col-md-offset-2">
               {{#if video_url}}
                 {{#if isYoutube video_url}}
                   {{#each videoCode video_url}}
@@ -62,13 +64,15 @@
                 {{/if}}
               {{/if}}
             </div>
-          </div>
+            </div>
+            <br/>
           <div class="row" style="font-size:18px;">
             {{description}}
           </div> 
+          <br/>
           {{#if screenshots}}
             <div class="row">
-              <div class="col-md-8 col-xs-10">
+              <div class="col-md-8 col-xs-10 col-md-offset-2">
                 {{#each image screenshotToShow}}
                   <img src="{{url}}">
                 {{/each}}
@@ -108,8 +112,21 @@
               </div>
             {{/each}} 
           </div>
+        {{#if article_urls}}
+          <h4>Prensa</h4>
+            {{#each article_urls}}
+            <div class="row" style="color: blue">
+            <a href="{{this}}">{{this}}</a>
+            </div>
+            {{/each}}
+          {{/if}}
+        </div>
+         <div class="col-md-3 col-xs-12" >
+          <h4>Vacantes</h4>
         </div>
       </div>
+    </div>
+  </div>
   </div>
 </template>
 

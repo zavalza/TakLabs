@@ -149,6 +149,18 @@
           {$pull:{'portafolio_urls': link}});
       },
 
+      addArticle: function(companyId, link){
+          console.log('Adding an article to company'+ companyId);
+          Companies.update({_id: companyId},
+          {$push:{'article_urls': link}});
+      },
+
+      deleteArticle: function(companyId, link){
+          console.log('Deleting the article '+link +' of profile '+ companyId);
+          Companies.update({_id: companyId},
+          {$pull:{'article_urls': link}});
+      },
+
       addScreenshot: function(companyUrl, imageId)
       {
         console.log('Adding image '+ imageId + ' to '+companyUrl);

@@ -85,6 +85,30 @@ else
       Meteor.call('updateExperience', this.person_id, Session.get('currentCompanyId'), field, value);
   },
 
+  'click .addArticle' : function (evt, tmpl){
+    //alert('article')
+      //alert(this._id);
+      var link = tmpl.find('#newLink').value;
+      var re = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+      if (link.match(re))
+      {
+        Meteor.call('addArticle', Session.get('currentCompanyId'), link);
+        tmpl.find('#newLink').value = "";
+      }
+      else
+      {
+        alert('No parece una liga válida');
+      }
+      //document.getElementById('SkillOptions').style.display='none';
+      return true;
+    },
+
+    'click .deleteArticle' : function (evt, tmpl){
+      //alert(this.toString());
+      Meteor.call('deleteArticle', Session.get('currentCompanyId'), this.toString());
+      return true;
+    },
+
  'click .deleteExperience': function(evt, tmpl){
      //alert(this.company_id);
      Meteor.call('deleteExperience', this.person_id, Session.get('currentCompanyId'));

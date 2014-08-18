@@ -157,6 +157,28 @@
             {{>addMember}}
           </div>
           <div class="row">
+            <h4>Prensa</h4>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-xs-10">
+            <div class="input-group">
+            <input type="url" class="form-control " id="newLink" placeholder="Nuevo Enlace">
+            <span class="input-group-btn">
+            <button class="btn btn-info addArticle" type="button">+</button>
+            </span>
+          </div>
+          {{#each article_urls}}
+            <div class="input-group">
+              <input type="text" class="form-control " id="link" value="{{this}}" disabled>
+              <span class="input-group-btn">
+              <button name="Link" class="btn btn-danger deleteArticle" type="button">x</button>
+              </span>
+            </div>
+          {{/each}}
+        </div>
+        </div>
+
+          <div class="row">
             <ul class="pager">
               <li><a href="{{pathFor 'companies'}}">Hecho</a></li>
             </ul>
