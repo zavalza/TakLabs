@@ -5,13 +5,23 @@
       <div class="row">
         <img class="img-circle img-responsive" src="{{picture}}">
       </div>
-      {{#if facebook_url}}
       <div class="row">
+      {{#if facebook_url}}
         <div class="col-md-6 col-xs-3">
           <a href="{{facebook_url}}"><img class="img-responsive" src="fbLogo.png"></a>
       </div>
+      {{/if}}
+      {{#if twitter_url}}
+        <div class="col-md-6 col-xs-3">
+          <a href="{{twitter_url}}"><img class="img-responsive" src="twitterLogo.png"></a>
       </div>
       {{/if}}
+      {{#if email}}
+        <div class="col-md-6 col-xs-3">
+          <a href="mailto:{{email}}"><img class="img-responsive" src="emailLogo.png"></a>
+      </div>
+      {{/if}}
+      </div>
       <div class="row">
         {{#each role tag_ids}}
         <div style="color: gray">{{name}}</div>

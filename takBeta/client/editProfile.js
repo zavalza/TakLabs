@@ -8,7 +8,7 @@ Template.editProfile.rendered=function() {
   };
 
 Template.editProfile.events({
-    'change #name' : function(evt, tmpl){
+    'change #name,#email,#facebook_url,#twitter_url' : function(evt, tmpl){
       var targetId = evt.target.id;
       //alert (Session.get('userToShow'));
       var newValue = tmpl.find('#'+targetId).value.trim();

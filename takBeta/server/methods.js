@@ -111,6 +111,14 @@
             People.update({_id: personId},
             {$set: {'email':value}});
             break;
+            case('facebook_url'):
+            People.update({_id: personId},
+            {$set: {'facebook_url':value}});
+            break;
+            case('twitter_url'):
+            People.update({_id: personId},
+            {$set: {'twitter_url':value}});
+            break;
             case('url'):
             People.update({_id: personId},
             {$set: {'url':value}});
