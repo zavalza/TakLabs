@@ -69,7 +69,7 @@
                 url: url,
                 name: name,
                 email: null,
-                picture:"http://localhost:3000/defaultPic.png", //url of picture
+                picture:"defaultPic.png", //url of picture
                 facebook_url: null,
                 tag_ids:[],
                 portafolio_urls:[],
