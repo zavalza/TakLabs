@@ -10,7 +10,7 @@ Template.loginForm.events({
           {
             //Success
             
-            Router.go('news');
+            Router.go('people');
           }
       }); 
       }

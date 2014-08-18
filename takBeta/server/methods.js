@@ -15,6 +15,24 @@
           return personId;
         },
 
+        claimPerson: function(userId, personUrl){
+          var userDoc = Meteor.users.findOne({_id:userId}, {'profile':1,'_id':0});
+          var emptyProfile={followers:{count:0, user_ids:[]},
+                            following:{count: 0, user_ids:[], company_ids:[]}
+                            };
+          var personDoc = People.findOne({url:personUrl});
+          var personId = personDoc._id;
+          console.log('Joint of user '+ userId + " with person "+personId);
+          People.update({_id:personId}, 
+            {$set:{'user_id':userId, 
+                  'picture': userDoc.profile.picture, 
+                  'facebook_url': userDoc.profile.facebook_url,
+                  'email':userDoc.profile.email}});
+          Meteor.users.update({_id:userId},
+            {$set:{'person_id':personId,'profile':emptyProfile}});
+          return personId;
+        },
+
         generateUrl: function(name){
             //console.log('creating a url');
             var url = name.toLowerCase().split(' ').join('-');
