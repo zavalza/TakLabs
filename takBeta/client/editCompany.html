@@ -48,7 +48,7 @@
               <input type="text" class="form-control dropdown-toggle" id="City" placeholder="Ciudad" value="{{city}}" data-toggle="dropdown">
               <ul class="dropdown-menu" style="display: none;" id="CityOptions">
                 {{#each cityOptions}}
-                <a href="#"><li style="color: white; display: none;" class="City" id="{{name}}">{{name}}</li></a>
+                <a href="#"><li style=" display: none;" class="City" id="{{name}}">{{name}}</li></a>
                 {{/each}}
               </ul>
             </div>
@@ -223,7 +223,7 @@
       </span>
       <ul class="dropdown-menu" style="display: none;" id="UserOptions">
         {{#each userOptions}}
-        <a href="#"><li style="color: white; display: none;" class="User" id="{{name}}">{{name}}</li></a>
+        <a href="#"><li style="display: none;" class="User" id="{{_id}}">{{name}}</li></a>
         {{/each}}
       </ul>
     </div>

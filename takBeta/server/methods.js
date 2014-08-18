@@ -17,7 +17,7 @@
 
         generateUrl: function(name){
             //console.log('creating a url');
-            var url = name.toLowerCase().replace(' ', '-');
+            var url = name.toLowerCase().split(' ').join('-');
             var notValid = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç";
             var valid = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc";
             for (var i=0; i<notValid.length; i++) {
@@ -209,7 +209,10 @@
 
       getCompanyId: function(companyUrl){
           var companyDoc = Companies.findOne({url: companyUrl});
-          return companyDoc._id;
+          if(companyDoc)
+            return companyDoc._id;
+          else
+            return null;
       },
 
       pushCompanyType: function(companyUrl, type){

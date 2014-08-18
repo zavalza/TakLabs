@@ -75,6 +75,20 @@ else
   Meteor.call('updateCompanyLink', Session.get('url'), targetId, link);
 }
 },
+
+'change #title,#startedAt,#endedAt': function(evt, tmpl){
+      //alert(this.company_id);
+      var field = evt.target.id;
+      //alert(field);
+      var value = evt.target.value.trim();
+      //alert(value);
+      Meteor.call('updateExperience', this.person_id, Session.get('currentCompanyId'), field, value);
+  },
+
+ 'click .deleteExperience': function(evt, tmpl){
+     //alert(this.company_id);
+     Meteor.call('deleteExperience', this.person_id, Session.get('currentCompanyId'));
+  },
 'click .pullCompanyType': function(evt, tmpl){
   //alert(this);
   Meteor.call('pullCompanyType', Session.get('url'), this.toString());
@@ -92,7 +106,7 @@ else
   Meteor.call('deleteCompanyLogo', Session.get('url'), this._id);
 },
 
-'keyup #City' : function(evt, tmpl){
+'keyup #City,#User' : function(evt, tmpl){
       //busca todo el string y no palabra por palabra
       var targetId = evt.target.id;
       //alert(targetId)
@@ -145,7 +159,7 @@ else
     var re = /([a-zA-Z]+)/g;
     if (typeOfExperience != "" && name.match(re))
     {
-    //alert (name);
+    alert (name);
      Meteor.call('addMember', Session.get('url'), typeOfExperience, name);
     }
     else
@@ -153,8 +167,9 @@ else
     alert ("Selecciona un tipo de experiencia y escribe un nombre");
     }
     },
-    /*'click .User': function(evt, tmpl){
-    var name = evt.target.id.trim();
+
+    'click .User': function(evt, tmpl){
+    var personId = evt.target.id.trim();
     //alert (this._id);
     var typeOfExperience = tmpl.find('#Experience').value.trim();
     if (typeOfExperience != "")
@@ -165,7 +180,7 @@ else
     startedAt:null,
     endedAt:null,
     confirmed:false,
-    user_id: Meteor.userId()
+    person_id: personId
     };
     var companyDoc = {
     type:typeOfExperience,
@@ -173,25 +188,26 @@ else
     startedAt:null,
     endedAt:null,
     confirmed:false,
-    company_id: this._id
+    company_id: Session.get('currentCompanyId')
     };
-    Meteor.call('pushExperience', Meteor.userId(), this._id, companyDoc, personDoc);
-    tmpl.find('#Company').value = "";
-    tmpl.find('#Company').blur();
-    document.getElementById('CompanyOptions').style.display='none';
+    Meteor.call('pushExperience', personId, Session.get('currentCompanyId'), companyDoc, personDoc);
+    tmpl.find('#User').value = "";
+    tmpl.find('#User').blur();
+    document.getElementById('UserOptions').style.display='none';
     }
     else
     {
     alert ("Selecciona un tipo de experiencia");
     }
-    },*/
+    },
 })
 
 Template.addMember.helpers({
     userOptions : function()
     {
+      Meteor.subscribe('people');
     return People.find({});
-    },
+    }
 })
 Template.member.helpers({
   user: function(userId)

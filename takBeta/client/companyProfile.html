@@ -115,7 +115,7 @@
 
 <template name="profileThumbnail">
 <div class="thumbnail">
-  <a href="{{pathFor 'profile'}}"><img class="img-circle" src="{{picture}}"></a>
+  <a href="{{pathFor 'profile'}}"><img style="height: 100px;" class="img-circle" src="{{picture}}"></a>
   <h6 class="text-center"><a href="{{pathFor 'profile'}}">{{name}}</a></h6>
   {{#each miniCV experience}}
     {{string}}{{#each company company_id}}<a href="{{pathFor 'profile'}}"> @{{name}};</a>{{/each}}
