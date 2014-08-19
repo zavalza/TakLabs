@@ -38,7 +38,7 @@
             </div>
             <div class="row">
               <div class="col-md-6 col-xs-6">
-                <input type="url" class="form-control col-md-5 " id="twitter_url" placeholder="Twitter" value="{{twitter_url}}">
+                <input type="text" class="form-control col-md-5 " id="twitter_url" placeholder="Twitter" value="{{twitter_url}}">
               </div>
             </div>
             <div class="row">
@@ -68,7 +68,7 @@
             </div>
             <div class="row">
               <div class="col-md-6 col-xs-6" >
-                <h4>Roles que busco dentro de una Startup</h4>
+                <h4>Roles que me gustan dentro de una Startup</h4>
               </div>
             </div>
             <div class="row">
@@ -88,50 +88,6 @@
               <div class="col-md-4 hidden-xs" >
                   Más comunes: <br/> Administración, Desarrollo, Diseño, Inversión, Mentoría, Mercadotecnia, Ventas
                 </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 col-xs-6" >
-                <h4>Mis habilidades</h4>
-              </div>
-              <div class="col-md-6 col-xs-6" >
-                <h4>Portafolio</h4>
-              </div>
-            </div>
-            <div class="row">
-              <form name="skills" role="form">
-                <div class="col-md-4 col-xs-6">
-                  {{>skillsInput}}
-                  {{#each tag_ids}}
-                    {{#each skill this}}
-                    <div class="input-group">
-                      <input type="text" class="form-control " id="skill" value="{{name}}" disabled>
-                      <span class="input-group-btn">
-                      <button name="Skill" class="btn btn-danger pullTag" type="button">x</button>
-                      </span>
-                    </div>
-                    {{/each}}
-                  {{/each}}
-                </div>
-              </form>
-              <div class="col-md-2 hidden-xs" >
-                Ejemplos: <br/> PHP, HTML, Ilustrator, Photoshop, etc
-              </div>
-              <form name="portafolio" role="form">
-                <div class="col-md-4 col-xs-6">
-                  {{>portafolioInput}}
-                  {{#each portafolio_urls}}
-                    <div class="input-group">
-                      <input type="text" class="form-control " id="link" value="{{this}}" disabled>
-                      <span class="input-group-btn">
-                      <button name="Link" class="btn btn-danger deleteLink" type="button">x</button>
-                      </span>
-                    </div>
-              {{/each}}
-                </div>
-                <div class="col-md-2 hidden-xs" >
-                  Ejemplos: <br/> Github, Behance, Página personal
-                </div>
-              </form>
             </div>
             <div class="row">
                 <div class="col-md-6 col-xs-6" >
@@ -173,6 +129,43 @@
                   </li>
                   {{/each}}
                 </ul>
+              </form>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-xs-6" >
+                <h4>Mis habilidades</h4>
+              </div>
+              <div class="col-md-6 col-xs-6" >
+                <h4>Portafolio</h4>
+              </div>
+            </div>
+            <div class="row">
+              <form name="skills" role="form">
+                <div class="col-md-4 col-xs-6">
+                  {{>skillsInput}}
+                  {{#each tag_ids}}
+                    {{#each skill this}}
+                    <div class="input-group">
+                      <input type="text" class="form-control " id="skill" value="{{name}}" disabled>
+                      <span class="input-group-btn">
+                      <button name="Skill" class="btn btn-danger pullTag" type="button">x</button>
+                      </span>
+                    </div>
+                    {{/each}}
+                  {{/each}}
+                </div>
+              </form>
+              <div class="col-md-2 hidden-xs" >
+                Ejemplos: <br/> PHP, HTML, Ilustrator, Photoshop, etc
+              </div>
+              <form name="portafolio" role="form">
+                <div class="row">
+                  <div class="col-md-4 col-xs-6">
+                    <input type="text" class="form-control col-md-5 " id="github_url" placeholder="Github" value="{{github_url}}">
+                    <input type="text" class="form-control col-md-5 " id="behance_url" placeholder="Behance" value="{{behance_url}}">
+                    <input type="text" class="form-control col-md-5 " id="personal_url" placeholder="Pagina Personal" value="{{personal_url}}">
+                  </div>
+                </div>
               </form>
             </div>
             <div class="row">

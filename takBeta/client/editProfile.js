@@ -8,10 +8,15 @@ Template.editProfile.rendered=function() {
   };
 
 Template.editProfile.events({
-    'change #name,#email,#facebook_url,#twitter_url' : function(evt, tmpl){
+    'change #name,#email,#facebook_url,#twitter_url,#github_url,#behance_url,#personal_url' : function(evt, tmpl){
       var targetId = evt.target.id;
       //alert (Session.get('userToShow'));
       var newValue = tmpl.find('#'+targetId).value.trim();
+      if (targetId == "twitter_url" && (newValue.charAt(0) == '@'))
+      {
+        //alert ('sí');
+        newValue = 'https://twitter.com/'+newValue.substring(1);
+      }
       Meteor.call('updateTextField', Session.get('userToShow'), targetId, newValue);
     },
 

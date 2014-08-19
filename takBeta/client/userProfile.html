@@ -78,15 +78,25 @@
         {{name}}
         {{/each}}
       </div>
-      {{#if portafolio_urls}}
       <h4>Portafolio</h4>
       <div class="row" style="color: blue">
-        {{#each portafolio_urls}}
-        <a href="{{this}}">{{this}}</a>
-        {{/each}}
+        {{#if github_url}}
+        <div class="row">
+          <a href="{{github_url}}">{{github_url}}</a>
+        </div>
+        {{/if}}
+        {{#if behance_url}}
+        <div class="row">
+          <a href="{{behance_url}}">{{behance_url}}</a>
+        </div>
+        {{/if}}
+        {{#if personal_url}}
+        <div class="row">
+          <a href="{{personal_url}}">{{personal_url}}</a>
+        </div>
+        {{/if}}
       </div>
-      {{/if}}
-      </div>
+    </div>
     </div>
   </div>
   </div>

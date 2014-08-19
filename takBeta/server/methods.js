@@ -119,6 +119,18 @@
             People.update({_id: personId},
             {$set: {'twitter_url':value}});
             break;
+            case('github_url'):
+            People.update({_id: personId},
+            {$set: {'github_url':value}});
+            break;
+            case('behance_url'):
+            People.update({_id: personId},
+            {$set: {'behance_url':value}});
+            break;
+            case('personal_url'):
+            People.update({_id: personId},
+            {$set: {'personal_url':value}});
+            break;
             case('url'):
             People.update({_id: personId},
             {$set: {'url':value}});
