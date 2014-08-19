@@ -8,6 +8,10 @@ Template.editProfile.rendered=function() {
   };
 
 Template.editProfile.events({
+    'keyup #name,#email,#facebook_url,#twitter_url,#github_url,#behance_url,#personal_url' : function(evt, tmpl){
+      var targetId = evt.target.id;
+      evt.target.style = "";
+    },
     'change #name,#email,#facebook_url,#twitter_url,#github_url,#behance_url,#personal_url' : function(evt, tmpl){
       var targetId = evt.target.id;
       //alert (Session.get('userToShow'));
@@ -18,6 +22,8 @@ Template.editProfile.events({
         newValue = 'https://twitter.com/'+newValue.substring(1);
       }
       Meteor.call('updateTextField', Session.get('userToShow'), targetId, newValue);
+
+      evt.target.style = "border-color: #44c444;";
     },
 
     'change #url': function(evt, tmpl){
