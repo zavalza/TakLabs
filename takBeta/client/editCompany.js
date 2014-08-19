@@ -183,7 +183,7 @@ else
     var re = /([a-zA-Z]+)/g;
     if (typeOfExperience != "" && name.match(re))
     {
-    alert (name);
+    //alert (name);
      Meteor.call('addMember', Session.get('url'), typeOfExperience, name);
     }
     else

@@ -11,6 +11,11 @@ Template.people.helpers({
           else
             return Companies.find({_id:Session.get('currentCompanyId')});
         },
+    tags: function(tagIds)
+        {
+          return Tags.find({_id:{$in:tagIds}});
+        },
+        
 	miniCV: function(experience)
         {
           var CV = [];

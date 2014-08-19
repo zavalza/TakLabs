@@ -12,9 +12,15 @@
 			</div>
 			<div class="col-md-6 col-xs-10">
 				<a href="{{pathFor 'profile'}}"><h6>{{name}}</h6></a>
+				{{#if experience}}
 				{{#each miniCV experience}}
 				{{string}} {{#each company company_id}}<a href="{{pathFor 'profile'}}">@{{name}}</a>{{/each}};
 				{{/each}}
+				{{else}}
+				{{#each tags tag_ids}}
+					{{name}};
+				{{/each}}
+				{{/if}}
 			</div>
 		</div>
 		{{/each}}
