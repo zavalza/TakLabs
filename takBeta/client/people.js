@@ -1,8 +1,33 @@
+Template.people.events({
+  'change #roles': function(evt, tmpl){
+    //alert(evt.target.value);
+    var filtersArray = Session.get("filters");
+    if (evt.target.checked)
+    {
+    filtersArray.push(evt.target.value);
+    }
+    else
+    {
+      var pos= filtersArray.indexOf(evt.target.value);
+      filtersArray.splice(pos, 1);
+    }
+    Session.set('filters', filtersArray);
+  }
+});
+
+
 Template.people.helpers({
+  roleOption: function()
+  {
+      return Tags.find({"type": "Role"});
+  },
+
 	person: function()
         {
-            Meteor.subscribe('allRegistredPeople');
-            return People.find({user_id:{$ne:null}});
+           if (Session.get('filters').length == 0)
+            return People.find ({user_id:{$ne:null}});
+           else
+            return People.find({user_id:{$ne:null}, tag_ids:{$in:Session.get('filters')}});
         },
     company: function(companyId)
         {

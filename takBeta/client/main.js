@@ -2,11 +2,16 @@ Meteor.startup(function () {
 
 Session.set('currentCompanyId',"");
 Session.set('userToShow',"");
+Session.set('filters',[]);
 Session.set('screenshotToShow',"");
 Meteor.subscribe("allCompanies");
 Meteor.subscribe("allTags");
 Meteor.subscribe("allImages");
 Meteor.subscribe("userData");
+});
+
+Deps.autorun(function () {
+  Meteor.subscribe("peopleToShow", Session.get('filters'));
 });
 
 Template.profile.helpers({

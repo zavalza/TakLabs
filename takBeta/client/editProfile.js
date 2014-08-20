@@ -55,6 +55,7 @@ Template.editProfile.events({
       var targetName = evt.target.name;
       //alert (targetName)
       var value = tmpl.find('#'+targetName).value.trim();
+      value = value[0].toUpperCase() + value.slice(1);
        var re = /([a-zA-Z]+)/g;
       if(Meteor.userId() && value.match(re))
       {

@@ -344,10 +344,19 @@
 
     
       saveTag: function(personId, doc){
-        //some protection method against duplication
         console.log('addingTag');
-        tagId = Tags.insert(doc);
-        console.log('new tag has id '+ tagId);
+        //protection method against duplication
+        var tagDoc= Tags.findOne({name: doc.name, type: doc.type});
+        if(tagDoc != null)
+        {
+          tagId = tagDoc._id;
+          console.log('tag already exist in '+tagId);
+        }
+        else
+        {
+          tagId = Tags.insert(doc);
+          console.log('new tag has id ' +tagId);
+        }
         Meteor.call('pushTag', personId, tagId);
         return tagId;
       },
