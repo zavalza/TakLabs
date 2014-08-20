@@ -62,6 +62,10 @@ Template.editProfile.events({
         var doc={
                   type: targetName,
                   name:value,
+                  counter:{
+                    people: 0,
+                    companies: 0,
+                  },
                   referrer: document.referrer, 
                   timestamp: new Date(),
                 }

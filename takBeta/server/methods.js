@@ -331,6 +331,7 @@
           console.log('Pushing tag with id '+ tagId +' to person ' + personId);
           People.update({_id: personId},
             {$push: {'tag_ids': tagId}});
+          Tags.update({_id: tagId}, {$inc:{'counter.people':1}});
           return true
       },
 
@@ -339,6 +340,7 @@
           console.log('Unlink tag with id '+ tagId +' from person '+ personId);
           People.update({_id: personId},
             {$pull: {'tag_ids': tagId}});
+          Tags.update({_id: tagId}, {$inc:{'counter.people':-1}});
           return true
       },
 

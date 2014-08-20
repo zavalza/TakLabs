@@ -24,7 +24,10 @@ Router.map(function() {
   this.route('companies', {path: '/startups'});
   this.route('people', 
   {path: '/personas',
-  waitOn: function() { return Meteor.subscribe('allRegistredPeople')},
+  waitOn: function() 
+  { 
+    Session.set('filters',[]);
+    return Meteor.subscribe('allRegistredPeople')},
   });
   this.route('editCompany', {path: '/editarCompania'});
   this.route('editProfile', {path: '/editarPerfil'});
