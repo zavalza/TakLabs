@@ -14,10 +14,10 @@ amount=${#collections[@]}
 # for loop
 for (( i=0;i<$amount;i++)); do
     echo ${collections[${i}]}
-    mongoexport -h $prodHost -d $prodDB -c ${collections[${i}]} -u zavalza -p pierrepaul10 -o ${collections[${i}]}.json
+    mongoexport -h $prodHost -d $prodDB -c ${collections[${i}]} -u xxxx -p xxxx -o ${collections[${i}]}.json
 done
 for (( i=0;i<$amount;i++)); do
     echo ${collections[${i}]}
-    mongoimport -h $testHost -d $testDB -c ${collections[${i}]} -u rojinegro -p pierrepaul10 --file ${collections[${i}]}.json
+    mongoimport -h $testHost -d $testDB -c ${collections[${i}]} -u xxxx -p xxxx --file ${collections[${i}]}.json
 done
 

@@ -11,7 +11,7 @@
     if(filtersArray.length == 0)
       return People.find({user_id:{$ne:null}});
     else
-      return People.find({tag_ids:{$in:filtersArray}});
+      return People.find({tag_ids:{$all:filtersArray}});
   });
 
 
