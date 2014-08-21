@@ -8,5 +8,5 @@
   Template.headerwrap.startupsAmount = function(){
     Meteor.subscribe("allCompanies");
     //maybe just type=startup
-    return Companies.find({}).count();
+    return Companies.find({types:'Startup'}).count();
   }

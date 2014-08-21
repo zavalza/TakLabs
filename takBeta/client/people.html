@@ -18,13 +18,14 @@
 			<div class="col-md-6 col-xs-10 col-md-offset-3">
 			<h4><b>Habilidades</b></h4>
 			<div class="row">
+			<div class="input-group">
 			<input type="text" class="form-control dropdown-toggle" id="Skill" placeholder="Añadir habilidad" data-toggle="dropdown">
 			<ul class="dropdown-menu" style="display: none;" id="SkillOptions">
 			    {{#each skillOptions}}
 			    <a href="#"><li style=" display: none;" class="Skill" id="{{_id}}">{{name}}</li></a>
 			    {{/each}}
 			  </ul>
-
+			 </div>
 			{{#each filters}}
                 {{#each skill this}}
                 <div class="input-group">
@@ -36,11 +37,33 @@
                 {{/each}}
              {{/each}}
 			 </div>
+			 <br/>
+			 <h4><b>Ubicación</b></h4>
+			<div class="row">
+			<div class="input-group">
+			<input type="text" class="form-control dropdown-toggle" id="City" placeholder="Añadir Ubicación" data-toggle="dropdown">
+			<ul class="dropdown-menu" style="display: none;" id="CityOptions">
+			    {{#each cityOption}}
+			    <a href="#"><li style=" display: none;" class="City" id="{{_id}}">{{name}}</li></a>
+			    {{/each}}
+			  </ul>
+			 </div>
+
+			{{#each filters}}
+                {{#each city this}}
+                <div class="input-group">
+                  <input type="text" class="form-control " id="city" value="{{name}}" disabled>
+                  <span class="input-group-btn">
+                  <button id="{{_id}}" name="City" class="btn btn-danger pullFilter" type="button">x</button>
+                  </span>
+                </div>
+                {{/each}}
+             {{/each}}
+			 </div>
 			</div>
 		</div>
 	</div>
 	<div class="col-md-6 col-xs-10">
-		<h3>Personas</h3>
 		{{#each person}}
 		<div class="row">
 			<div class="col-md-2 col-xs-10">

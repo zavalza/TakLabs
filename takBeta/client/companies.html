@@ -1,11 +1,44 @@
 <template name="companies">
 	<div class="wrap row">
 		<div class="col-md-3 col-xs-10">
-			<!--<h3>Filtros</h3>-->
-			
+			<!--
+			<div class="row col-md-6 col-xs-12 col-md-offset-3">
+			<ul class="list-group">
+			  <a href="#" class="list-group-item active">Startups</a>
+			  <a href="#" class="list-group-item">Coworks</a>
+			  <a href="#" class="list-group-item">Incubadoras</a>
+			  <a href="#" class="list-group-item">Aceleradoras</a>
+			  <a href="#" class="list-group-item">Capitales de Riesgo</a>
+			  <a href="#" class="list-group-item">Todas</a>
+			</ul>
+			</div>
+			-->
+			<div class="row">
+			<div class="col-md-6 col-xs-10 col-md-offset-3">
+			<h4><b>Ubicación</b></h4>
+			<div class="row">
+			<input type="text" class="form-control dropdown-toggle" id="City" placeholder="Añadir Ubicación" data-toggle="dropdown">
+			<ul class="dropdown-menu" style="display: none;" id="CityOptions">
+			    {{#each cityOption}}
+			    <a href="#"><li style=" display: none;" class="City" id="{{_id}}">{{name}}</li></a>
+			    {{/each}}
+			  </ul>
+
+			{{#each filters}}
+                {{#each city this}}
+                <div class="input-group">
+                  <input type="text" class="form-control " id="city" value="{{name}}" disabled>
+                  <span class="input-group-btn">
+                  <button id="{{_id}}" name="City" class="btn btn-danger pullFilter" type="button">x</button>
+                  </span>
+                </div>
+                {{/each}}
+             {{/each}}
+			 </div>
+			</div>
+		</div>
 		</div>
 		<div class="col-md-6 col-xs-10">
-			<h3>Compañías</h3>
 			{{#each company}}
 				<div class="row">
 					<div class="col-md-2 col-xs-10">
@@ -18,10 +51,17 @@
 	                	</a>
         			</div>
 					<div class="col-md-6 col-xs-10">
-						<a href="{{pathFor 'profile'}}"><h6>{{name}}</h6></a>
-						{{highConcept}}
+						<div class="row">
+						<h5><a href="{{pathFor 'profile'}}">{{name}}</a>
+						</h5>
+						<h5>{{highConcept}}</h5>
+						</div>
+						{{#each cities tag_ids}}
+							<div id="{{_id}}" style="font-size: 10px;" class="btn tag btn-xs">{{name}}</div>
+						{{/each}}
 					</div>
 		 		</div>
+
 		 		<br/>
 			{{/each}}
 		</div>

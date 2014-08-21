@@ -74,6 +74,17 @@ Template.people.helpers({
         {
             return Tags.find({"type": "Role","counter.people":{$gt:1}});
         },
+  cityOption: function()
+        {
+            return Tags.find({"type": "City","counter.people":{$gt:0}});
+        },
+  city: function(tagsArray)
+    {
+      if(typeof tagsArray == 'object')
+         return Tags.find({_id:{$in:tagsArray}, type:'City'});
+      else
+        return Tags.find({_id:tagsArray, type:'City'});
+    },
 
   skillOptions : function()
         {

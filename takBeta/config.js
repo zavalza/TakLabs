@@ -21,7 +21,12 @@ Router.map(function() {
   this.route('loginForm', {path: '/entrar'});
   this.route('newUserForm', {path: '/registro'});
   this.route('news', {path: '/noticias'});
-  this.route('companies', {path: '/startups'});
+  this.route('companies', {path: '/startups',
+    waitOn: function() 
+  { 
+    Session.set('filters',[]);
+    return Meteor.subscribe('allCompanies')},
+  });
   this.route('people', 
   {path: '/personas',
   waitOn: function() 
