@@ -1,0 +1,113 @@
+<template name="firstLogin">
+  <div class="wrap">
+    <div class="panel panel-primary col-md-8 col-xs-12 col-md-offset-2">
+      <a href="{{pathFor 'people'}}" class="btn btn-success pull-right">Hecho</a>
+      <div class="panel-heading">
+          <h3 class="panel-title text-center">Solo falta un paso</h3>
+      </div>
+      <div class="panel-body">
+        {{#each person currentUser.person_id}}
+        <form class="form col-md-12 col-xs-12" name="editProfile">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6 col-xs-6" >
+                <h4>Roles que me gustan dentro de una Startup</h4>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-xs-6">
+              {{>rolesInput}}
+              {{#each tag_ids}}
+              {{#each role this}}
+              <div class="input-group">
+                <input type="text" class="form-control " id="role" value="{{name}}" disabled>
+                <span class="input-group-btn">
+                <button name="Role" class="btn btn-danger pullTag" type="button">x</button>
+                </span>
+              </div>
+              {{/each}}
+              {{/each}}
+              </div>
+              <div class="col-md-4 hidden-xs" >
+                  Más comunes: <br/> Administración, Desarrollo, Diseño, Inversión, Mentoría, Mercadotecnia, Ventas
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-xs-6" >
+                  <h4>Mi experiencia</h4>
+                </div>
+            </div>
+            <div class="row">
+              <form name="experience" role="form" class="col-md-12 col-xs-12">
+                {{>experienceInput}}
+                <ul class="list-group">
+                  {{#each experience}}
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-md-6 col-xs-12">
+                        {{type}} -
+                        {{#each company company_id}}
+                        {{name}}
+                        {{/each}}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4 col-xs-6">
+                        <input type="text" class="form-control " id="title" placeholder="Nombre del Puesto" value="{{title}}">
+                      </div>
+                      <div class="col-md-3 col-xs-6" >
+                        <div class="input-group date">
+                          <input type="text" id="startedAt" class="form-control" placeholder="Inicio" value="{{startedAt}}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-xs-6" >
+                        <div class="input-group date">
+                          <input type="text" id="endedAt" class="form-control" placeholder="Fin" value="{{endedAt}}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                        </div>
+                      </div>
+                      <div class="col-md-2 col-xs-6" >
+                        <button type="button" class="btn btn-danger deleteExperience">Eliminar</button>
+                      </div>
+                    </div>
+                  </li>
+                  {{/each}}
+                </ul>
+              </form>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-xs-6" >
+                <h4>Mis habilidades</h4>
+              </div>
+            </div>
+            <div class="row">
+              <form name="skills" role="form">
+                <div class="col-md-4 col-xs-6">
+                  {{>skillsInput}}
+                  {{#each tag_ids}}
+                    {{#each skill this}}
+                    <div class="input-group">
+                      <input type="text" class="form-control " id="skill" value="{{name}}" disabled>
+                      <span class="input-group-btn">
+                      <button name="Skill" class="btn btn-danger pullTag" type="button">x</button>
+                      </span>
+                    </div>
+                    {{/each}}
+                  {{/each}}
+                </div>
+              </form>
+              <div class="col-md-2 hidden-xs" >
+                Ejemplos: <br/> PHP, HTML, Ilustrator, Photoshop, etc
+              </div>
+            </div>
+            <div class="row">
+              <ul class="pager">
+              <li><a href="{{pathFor 'people'}}">Hecho</a></li>
+              </ul>
+            </div>
+          </div>
+        </form>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</template>

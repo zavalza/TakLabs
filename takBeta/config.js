@@ -21,6 +21,7 @@ Router.map(function() {
   this.route('loginForm', {path: '/entrar'});
   this.route('newUserForm', {path: '/registro'});
   this.route('news', {path: '/noticias'});
+  this.route('firstLogin', {path: '/bienvenido'});
   this.route('companies', {path: '/startups',
     waitOn: function() 
   { 

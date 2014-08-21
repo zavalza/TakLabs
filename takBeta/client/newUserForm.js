@@ -46,7 +46,7 @@ Template.newUserForm.events({
                 if(!error){
                   Session.set('userToShow', result);
                   //alert(result);
-                  Router.go('editProfile');
+                  Router.go('firstLogin');
                 }
               });
             
