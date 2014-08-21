@@ -34,7 +34,9 @@
             {{/each}}
           </div>
           <div class="row">
-            <div style="color: blue">{{city}}</div>
+            {{#each city tag_ids}}
+            <div style="color: blue">{{name}}</div>
+            {{/each}}
           </div>
         </div>
         <div class="col-md-9 col-xs-12 col-md-offset-1" >

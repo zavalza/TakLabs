@@ -59,6 +59,11 @@ Template.companyProfile.helpers ({
         'experience':{$elemMatch:{'company_id': this._id, 'type':'Fundador'}}}).count() > 0);
     },
 
+      city: function(tagsArray)
+      {
+        return Tags.find({_id:{$in:tagsArray}, type:'City'});
+      },
+
         company: function(companyId)
         {
           if(companyId)

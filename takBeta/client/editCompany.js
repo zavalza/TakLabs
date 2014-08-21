@@ -48,7 +48,36 @@ Template.editCompany.events({
     });
   },
 
-'change #name,#highConcept,#City,#description' :function (evt, tmpl){
+  'click .saveTag' : function(evt, tmpl){
+      var targetName = evt.target.name;
+      //alert (targetName)
+      var value = tmpl.find('#'+targetName).value.trim();
+      value = value[0].toUpperCase() + value.slice(1);
+       var re = /([a-zA-Z]+)/g;
+      if(Meteor.userId() && value.match(re))
+      {
+        var doc={
+                  type: targetName,
+                  name:value,
+                  counter:{
+                    people: 0,
+                    companies: 0,
+                  },
+                  referrer: document.referrer, 
+                  timestamp: new Date(),
+                }
+        var tagId = Meteor.call('saveCompanyTag', Session.get('url'), doc);
+        tmpl.find('#'+targetName).value = "";
+        tmpl.find('#'+targetName).blur();
+        document.getElementById(targetName+'options').style.display='none';
+      }
+      else
+      {
+        alert("Error al guardar etiqueta");
+      }
+    },
+
+'change #name,#highConcept,#description' :function (evt, tmpl){
   var targetId = evt.target.id;
   var value= tmpl.find('#'+targetId).value;
   var re = /([a-zA-Z]+)/g;
@@ -168,10 +197,14 @@ else
       var targetClass = evt.target.getAttribute('class');
       //alert (targetClass);
       //Meteor.call('pushTag', Meteor.userId(), this._id);
-      tmpl.find('#'+targetClass).value = this.name;
-      Meteor.call('updateCompanyText', Session.get('url'), 'city', this.name);
+      tmpl.find('#'+targetClass).value = " ";
+      Meteor.call('pushCompanyTag', Session.get('url'), this._id);
       document.getElementById(targetClass+'Options').style.display='none';
       return true;
+    },
+    
+    'click .pullCompanyTag' : function(evt, tmpl){
+       Meteor.call('pullCompanyTag', Session.get('url'), this._id);
     }
   });
 
@@ -252,6 +285,11 @@ Template.member.helpers({
         cityOptions : function()
         {
           return Tags.find({type:'City'});
+        },
+
+        city: function(tagId)
+        {
+          return Tags.find({_id:tagId, type:'City'});
         },
 
         company: function()

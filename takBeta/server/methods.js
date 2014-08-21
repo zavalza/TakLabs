@@ -329,18 +329,34 @@
 
       pushTag: function(personId, tagId){
           console.log('Pushing tag with id '+ tagId +' to person ' + personId);
-          People.update({_id: personId},
-            {$push: {'tag_ids': tagId}});
-          Tags.update({_id: tagId}, {$inc:{'counter.people':1}});
+          var updatedDoc = People.update({_id: personId},
+            {$addToSet: {'tag_ids': tagId}});
+          
+          Tags.update({_id: tagId}, {$inc:{'counter.people':updatedDoc}});
           return true
       },
 
+      pushCompanyTag: function(companyUrl, tagId){
+          console.log('Pushing tag with id '+ tagId +' to company ' + companyUrl);
+          var updatedDoc = Companies.update({url: companyUrl},
+            {$addToSet: {'tag_ids': tagId}});
+          Tags.update({_id: tagId}, {$inc:{'counter.companies':updatedDoc}});
+          return true
+      },
     
       pullTag: function (personId, tagId){
           console.log('Unlink tag with id '+ tagId +' from person '+ personId);
           People.update({_id: personId},
             {$pull: {'tag_ids': tagId}});
           Tags.update({_id: tagId}, {$inc:{'counter.people':-1}});
+          return true
+      },
+
+      pullCompanyTag: function (companyUrl, tagId){
+          console.log('Unlink tag with id '+ tagId +' from company '+ companyUrl);
+          Companies.update({url: companyUrl},
+            {$pull: {'tag_ids': tagId}});
+          Tags.update({_id: tagId}, {$inc:{'counter.companies':-1}});
           return true
       },
 
@@ -360,6 +376,24 @@
           console.log('new tag has id ' +tagId);
         }
         Meteor.call('pushTag', personId, tagId);
+        return tagId;
+      },
+
+      saveCompanyTag: function(companyUrl, doc){
+        console.log('addingTag');
+        //protection method against duplication
+        var tagDoc= Tags.findOne({name: doc.name, type: doc.type});
+        if(tagDoc != null)
+        {
+          tagId = tagDoc._id;
+          console.log('tag already exist in '+tagId);
+        }
+        else
+        {
+          tagId = Tags.insert(doc);
+          console.log('new tag has id ' +tagId);
+        }
+        Meteor.call('pushCompanyTag', companyUrl, tagId);
         return tagId;
       },
       

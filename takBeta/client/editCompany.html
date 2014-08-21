@@ -45,12 +45,17 @@
               <input type="text" class="form-control col-md-5 " id="highConcept" placeholder="Describe tu compañía en menos de 10 palabras" value="{{highConcept}}">
             </div>
             <div class="col-md-8 col-xs-6">
-              <input type="text" class="form-control dropdown-toggle" id="City" placeholder="Ciudad" value="{{city}}" data-toggle="dropdown">
-              <ul class="dropdown-menu" style="display: none;" id="CityOptions">
-                {{#each cityOptions}}
-                <a href="#"><li style=" display: none;" class="City" id="{{name}}">{{name}}</li></a>
+              {{>locationInput}}
+              {{#each tag_ids}}
+                {{#each city this}}
+                <div class="input-group">
+                  <input type="text" class="form-control " id="city" value="{{name}}" disabled>
+                  <span class="input-group-btn">
+                  <button name="City" class="btn btn-danger pullCompanyTag" type="button">x</button>
+                  </span>
+                </div>
                 {{/each}}
-              </ul>
+              {{/each}}
             </div>
           </div>
           <div class="row">
