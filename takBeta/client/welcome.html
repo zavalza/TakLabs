@@ -6,7 +6,7 @@
 <div id="headerwrap">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-8 col-lg-offset-2">
+			<div class="col-md-8 col-md-offset-2">
 				<!--<h3>Explora el ecosistema emprendedor latino</h3>-->
 				<h1>Personas que impulsan Startups</h1>
 				<!--<h5>Crea contactos que te ayuden a cumplir tu sueño</h5>-->
@@ -17,10 +17,10 @@
 			<a class="btn btn-lg btn-default" href="{{pathFor 'newUserForm'}}">Unirme</a>
 		</div>
 		<div class="row">
-			<div class="col-lg-4 col-lg-offset-2">
+			<div class="col-md-4 col-md-offset-2 col-xs-6">
 				<h1>{{startupsAmount}}</h1><h3>Startups</h3>
 			</div>
-			<div class="col-lg-4">
+			<div class="col-md-4 col-xs-6">
 				<h1>{{peopleAmount}}</h1><h3>Personas</h3>
 			</div>
 		</div>
@@ -28,16 +28,17 @@
 	</div><!-- /headerwrap -->
 	</template>
 	<template name="footer">
-	<div id="footerwrap">
+		<!--show this menu in top navbar when mobil -->
+	<div class="navbar-fixed-bottom hidden-xs" id="footerwrap">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-3 col-lg-offset-1">
+				<div class="col-md-3 col-md-offset-1">
 					<h4>Acerca de</h4>
 					<div class="hline-w"></div>
 					<p>Reunimos una comunidad de personas con roles distintos que logran proyectos más exitosos. (Fase Beta) </p>
 				</div>
-				<div class="col-lg-3 col-lg-offset-1">
-					<h4>Redes Sociales</h4>
+				<div class="col-md-3 col-md-offset-1">
+					<!--<h4>Redes Sociales</h4>
 					<div class="hline-w"></div>
 					<p>
 					<a href="#"><i class="fa fa-dribbble"></i></a>
@@ -45,9 +46,9 @@
 					<a href="#"><i class="fa fa-twitter"></i></a>
 					<a href="#"><i class="fa fa-instagram"></i></a>
 					<a href="#"><i class="fa fa-tumblr"></i></a>
-					</p>
+					</p>-->
 				</div>
-				<div class="col-lg-3 col-lg-offset-1">
+				<div class="col-md-3 col-md-offset-1">
 					<h4>Contacto</h4>
 					<div class="hline-w"></div>
 					<p>

@@ -1,16 +1,14 @@
 <template name="people">
 <div class="wrap row">
-	<div class="col-md-3 col-xs-10">
+	<div class="col-md-3">
 		<form name="roles" role="form" class="form-inline col-md-6 col-xs-12 col-md-offset-3">
 			<div class="form-group">
 				<h4><b>Roles</b></h4>
 				{{#each roleOption}}
-				<div class="row">
 				<label>
 					{{name}}
 					<input class="form-control" type="checkbox" id="roles" value="{{_id}}">
 				</label>
-				</div>
 				{{/each}}
 			</div>
 		</form>

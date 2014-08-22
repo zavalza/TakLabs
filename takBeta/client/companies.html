@@ -1,6 +1,6 @@
 <template name="companies">
 	<div class="wrap row">
-		<div class="col-md-3 col-xs-10">
+		<div class="col-md-3">
 			<!--
 			<div class="row col-md-6 col-xs-12 col-md-offset-3">
 			<ul class="list-group">
@@ -14,7 +14,7 @@
 			</div>
 			-->
 			<div class="row">
-			<div class="col-md-6 col-xs-10 col-md-offset-3">
+			<div class="col-md-6 col-xs-6 col-md-offset-3 col-xs-offset-3">
 			<h4><b>Ubicación</b></h4>
 			<div class="row">
 			<input type="text" class="form-control dropdown-toggle" id="City" placeholder="Añadir Ubicación" data-toggle="dropdown">
@@ -38,19 +38,19 @@
 			</div>
 		</div>
 		</div>
-		<div class="col-md-6 col-xs-10">
+		<div class="col-md-8 col-md-offset-0 col-xs-10 col-xs-offset-1">
 			{{#each company}}
-				<div class="row">
-					<div class="col-md-2 col-xs-10">
+				<div class="row center-block">
+					<div class="col-md-2 col-xs-3">
 						<a href="{{pathFor 'profile'}}">
 				 		{{#each image logo}}
-	                		<img src="{{url}}">
+	                		<img class="img-responsive" width="100" src="{{url}}">
 	                	{{else}}
-	               			<img src="companyLogo.png">
+	               			<img class="img-responsive" width="100" src="companyLogo.png">
 	                	{{/each}}
 	                	</a>
         			</div>
-					<div class="col-md-6 col-xs-10">
+					<div class="col-md-7 col-xs-9">
 						<div class="row">
 						<h5><a href="{{pathFor 'profile'}}">{{name}}</a>
 						</h5>
@@ -61,7 +61,6 @@
 						{{/each}}
 					</div>
 		 		</div>
-
 		 		<br/>
 			{{/each}}
 		</div>
