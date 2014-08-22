@@ -1,7 +1,7 @@
 <template name="people">
 <div class="wrap row">
 	<div class="col-md-3">
-		<form name="roles" role="form" class="form-inline col-md-6 col-xs-12 col-md-offset-3">
+		<form name="roles" role="form" class="form-inline col-md-6 col-xs-10 col-md-offset-3 col-xs-offset-1">
 			<div class="form-group">
 				<h4><b>Roles</b></h4>
 				{{#each roleOption}}
@@ -13,7 +13,7 @@
 			</div>
 		</form>
 		<div class="row">
-			<div class="col-md-6 col-xs-10 col-md-offset-3">
+			<div class="col-md-6 col-xs-5 col-md-offset-3 col-xs-offset-1">
 			<h4><b>Habilidades</b></h4>
 			<div class="row">
 			<div class="input-group">
@@ -35,7 +35,9 @@
                 {{/each}}
              {{/each}}
 			 </div>
+			</div>
 			 <br/>
+			 <div class="col-md-6 col-xs-5 col-md-offset-3 col-xs-offset-1">
 			 <h4><b>Ubicación</b></h4>
 			<div class="row">
 			<div class="input-group">
@@ -61,13 +63,13 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-6 col-xs-10">
+	<div class="col-md-8 col-md-offset-0 col-xs-10 col-xs-offset-1">
 		{{#each person}}
-		<div class="row">
-			<div class="col-md-2 col-xs-10">
-				<a style="height: 100px;" href="{{pathFor 'profile'}}"><img class="img-circle" src="{{picture}}"></a>
+		<div class="row center-block">
+			<div class="col-md-2 col-xs-3">
+				<a style="height: 100px;" href="{{pathFor 'profile'}}"><img class="img-circle img-responsive" width="100" src="{{picture}}"></a>
 			</div>
-			<div class="col-md-6 col-xs-10">
+			<div class="col-md-7 col-xs-9">
 				<a href="{{pathFor 'profile'}}"><h6>{{name}}</h6></a>
 				{{#if experience}}
 				{{#each miniCV experience}}
