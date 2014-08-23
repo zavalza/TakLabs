@@ -41,6 +41,7 @@ Router.map(function() {
     {path: '/:url',
     waitOn: function()
     { 
+      Session.set('screenshotToShow', null);
       Session.set("url", this.params.url);
       return Meteor.subscribe('personUrl', this.params.url);
     }

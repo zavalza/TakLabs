@@ -1,3 +1,30 @@
+
+Template.profileThumbnail.rendered = function()
+{
+  //alert ("dentro");
+  var thumbs = document.getElementsByName("pthumb");
+  //alert (thumbs.length);
+  //return thumbs.length;
+  //return thumbs.length();
+  var maxHeight = 0;
+  for (var i=0; i < thumbs.length; i++)
+  {
+    //alert(thumbs[i].height());
+    /*if(thumbs[i].style.height > maxHeight)
+    {
+      maxHeight = thumbs[i].style.height;
+      alert(thumbs[i].style.height);
+    }*/
+  }
+
+  /*for (var i=0; i < thumbs.length; i++)
+  {
+    thumbs[i].style.height = maxHeight;
+  }*/
+
+
+}
+
 Template.companyProfile.events({
   'mouseenter .screenshot':function(evt, tmpl){
     Session.set("screenshotToShow",this._id);
