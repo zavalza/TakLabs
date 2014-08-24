@@ -92,28 +92,30 @@
           {{#if team}}
           <h4>Equipo</h4>
           {{/if}}
+          <div class="gridTable">
           <div class="row">
             {{#each founder team}}
-              <div class="col-md-3 col-xs-6">
+              <div class="col-md-4 col-xs-6">
                 {{>profileThumbnail}}
               </div>
-            {{/each}} 
+            {{/each}}
             {{#each teamMember team}}
-              <div class="col-md-3 col-xs-6">
+              <div class="col-md-4 col-xs-6">
                 {{>profileThumbnail}}
               </div>
             {{/each}}  
             {{#each investor team}}
-              <div class="col-md-3 col-xs-6">
+              <div class="col-md-4 col-xs-6">
                 {{>profileThumbnail}}
               </div>
             {{/each}}
             {{#each otherRole team}}
-              <div class="col-md-3 col-xs-6">
+              <div class="col-md-4 col-xs-6">
                 {{>profileThumbnail}}
               </div>
             {{/each}}
           </div>
+        </div>
         {{#if article_urls}}
           <h4>Prensa</h4>
             {{#each article_urls}}
@@ -122,24 +124,6 @@
             </div>
             {{/each}}
           {{/if}}
-        </div>
-        <div class="row">
-          <div class="col-md-5 col-xs-6">
-            hola<br/>
-            hola<br/>
-            hola<br/>
-          </div>
-          <div class="col-md-5 col-xs-6">
-            HOLA
-          </div>
-          <div class="col-md-5 col-xs-6">
-            hola<br/>
-            hola<br/>
-            hola<br/>
-          </div>
-          <div class="col-md-5 col-xs-6">
-            HOLA
-          </div>
         </div>
          <!--div class="col-md-3 col-xs-12" >
           <h4>Vacantes</h4>
@@ -153,11 +137,12 @@
 <template name="profileThumbnail">
   <div class="thumbnail">
   <a href="{{pathFor 'profile'}}"><img style="height: 100px;" class="img-circle" src="{{picture}}"></a>
-  <div class="caption">
-  <h6 class="text-center"><a href="{{pathFor 'profile'}}">{{name}}</a></h6>
+  <!--height:120px;-->
+  <span class="cvText" style="display:inline-block;">
+    <h6 class="text-center"><a href="{{pathFor 'profile'}}">{{name}}</a></h6>
   {{#each miniCV experience}}
     {{string}}{{#each company company_id}}<a href="{{pathFor 'profile'}}"> @{{name}};</a>{{/each}}
   {{/each}}
-  </div>
+  </span>
 </div>
 </template>
