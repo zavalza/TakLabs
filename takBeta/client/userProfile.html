@@ -1,104 +1,96 @@
 <template name="userProfile">
 <div class="wrap">
   <div class="row">
-    <div class="col-md-1 col-xs-3 col-md-offset-1">
-      <div class="row">
-        <img class="img-circle img-responsive" src="{{picture}}">
-      </div>
-      <div class="row">
-      {{#if facebook_url}}
-        <div class="col-md-6 col-xs-3">
-          <a href="{{facebook_url}}"><img class="img-responsive" src="fbLogo.png"></a>
-      </div>
-      {{/if}}
-      {{#if twitter_url}}
-        <div class="col-md-6 col-xs-3">
-          <a href="{{twitter_url}}"><img class="img-responsive" src="twitterLogo.png"></a>
-      </div>
-      {{/if}}
-      {{#if email}}
-        <div class="col-md-6 col-xs-3">
-          <a href="mailto:{{email}}"><img class="img-responsive" src="emailLogo.png"></a>
-      </div>
-      {{/if}}
-      </div>
-      <div class="row">
-        {{#each role tag_ids}}
-        <div style="color: gray">{{name}}</div>
-        {{/each}}
-      </div>
-      <div class="row">
-        {{#each city tag_ids}}
-        <div style="color: blue">{{name}}</div>
-        {{/each}}
-      </div>
-      <div class="row">
-        {{#each college tag_ids}}
-        <div style="color: orange">{{name}}</div>
-        {{/each}}
-      </div>
-    </div>
-    <div class="col-md-9 col-xs-12 col-md-offset-1" >
-      <h2>{{name}}</h2>
-      {{#if canEdit}}
-      <a href="{{pathFor 'editProfile'}}"><button class="btn btn-info" type="button">Editar</button></a>
-      {{/if}}
-      {{#if hasNoUser}}
-      <a href="{{pathFor 'editProfile'}}"><button class="btn btn-warning claimProfile" type="button">Soy yo</button></a>
-      {{/if}}
-      <div class="row">
-      <div class="col-md-8 col-xs-12" >
-        <h4>Experiencia</h4>
-        <div class="row">
-          {{#each experience}}
-          <div class="col-md-3 col-xs-6">
-            <div class="thumbnail">
-              {{#each company company_id}}
-              <a href="{{pathFor 'profile'}}">
-              {{#each image logo}}
-                <img src="{{url}}" class="img-responsive" style="height:70px;" >
-              {{else}}
-                <img src="companyLogo.png" class="img-responsive" style="height:70px;">
-              {{/each}}
-              </a>
-              <a href="{{pathFor 'profile'}}"><h4 class="text-center">{{name}}</h4></a>
-              {{/each}}
-              <h5 class="text-center">{{type}}</h5>
-            </div>
+    <div class="col-md-8 col-xs-10 col-md-offset-2 col-xs-offset-1">
+      <div class="row well">
+        <div class="col-md-2">
+          <img class="img-circle img-responsive" height="120" width="120" src="{{picture}}">
+        </div>
+        <div class="col-md-9" >
+          <h2>{{name}}</h2>
+          <div class="row">
+            {{#each role tag_ids}}
+            <div class="btn tag btn-xs">{{name}}</div>
+            {{/each}}
+            {{#each city tag_ids}}
+            <div class="btn tag btn-xs">{{name}}</div>
+            {{/each}}
           </div>
-          {{/each}}
+          <div class="row">
+          {{#if canEdit}}
+          <a href="{{pathFor 'editProfile'}}"><button class="btn btn-info" type="button">Editar</button></a>
+          {{/if}}
+          {{#if hasNoUser}}
+          <a href="{{pathFor 'editProfile'}}"><button class="btn btn-warning claimProfile" type="button">Soy yo</button></a>
+          {{/if}}
+            {{#if facebook_url}}
+              <a href="{{facebook_url}}"><img width="30" class="img-responsive pull-right" src="fbLogo.png"></a>
+            {{/if}}
+            {{#if twitter_url}}
+              <a href="{{twitter_url}}"><img width="30" class="img-responsive pull-right" src="twitterLogo.png"></a>
+            {{/if}}
+            {{#if email}}
+              <a href="mailto:{{email}}"><img  width="30" class="img-responsive pull-right" src="emailLogo.png"></a>
+            {{/if}}
+          </div>
         </div>
       </div>
-      <div class="col-md-3 col-xs-12" >
-      <div class="row" style="color: blue">
-        {{#each skill tag_ids}}
-        {{#if isFirst position}}
-        <h4>Habilidades</h4>
-        {{/if}}
-        {{name}}
-        {{/each}}
-      </div>
-      <h4>Portafolio</h4>
-      <div class="row" style="color: blue">
-        {{#if github_url}}
-        <div class="row">
-          <a href="{{github_url}}">{{github_url}}</a>
+      <div class="row">
+        {{#if experience}}
+        <div class="col-md-8 col-xs-12 well" >
+          <h3>Experiencia</h3>
+          <div class="row">
+            {{#each experience}}
+            <div class="col-md-4 col-xs-6">
+              <div class="thumbnail">
+                {{#each company company_id}}
+                <a href="{{pathFor 'profile'}}">
+                  {{#each image logo}}
+                  <img src="{{url}}" class="img-responsive" style="height:70px;" >
+                  {{else}}
+                  <img src="companyLogo.png" class="img-responsive" style="height:70px;">
+                  {{/each}}
+                </a>
+                <a href="{{pathFor 'profile'}}"><h4 class="text-center">{{name}}</h4></a>
+                {{/each}}
+                <h5 class="text-center">{{type}}</h5>
+              </div>
+            </div>
+            {{/each}}
+          </div>
         </div>
-        {{/if}}
-        {{#if behance_url}}
-        <div class="row">
-          <a href="{{behance_url}}">{{behance_url}}</a>
-        </div>
-        {{/if}}
-        {{#if personal_url}}
-        <div class="row">
-          <a href="{{personal_url}}">{{personal_url}}</a>
+         {{/if}}
+         {{#if skill tag_ids}}
+        <div class="col-md-3 col-md-offset-1 col-xs-12 well" >
+          <h3>Habilidades</h3>
+          <div class="row">
+            {{#each skill tag_ids}}
+            <div class="btn tag btn-xs">{{name}}</div>
+            {{/each}}
+          </div>
+          <!--
+          <div class="row" style="color: blue">
+            {{#if github_url}}
+            <div class="row pull-center">
+              <a href="{{github_url}}">{{github_url}}</a>
+            </div>
+            {{/if}}
+            {{#if behance_url}}
+            <div class="row pull-center">
+              <a href="{{behance_url}}">{{behance_url}}</a>
+            </div>
+            {{/if}}
+            {{#if personal_url}}
+            <div class="row pull-center">
+              <a href="{{personal_url}}">{{personal_url}}</a>
+            </div>
+            {{/if}}
+          </div>
+        -->
         </div>
         {{/if}}
       </div>
     </div>
-    </div>
-  </div>
   </div>
 </div>
 </template>
