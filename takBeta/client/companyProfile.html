@@ -1,148 +1,146 @@
 <template name="companyProfile">
-  <div class="wrap">
-      <div class="row">
-        <div class="col-md-1 col-xs-3 col-md-offset-1 col-xs-offset-4">
-          <div class="row center-block">
-            {{#each image logo}}
-              <img class="img-responsive" width="100" src="{{url}}">
-            {{else}}
-               <img class="img-responsive" width="100" src="companyLogo.png">
-           {{/each}}
-          </div>
-          <div class="row ">
-            {{#if fb_url}}
-            <div class="col-md-6 col-xs-6">
-              <a href="{{fb_url}}"><img class="img-responsive" width="30" src="fbLogo.png"></a>
-            </div>
-            {{/if}}
-            {{#if twitter_url}}
-            <div class="col-md-6 col-xs-6">
-              <a href="{{twitter_url}}"><img class="img-responsive" width="30" src="twitterLogo.png"></a>
-            </div>
-            {{/if}}
-          </div>
-          {{#if company_url}}
-            <div class="row">
-              {{#each externalLink company_url}}
-                <a href="{{this}}">{{this}}</a>
-              {{/each}}
-            </div>
-          {{/if}}
-          <div class="row"> 
-            {{#each types}}
-              <div style="color: gray">{{this}}</div>
-            {{/each}}
-          </div>
-          <div class="row">
-            {{#each city tag_ids}}
-            <div style="color: blue">{{name}}</div>
-            {{/each}}
-          </div>
+<div class="wrap">
+  <div class="row">
+    <div class="col-md-8 col-xs-10 col-md-offset-2 col-xs-offset-1">
+      <div class="row well">
+        <div class="col-md-2">
+          {{#each image logo}}
+          <img class="img-responsive" width="120" src="{{url}}">
+          {{else}}
+          <img class="img-responsive" width="120" src="companyLogo.png">
+          {{/each}}
         </div>
-        <div class="col-md-9 col-xs-8 col-md-offset-1 col-xs-offset-2" >
+        <div class="col-md-9" >
           <h2>{{name}}</h2>
           <i><h4>{{highConcept}}</h4></i>
-          {{#if canEdit currentUser.person_id}}
-          <a href="{{pathFor 'editCompany'}}"><button class="btn btn-info" type="button">Editar</button></a>
-          {{/if}}
           <div class="row">
-          <div class="col-md-8">
-            <div class="row">
-              <div class="col-md-8 col-md-offset-2">
-              {{#if video_url}}
-                {{#if isYoutube video_url}}
-                  {{#each videoCode video_url}}
-                    <div class="embed-responsive embed-responsive-4by3">
-                      <iframe class="embed-responsive-item" width="420" height="315" src="//www.youtube.com/embed/{{this}}" frameborder="0" allowfullscreen></iframe>
-                    </div>
-                  {{/each}}
-                {{/if}}
-                {{#if isVimeo video_url}}
-                  {{#each videoCode video_url}}
-                    <div class="embed-responsive embed-responsive-4by3">
-                      <iframe class="embed-responsive-item" src="//player.vimeo.com/video/{{this}}" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                    </div>
-                  {{/each}}
-                {{/if}}
-              {{/if}}
-            </div>
-            </div>
-            <br/>
-          <div class="row" style="font-size:18px;">
-            {{description}}
-          </div> 
-          <br/>
-          {{#if screenshots}}
-            <div class="row">
-              <div class="col-md-8 col-xs-10 col-md-offset-2">
-                {{#each image screenshotToShow}}
-                  <img class="img-responsive" src="{{url}}">
-                {{/each}}
-              </div>
-            </div>
-            <br/>
-            <div class="row">
-              {{#each image screenshots}}
-                <div class="col-md-3 col-xs-5">
-                  <a class="screenshot" href=""><img class="img-responsive" src="{{url}}"></a>
-                </div>
-              {{/each}}
-            </div>
-          {{/if}}
-          {{#if team}}
-          <h4>Equipo</h4>
-          {{/if}}
-          <div class="gridTable">
-          <div class="row">
-            {{#each founder team}}
-              <div class="col-md-4 col-xs-6">
-                {{>profileThumbnail}}
-              </div>
+            {{#each types}}
+            <div class="btn tag btn-xs">{{this}}</div>
             {{/each}}
-            {{#each teamMember team}}
-              <div class="col-md-4 col-xs-6">
-                {{>profileThumbnail}}
-              </div>
-            {{/each}}  
-            {{#each investor team}}
-              <div class="col-md-4 col-xs-6">
-                {{>profileThumbnail}}
-              </div>
-            {{/each}}
-            {{#each otherRole team}}
-              <div class="col-md-4 col-xs-6">
-                {{>profileThumbnail}}
-              </div>
+            {{#each city tag_ids}}
+            <div class="btn tag btn-xs">{{name}}</div>
             {{/each}}
           </div>
+          <div class="row">
+            {{#if canEdit currentUser.person_id}}
+            <a href="{{pathFor 'editCompany'}}"><button class="btn btn-info" type="button">Editar</button></a>
+            {{/if}}
+            {{#if fb_url}}
+            <a href="{{fb_url}}"><img class="img-responsive pull-right" width="30" src="fbLogo.png"></a>
+            {{/if}}
+            {{#if twitter_url}}
+            <a href="{{twitter_url}}"><img class="img-responsive pull-right" width="30" src="twitterLogo.png"></a>
+            {{/if}}
+            {{#if company_url}}
+            {{#each externalLink company_url}}
+            <a class="pull-right" href="{{this}}">{{this}}</a>
+            {{/each}}
+            {{/if}}
+          </div>
         </div>
-        {{#if article_urls}}
-          <h4>Prensa</h4>
-            {{#each article_urls}}
-            <div class="row" style="color: blue">
-            <a href="{{this}}">{{this}}</a>
+      </div>
+      <div class="row">
+        {{#if someDescription}}
+        <div class="col-md-9 col-md-offset-1 well">
+          <h3>Descripción</h3>
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              {{#if video_url}}
+              {{#if isYoutube video_url}}
+              {{#each videoCode video_url}}
+              <div class="embed-responsive embed-responsive-4by3">
+                <iframe class="embed-responsive-item" width="420" height="315" src="//www.youtube.com/embed/{{this}}" frameborder="0" allowfullscreen></iframe>
+              </div>
+              {{/each}}
+              {{/if}}
+              {{#if isVimeo video_url}}
+              {{#each videoCode video_url}}
+              <div class="embed-responsive embed-responsive-4by3">
+                <iframe class="embed-responsive-item" src="//player.vimeo.com/video/{{this}}" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+              </div>
+              {{/each}}
+              {{/if}}
+              {{/if}}
+            </div>
+          </div>
+          <br/>
+          <div class="row" style="font-size:18px;">
+            {{description}}
+          </div>
+          <br/>
+          {{#if screenshots}}
+          <div class="row">
+            <div class="col-md-8 col-xs-10 col-md-offset-2">
+              {{#each image screenshotToShow}}
+              <img class="img-responsive" src="{{url}}">
+              {{/each}}
+            </div>
+          </div>
+          <br/>
+          <div class="row">
+            {{#each image screenshots}}
+            <div class="col-md-3 col-xs-5">
+              <a class="screenshot" href=""><img class="img-responsive" src="{{url}}"></a>
             </div>
             {{/each}}
+          </div>
           {{/if}}
         </div>
-         <!--div class="col-md-3 col-xs-12" >
-          <h4>Vacantes</h4>
-        </div-->
+        {{/if}}
+        {{#if team}}
+          <div class="col-md-9 col-md-offset-1 well">
+            <h3>Equipo</h3>
+            <div class="row">
+              {{#each founder team}}
+              <div class="col-md-4 col-xs-6">
+                {{>profileThumbnail}}
+              </div>
+              {{/each}}
+              {{#each teamMember team}}
+              <div class="col-md-4 col-xs-6">
+                {{>profileThumbnail}}
+              </div>
+              {{/each}}
+              {{#each investor team}}
+              <div class="col-md-4 col-xs-6">
+                {{>profileThumbnail}}
+              </div>
+              {{/each}}
+              {{#each otherRole team}}
+              <div class="col-md-4 col-xs-6">
+                {{>profileThumbnail}}
+              </div>
+              {{/each}}
+            </div>
+          </div>
+           {{/if}}
+        <!--
+        {{#if article_urls}}
+        <h4>Prensa</h4>
+        {{#each article_urls}}
+        <div class="row" style="color: blue">
+          <a href="{{this}}">{{this}}</a>
+        </div>
+        {{/each}}
+        {{/if}}
+      -->
       </div>
-    </div>
+      <!--div class="col-md-3 col-xs-12" >
+      <h4>Vacantes</h4>
+    </div-->
   </div>
-  </div>
+</div>
+</div>
 </template>
-
 <template name="profileThumbnail">
-  <div class="thumbnail">
-  <a href="{{pathFor 'profile'}}"><img style="height: 100px;" class="img-circle" src="{{picture}}"></a>
-  <!--height:120px;-->
-  <span class="cvText" style="display:inline-block;">
-    <h6 class="text-center"><a href="{{pathFor 'profile'}}">{{name}}</a></h6>
-  {{#each miniCV experience}}
-    {{string}}{{#each company company_id}}<a href="{{pathFor 'profile'}}"> @{{name}};</a>{{/each}}
-  {{/each}}
-  </span>
+<div class="thumbnail">
+<a href="{{pathFor 'profile'}}"><img style="height: 100px;" class="img-circle" src="{{picture}}"></a>
+<!--height:120px;-->
+<span class="cvText" style="display:inline-block;">
+<h6 class="text-center"><a href="{{pathFor 'profile'}}">{{name}}</a></h6>
+{{#each miniCV experience}}
+{{string}}{{#each company company_id}}<a href="{{pathFor 'profile'}}"> @{{name}};</a>{{/each}}
+{{/each}}
+</span>
 </div>
 </template>

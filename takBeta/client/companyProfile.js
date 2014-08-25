@@ -30,6 +30,11 @@ Template.companyProfile.events({
       return this.screenshots[0]
   };
 
+  Template.companyProfile.someDescription = function()
+  {
+    return (this.description||this.video_url||this.screenshots);
+  }
+
 Template.profileThumbnail.helpers({
   company: function(companyId)
         {
