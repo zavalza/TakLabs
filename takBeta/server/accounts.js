@@ -7,7 +7,7 @@
       lastName = user.services.facebook.last_name;
       email = user.services.facebook.email;
       fbLink = user.services.facebook.link;
-      fbPicture = "http://graph.facebook.com/v2.0/" + user.services.facebook.id + "/picture/?type=large";
+      fbPicture = "http://graph.facebook.com/v2.0/" + user.services.facebook.id + "/picture/?width=100&height=100";
       //graph request for picture
     }
     else{
