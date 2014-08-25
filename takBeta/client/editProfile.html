@@ -1,23 +1,23 @@
 <template name="editProfile">
   <div class="wrap">
-    <div class="panel panel-primary col-md-8 col-xs-12 col-md-offset-2">
+    <div class="panel panel-primary col-md-8 col-md-offset-2">
       <a href="{{pathFor 'people'}}" class="btn btn-success pull-right">Hecho</a>
       <div class="panel-heading">
           <h3 class="panel-title text-center">Editar Perfil</h3>
       </div>
       <div class="panel-body">
         {{#each person currentUser.person_id}}
-        <form class="form col-md-12 col-xs-12" name="editProfile">
+        <form class="form col-md-12" name="editProfile">
           <div class="form-group">
             <div class="row">
-              <div class="col-md-2 col-xs-4">
-                <img src="{{picture}}">
+              <div class="col-md-2">
+                <img class="img-responsive" width="120" src="{{picture}}">
               </div>
-              <div class="col-md-4 col-xs-6">
+              <div class="col-md-4 col-xs-10">
                 <input type="text" class="form-control " id="name" placeholder="Nombre" value="{{name}}">
               </div>
-              <div class="col-md-4 col-xs-6">
-                <input type="text" class="form-control col-md-5 " id="url" placeholder="Usuario" value="{{url}}">
+              <div class="col-md-4 col-xs-10">
+                <input type="text" class="form-control" id="url" placeholder="Usuario" value="{{url}}">
               </div>
               <br/><br/>
               <!--
@@ -27,32 +27,32 @@
               -->
             </div>
             <div class="row">
-              <div class="col-md-6 col-xs-6" >
+              <div class="col-md-6 col-xs-10" >
                 <h4>Contacto</h4>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6 col-xs-6">
+              <div class="col-md-6 col-xs-10">
                 <input type="url" class="form-control" id="facebook_url" placeholder="Facebook" value="{{facebook_url}}">
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6 col-xs-6">
+              <div class="col-md-6 col-xs-10">
                 <input type="text" class="form-control " id="twitter_url" placeholder="Twitter" value="{{twitter_url}}">
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6 col-xs-6">
+              <div class="col-md-6 col-xs-10">
                 <input type="email" class="form-control " id="email" placeholder="Email" value="{{email}}">
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6 col-xs-6" >
+              <div class="col-md-6 col-xs-10" >
                 <h4>Ciudades donde trabajo</h4>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 col-xs-6">
+              <div class="col-md-4 col-xs-10">
                 {{>locationInput}}
                 {{#each tag_ids}}
                   {{#each city this}}
@@ -67,12 +67,12 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6 col-xs-6" >
+              <div class="col-md-6 col-xs-10" >
                 <h4>Roles que me gustan dentro de una Startup</h4>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 col-xs-6">
+              <div class="col-md-4 col-xs-10">
               {{>rolesInput}}
               {{#each tag_ids}}
               {{#each role this}}
@@ -90,7 +90,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 col-xs-6" >
+                <div class="col-md-6 col-xs-10" >
                   <h4>Mi experiencia</h4>
                 </div>
             </div>
@@ -101,7 +101,7 @@
                   {{#each experience}}
                   <li class="list-group-item">
                     <div class="row">
-                      <div class="col-md-6 col-xs-12">
+                      <div class="col-md-6 col-xs-10">
                         {{type}} -
                         {{#each company company_id}}
                         {{name}}
@@ -109,20 +109,20 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-4 col-xs-6">
+                      <div class="col-md-4 col-xs-10">
                         <input type="text" class="form-control " id="title" placeholder="Nombre del Puesto" value="{{title}}">
                       </div>
-                      <div class="col-md-3 col-xs-6" >
+                      <div class="col-md-3 col-xs-10" >
                         <div class="input-group date">
                           <input type="text" id="startedAt" class="form-control" placeholder="Inicio" value="{{startedAt}}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                         </div>
                       </div>
-                      <div class="col-md-3 col-xs-6" >
+                      <div class="col-md-3 col-xs-10" >
                         <div class="input-group date">
                           <input type="text" id="endedAt" class="form-control" placeholder="Fin" value="{{endedAt}}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                         </div>
                       </div>
-                      <div class="col-md-2 col-xs-6" >
+                      <div class="col-md-2 col-xs-10" >
                         <button type="button" class="btn btn-danger deleteExperience">Eliminar</button>
                       </div>
                     </div>
@@ -135,13 +135,10 @@
               <div class="col-md-6 col-xs-6" >
                 <h4>Mis habilidades</h4>
               </div>
-              <div class="col-md-6 col-xs-6" >
-                <h4>Portafolio</h4>
-              </div>
             </div>
             <div class="row">
               <form name="skills" role="form">
-                <div class="col-md-4 col-xs-6">
+                <div class="col-md-4 col-xs-10">
                   {{>skillsInput}}
                   {{#each tag_ids}}
                     {{#each skill this}}
@@ -158,24 +155,30 @@
               <div class="col-md-2 hidden-xs" >
                 Ejemplos: <br/> PHP, HTML, Ilustrator, Photoshop, etc
               </div>
+          </div>
+          
               <form name="portafolio" role="form">
                 <div class="row">
-                  <div class="col-md-4 col-xs-6">
+                <div class="col-md-6 col-xs-10" >
+                <h4>Portafolio</h4>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-4 col-xs-10">
                     <input type="text" class="form-control col-md-5 " id="github_url" placeholder="Github" value="{{github_url}}">
                     <input type="text" class="form-control col-md-5 " id="behance_url" placeholder="Behance" value="{{behance_url}}">
                     <input type="text" class="form-control col-md-5 " id="personal_url" placeholder="Pagina Personal" value="{{personal_url}}">
                   </div>
-                </div>
-              </form>
             </div>
+            </form>
             <div class="row">
-              <div class="col-md-6 col-xs-6" >
+              <div class="col-md-6 col-xs-10" >
                 <h4>Estudios</h4>
               </div>
             </div>
-            <div class="row">
-              <form name="education" role="form" class="col-md-12 col-xs-12">
-                  <div class="col-md-4 col-xs-6">
+              <form name="education" role="form" class="col-md-12">
+                <div class="row">
+                  <div class="col-md-4 col-xs-10">
                     {{>collegesInput}}
                     {{#each tag_ids}}
                     {{#each college this}}
@@ -188,8 +191,9 @@
                     {{/each}}
                     {{/each}}
                   </div>
+                  </div>
               </form>
-            </div>
+            
             <div class="row">
               <ul class="pager">
               <li><a href="{{pathFor 'people'}}">Hecho</a></li>
