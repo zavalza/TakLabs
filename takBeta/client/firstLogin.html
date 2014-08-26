@@ -7,15 +7,15 @@
       </div>
       <div class="panel-body">
         {{#each person currentUser.person_id}}
-        <form class="form col-md-12 col-xs-12" name="editProfile">
+        <form class="form col-md-12" name="editProfile">
           <div class="form-group">
             <div class="row">
-              <div class="col-md-6 col-xs-6" >
-                <h4>Roles que me gustan dentro de una Startup</h4>
+              <div class="col-md-6 col-xs-10" >
+                <h4>Si te unes a una Startup, ¿qué roles asumes?</h4>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 col-xs-6">
+              <div class="col-md-4 col-xs-10">
               {{>rolesInput}}
               {{#each tag_ids}}
               {{#each role this}}
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 col-xs-6" >
+                <div class="col-md-6 col-xs-10" >
                   <h4>Mi experiencia</h4>
                 </div>
             </div>
@@ -52,20 +52,20 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-4 col-xs-6">
+                      <div class="col-md-4 col-xs-10">
                         <input type="text" class="form-control " id="title" placeholder="Nombre del Puesto" value="{{title}}">
                       </div>
-                      <div class="col-md-3 col-xs-6" >
+                      <div class="col-md-3 col-xs-10" >
                         <div class="input-group date">
                           <input type="text" id="startedAt" class="form-control" placeholder="Inicio" value="{{startedAt}}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                         </div>
                       </div>
-                      <div class="col-md-3 col-xs-6" >
+                      <div class="col-md-3 col-xs-10" >
                         <div class="input-group date">
                           <input type="text" id="endedAt" class="form-control" placeholder="Fin" value="{{endedAt}}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                         </div>
                       </div>
-                      <div class="col-md-2 col-xs-6" >
+                      <div class="col-md-2 col-xs-10" >
                         <button type="button" class="btn btn-danger deleteExperience">Eliminar</button>
                       </div>
                     </div>
@@ -75,13 +75,13 @@
               </form>
             </div>
             <div class="row">
-              <div class="col-md-6 col-xs-6" >
-                <h4>Mis habilidades</h4>
+              <div class="col-md-6 col-xs-10" >
+                <h4>¿Con qué habilidades ayudo a una Startup?</h4>
               </div>
             </div>
             <div class="row">
               <form name="skills" role="form">
-                <div class="col-md-4 col-xs-6">
+                <div class="col-md-4 col-xs-10">
                   {{>skillsInput}}
                   {{#each tag_ids}}
                     {{#each skill this}}

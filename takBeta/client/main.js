@@ -3,6 +3,7 @@ Meteor.startup(function () {
 Session.set('currentCompanyId',"");
 Session.set('userToShow',"");
 Session.set('filters',[]);
+Session.set('keyControl',0);
 Session.set('screenshotToShow',"");
 Meteor.subscribe("allCompanies");
 Meteor.subscribe("allTags");

@@ -102,6 +102,17 @@ Template.editProfile.events({
 
 'keyup #City,#Skill,#College,#Role,#Company' : function(evt, tmpl){
       //busca todo el string y no palabra por palabra
+      //alert(evt.keyCode);
+      var key =evt.keyCode;
+      if(key==40) //Down
+      {
+
+      }
+      if(key==38)//Up
+      {
+
+      }
+
       var targetId = evt.target.id;
       //alert(targetId)
       filter = tmpl.find('#'+targetId).value.trim().toUpperCase();
@@ -131,6 +142,10 @@ Template.editProfile.events({
         }
           
       }
+    },
+
+    'keydown #City,#Skill,#College,#Role,#Company' : function(evt, tmpl){
+      //alert(evt.keyCode);
     },
 
     'click .City,.Skill,.College,.Role' : function (evt, tmpl){
