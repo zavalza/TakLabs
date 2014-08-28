@@ -100,24 +100,16 @@ Template.editProfile.events({
       Meteor.call('updateExperience', Session.get('userToShow'),this.company_id, field, value);
     },
 
-'keyup #City,#Skill,#College,#Role,#Company' : function(evt, tmpl){
+    'keyup #City,#Skill,#College,#Role,#Company' : function(evt, tmpl){
       //busca todo el string y no palabra por palabra
       //alert(evt.keyCode);
-      var key =evt.keyCode;
-      if(key==40) //Down
-      {
-
-      }
-      if(key==38)//Up
-      {
-
-      }
 
       var targetId = evt.target.id;
       //alert(targetId)
       filter = tmpl.find('#'+targetId).value.trim().toUpperCase();
       var re = /([a-zA-Z]+)/g;
       var options = document.getElementsByClassName(targetId);
+      var matches = [];
       for (var i = 0; i < options.length; i++) {
 
         if (filter.match(re)){
@@ -127,6 +119,8 @@ Template.editProfile.events({
               {
                 document.getElementById(targetId+'Options').style.display='inline';
                 options[i].style.display = 'list-item';
+                //options[i].className = targetId;
+                matches.push(options[i]);
               }
               
           else
@@ -139,13 +133,142 @@ Template.editProfile.events({
         {
           document.getElementById(targetId+'Options').style.display='none';
           options[i].style.display = 'none';
-        }
-          
+        }   
       }
+
+      var key =evt.keyCode;
+      //alert(key);
+      var selection = Session.get('keyControl');
+
+      switch(key){
+        case 40: //Down
+          if(selection+1 < matches.length) 
+            selection = selection+1;
+        break;
+        case 38: //Up
+          if(selection-1 >= 0)
+          selection = selection -1;
+        break;
+        case 13: //Return
+          if(targetId == 'Company')
+          {
+
+              var typeOfExperience = tmpl.find('#Experience').value.trim();
+              if (typeOfExperience != "")
+              {
+                  if(matches.length == 0) //New company name
+                  {
+                    var companyName = tmpl.find('#Company').value.trim();
+                    var re = /([a-zA-Z]+)/g;
+                    if(companyName.match(re))
+                    {
+                      var newCompany={
+                      types: [], //startup, incubator, accelerator, cowork etc.
+                      name:companyName,
+                      url:null,
+                      logo:"", //id of logo image
+                      description:"",
+                      highConcept:"",
+                      company_url:"",
+                      fb_url:"",
+                      twitter_url:"",
+                      tag_ids:[],
+                      video_url:"",
+                      screenshots:[],
+                      team:[{
+                        type:typeOfExperience,
+                        title:null,
+                        startedAt:null,
+                        endedAt:null,
+                        confirmed:false,
+                        person_id: Session.get('userToShow')
+                      }],
+                      followers:{count:0, user_ids:[]},
+                      referrer: document.referrer, 
+                      timestamp: new Date(),
+                    }
+                    Meteor.call('addExperience', Session.get('userToShow'), typeOfExperience, newCompany);
+                    }
+                  }
+                  else
+                  {
+                    var personDoc = {
+                              type:typeOfExperience,
+                              title:null,
+                              startedAt:null,
+                              endedAt:null,
+                              confirmed:false,
+                              person_id: Session.get('userToShow')
+                            };
+                    var companyDoc = {
+                              type:typeOfExperience,
+                              title:null,
+                              startedAt:null,
+                              endedAt:null,
+                              confirmed:false,
+                              company_id: matches[selection].getAttribute('name')
+                  };
+                  Meteor.call('pushExperience', Session.get('userToShow'), matches[selection].getAttribute('name'), companyDoc, personDoc);
+                  }
+            }
+            else
+              {
+                alert ("Selecciona un tipo de experiencia");
+              }
+          }
+          else
+          {
+            if(matches.length == 0) //New tag
+            {
+              var value = tmpl.find('#'+targetId).value.trim();
+              value = value[0].toUpperCase() + value.slice(1);
+               var re = /([a-zA-Z]+)/g;
+              if(Meteor.userId() && value.match(re))
+              {
+                var doc={
+                          type: targetId,
+                          name:value,
+                          counter:{
+                            people: 0,
+                            companies: 0,
+                          },
+                          referrer: document.referrer, 
+                          timestamp: new Date(),
+                        }
+                    Meteor.call('saveTag', Session.get('userToShow'), doc);
+              }
+            } 
+            else
+              Meteor.call('pushTag', Session.get('userToShow'), matches[selection].getAttribute('name'));
+          }
+          tmpl.find('#'+targetId).value = "";
+            tmpl.find('#'+targetId).blur();
+            document.getElementById(targetId+'Options').style.display='none';
+        break;
+        default:
+          selection = 0;
+        break;
+      }
+
+      for(var j=0; j < matches.length; j++)
+      {
+        if(j==selection)
+          matches[j].className =targetId+' list-group-item active';
+        else
+          matches[j].className = targetId+' list-group-item';
+      }
+      matches = [];
+      //Session.set('keyControl', 0);
+      Session.set('keyControl', selection);
+      //alert(selection);
     },
 
-    'keydown #City,#Skill,#College,#Role,#Company' : function(evt, tmpl){
-      //alert(evt.keyCode);
+    'blur #City,#Skill,#College,#Role,#Company' : function(evt, tmpl){
+      
+      Session.set('keyControl', 0);
+      var targetId = evt.target.id;
+      tmpl.find('#'+targetId).value = "";
+      document.getElementById(targetId+'Options').style.display='none';
     },
 
     'click .City,.Skill,.College,.Role' : function (evt, tmpl){

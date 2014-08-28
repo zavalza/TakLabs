@@ -95,7 +95,7 @@
                 </div>
             </div>
             <div class="row">
-              <form name="experience" role="form" class="col-md-12 col-xs-12">
+              <div class="col-md-12 col-xs-12">
                 {{>experienceInput}}
                 <ul class="list-group">
                   {{#each experience}}
@@ -129,7 +129,7 @@
                   </li>
                   {{/each}}
                 </ul>
-              </form>
+              </div>
             </div>
             <div class="row">
               <div class="col-md-6 col-xs-6" >
@@ -137,7 +137,6 @@
               </div>
             </div>
             <div class="row">
-              <form name="skills" role="form">
                 <div class="col-md-4 col-xs-10">
                   {{>skillsInput}}
                   {{#each tag_ids}}
@@ -151,13 +150,10 @@
                     {{/each}}
                   {{/each}}
                 </div>
-              </form>
               <div class="col-md-2 hidden-xs" >
                 Ejemplos: <br/> PHP, HTML, Ilustrator, Photoshop, etc
               </div>
           </div>
-          
-              <form name="portafolio" role="form">
                 <div class="row">
                 <div class="col-md-6 col-xs-10" >
                 <h4>Portafolio</h4>
@@ -170,13 +166,11 @@
                     <input type="text" class="form-control col-md-5 " id="personal_url" placeholder="Pagina Personal" value="{{personal_url}}">
                   </div>
             </div>
-            </form>
             <div class="row">
               <div class="col-md-6 col-xs-10" >
                 <h4>Estudios</h4>
               </div>
             </div>
-              <form name="education" role="form" class="col-md-12">
                 <div class="row">
                   <div class="col-md-4 col-xs-10">
                     {{>collegesInput}}
@@ -192,8 +186,6 @@
                     {{/each}}
                   </div>
                   </div>
-              </form>
-            
             <div class="row">
               <ul class="pager">
               <li><a href="{{pathFor 'people'}}">Hecho</a></li>
