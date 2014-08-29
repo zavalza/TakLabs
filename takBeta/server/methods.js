@@ -50,15 +50,9 @@
             },
 
       validatePersonUrl: function(personId, url){
-        var urls = Companies.find({'url': url}).count() 
-        + People.find({'url':url}).count();
-        console.log(urls);
-        if(urls==0)
-        {
-          Meteor.call('updateTextField', personId , 'url', url);
-        } 
-        else
-          throw "Used";
+
+        var newUrl = Meteor.call('generateUrl', url);
+        Meteor.call('updateTextField', personId , 'url', newUrl);
       },
       addMember: function(companyUrl, typeOfExperience, name){
       console.log('requesting new url');

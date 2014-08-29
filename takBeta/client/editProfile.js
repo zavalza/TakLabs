@@ -5,6 +5,7 @@ Template.editProfile.rendered=function() {
       language: "es",
       autoclose: true
       });
+    alert('Hecho')
   };
 
 Template.editProfile.events({
@@ -16,14 +17,56 @@ Template.editProfile.events({
       var targetId = evt.target.id;
       //alert (Session.get('userToShow'));
       var newValue = tmpl.find('#'+targetId).value.trim();
-      if (targetId == "twitter_url" && (newValue.charAt(0) == '@'))
+      var re = /([a-zA-Z]+)/g;
+      if(newValue.match(re))
       {
-        //alert ('sí');
-        newValue = 'https://twitter.com/'+newValue.substring(1);
-      }
-      Meteor.call('updateTextField', Session.get('userToShow'), targetId, newValue);
+        switch(targetId)
+        {
+          case "twitter_url":
+             if (newValue.charAt(0) == '@')
+              {
+                newValue = 'https://twitter.com/'+newValue.substring(1);
+              }
+             else if (newValue.search('https://twitter.com/') == -1)
+             {
+               newValue = 'https://twitter.com/'+newValue;
+             }
+          break;
+          case "facebook_url":
+            if (newValue.search('www.facebook.com/') == -1)
+              newValue = 'https://www.facebook.com/'+newValue;
+          break;
+          case "github_url":
+            if (newValue.search('github.com/') == -1)
+              newValue = 'https://github.com/'+newValue;
+          break;
+          case "behance_url":
+            if (newValue.search('www.behance.net/') == -1)
+              newValue= 'https://www.behance.net/'+newValue;
+          break;
+          case "personal_url":
+            if(!newValue.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/))
+            {
+              alert("No parece una liga válida, revisa que no haya ningún signo '?'");
+              evt.target.style = "border-color: #f41717;";
+              return false;
+            }
+          break;
+          case "email":
+            if(!newValue.match(/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/))      
+            {
+              alert("El correo electrónico no es válido");
+              evt.target.style = "border-color: #f41717;";
+              return false;
+            }
+          break;
+        }
+     
+        Meteor.call('updateTextField', Session.get('userToShow'), targetId, newValue);
 
-      evt.target.style = "border-color: #44c444;";
+        evt.target.style = "border-color: #44c444;";
+      }
+      
     },
 
     'change #url': function(evt, tmpl){
@@ -97,7 +140,14 @@ Template.editProfile.events({
       //alert(field);
       var value = evt.target.value.trim();
       //alert(value);
-      Meteor.call('updateExperience', Session.get('userToShow'),this.company_id, field, value);
+      var re = /([a-zA-Z]+)/g;
+      if(value.match(re))
+      {
+        Meteor.call('updateExperience', Session.get('userToShow'),this.company_id, field, value);
+        evt.target.style = "border-color: #44c444;";
+      }
+      else
+        evt.target.style = "border-color: #f41717;";
     },
 
     'keyup #City,#Skill,#College,#Role,#Company' : function(evt, tmpl){

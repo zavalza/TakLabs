@@ -12,7 +12,7 @@
       }
       else
       {
-        alert('No parece una liga válida');
+        alert("No parece una liga válida, revisa que no haya ningún signo '?'");
       }
       //document.getElementById('SkillOptions').style.display='none';
       return true;
