@@ -20,7 +20,7 @@
   });
 
   Template.experienceInput.events({
-    'click .Company': function(evt, tmpl){
+    'mousedown .Company': function(evt, tmpl){
       var companyName = evt.target.id.trim();
       //alert (this._id);
       var typeOfExperience = tmpl.find('#Experience').value.trim();
@@ -43,9 +43,6 @@
                     company_id: this._id
         };
       Meteor.call('pushExperience', Session.get('userToShow'), this._id, companyDoc, personDoc);
-      tmpl.find('#Company').value = "";
-      tmpl.find('#Company').blur();
-      document.getElementById('CompanyOptions').style.display='none';
       }
       else
       {
@@ -53,7 +50,7 @@
       }
     },
 
-    'click .addExperience' : function(evt, tmpl){
+    'mousedown .addExperience' : function(evt, tmpl){
       var typeOfExperience = tmpl.find('#Experience').value.trim();
       var companyName = tmpl.find('#Company').value.trim()
       var re = /([a-zA-Z]+)/g;
