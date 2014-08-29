@@ -246,7 +246,7 @@ Template.editProfile.events({
             document.getElementById(targetId+'Options').style.display='none';
         break;
         default:
-          selection = 0;
+          selection = -1;
         break;
       }
 
@@ -264,22 +264,19 @@ Template.editProfile.events({
     },
 
     'blur #City,#Skill,#College,#Role,#Company' : function(evt, tmpl){
-      
-      Session.set('keyControl', 0);
       var targetId = evt.target.id;
+      //alert(evt.currentTarget.id);
+      Session.set('keyControl', -1);
       tmpl.find('#'+targetId).value = "";
       document.getElementById(targetId+'Options').style.display='none';
+      
     },
 
-    'click .City,.Skill,.College,.Role' : function (evt, tmpl){
+    'mousedown .City,.Skill,.College,.Role' : function (evt, tmpl){
       //alert(this._id);
-      var targetClass = evt.target.getAttribute('class');
-      //alert (targetClass);
+      var targetClass = evt.target.getAttribute('class').split(' ')[0];
       Meteor.call('pushTag', Session.get('userToShow'), this._id);
-      tmpl.find('#'+targetClass).value = "";
-      tmpl.find('#'+targetClass).blur();
-      document.getElementById(targetClass+'Options').style.display='none';
-      return true;
+      //blur event is called after mousedown
     }
   });
 
