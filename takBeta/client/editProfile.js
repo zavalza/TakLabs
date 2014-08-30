@@ -5,7 +5,7 @@ Template.editProfile.rendered=function() {
       language: "es",
       autoclose: true
       });
-    alert('Hecho')
+    //alert('Hecho')
   };
 
 Template.editProfile.events({
