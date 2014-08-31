@@ -1,12 +1,12 @@
 <template name="editProfile">
   <div class="wrap">
+    {{#each person currentUser.person_id}}
     <div class="panel panel-primary col-md-8 col-md-offset-2">
-      <a href="{{pathFor 'people'}}" class="btn btn-success pull-right">Hecho</a>
+      <a href="{{pathFor 'profile'}}" class="btn btn-success pull-right">Hecho</a>
       <div class="panel-heading">
           <h3 class="panel-title text-center">Editar Perfil</h3>
       </div>
       <div class="panel-body">
-        {{#each person currentUser.person_id}}
         <form class="form col-md-12" name="editProfile">
           <div class="form-group">
             <div class="row">
@@ -186,13 +186,13 @@
                   </div>
             <div class="row">
               <ul class="pager">
-              <li><a href="{{pathFor 'people'}}">Hecho</a></li>
+              <li><a href="{{pathFor 'profile'}}">Hecho</a></li>
               </ul>
             </div>
           </div>
         </form>
-        {{/each}}
       </div>
     </div>
+    {{/each}}
   </div>
 </template>
