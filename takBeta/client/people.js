@@ -119,7 +119,7 @@ Template.people.events({
 Template.people.helpers({
   roleOption: function()
         {
-            return Tags.find({"type": "Role","counter.people":{$gt:1}});
+            return Tags.find({"type": "Role","counter.people":{$gt:2}});
         },
   cityOption: function()
         {

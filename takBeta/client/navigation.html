@@ -23,6 +23,7 @@
         <ul class="nav navbar-nav">
           <li><a href="{{pathFor 'companies'}}">STARTUPS</a></li>
           <li><a href="{{pathFor 'people'}}">PERSONAS</a></li>
+          <!--<li>{{>loginButtons}}</li>-->
           {{#each thisUser currentUser.person_id}}
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="btn img-responsive" width="60" src="{{picture}}"><b class="caret"></b></a>

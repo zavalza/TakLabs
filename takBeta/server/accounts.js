@@ -10,6 +10,10 @@
       fbPicture = "http://graph.facebook.com/v2.0/" + user.services.facebook.id + "/picture/?width=100&height=100";
       //graph request for picture
     }
+    /*if(user.services.twitter)
+    {
+      console.log(user.services.twitter);
+    }*/
     else{
       console.log("Error");
     }

@@ -2,7 +2,8 @@ Template.editCompany.events({
 'change #type' : function(evt, tmpl){
   var value = tmpl.find('#type').value;
   //alert(this._id);
-  Meteor.call('pushCompanyType', Session.get('url'), value);
+  if (value != ' ')
+    Meteor.call('pushCompanyType', Session.get('url'), value);
 },
 
 'change #logo' : function(evt, tmpl) {
@@ -166,6 +167,7 @@ else
       filter = tmpl.find('#'+targetId).value.trim().toUpperCase();
       var re = /([a-zA-Z]+)/g;
       var options = document.getElementsByClassName(targetId);
+      var matches = [];
       for (var i = 0; i < options.length; i++) {
 
         if (filter.match(re)){
@@ -175,6 +177,8 @@ else
               {
                 document.getElementById(targetId+'Options').style.display='inline';
                 options[i].style.display = 'list-item';
+                //options[i].className = targetId;
+                matches.push(options[i]);
               }
               
           else
@@ -187,20 +191,129 @@ else
         {
           document.getElementById(targetId+'Options').style.display='none';
           options[i].style.display = 'none';
-        }
-          
+        }   
       }
+
+      var key =evt.keyCode;
+      //alert(key);
+      var selection = Session.get('keyControl');
+
+      switch(key){
+        case 40: //Down
+          if(selection+1 < matches.length) 
+            selection = selection+1;
+        break;
+        case 38: //Up
+          if(selection-1 >= 0)
+          selection = selection -1;
+        break;
+        case 13: //Return
+          if(targetId == 'User')
+          {
+
+              var typeOfExperience = tmpl.find('#Experience').value.trim();
+              var name = tmpl.find('#User').value.trim()
+              var re = /([a-zA-Z]+)/g;
+              if (typeOfExperience != "" && name.match(re))
+              {
+                  if(matches.length == 0) //New user name
+                  {
+                  //alert (name);
+                   Meteor.call('addMember', Session.get('url'), typeOfExperience, name);
+                  }
+                  else
+                  {
+
+                    var personId =  matches[selection].id;
+                    var personDoc = {
+                    type:typeOfExperience,
+                    title:null,
+                    startedAt:null,
+                    endedAt:null,
+                    confirmed:false,
+                    person_id: personId
+                    };
+                    var companyDoc = {
+                    type:typeOfExperience,
+                    title:null,
+                    startedAt:null,
+                    endedAt:null,
+                    confirmed:false,
+                    company_id: Session.get('currentCompanyId')
+                    };
+                    Meteor.call('pushExperience', personId, Session.get('currentCompanyId'), companyDoc, personDoc);
+              }
+            }
+            else
+            {
+            alert ("Selecciona un tipo de experiencia y escribe un nombre");
+            }
+
+              
+          }
+          else
+          {
+            if(matches.length == 0) //New tag
+            {
+              var value = tmpl.find('#'+targetId).value.trim();
+              value = value[0].toUpperCase() + value.slice(1);
+               var re = /([a-zA-Z]+)/g;
+              if(Meteor.userId() && value.match(re))
+              {
+                var doc={
+                          type: targetId,
+                          name:value,
+                          counter:{
+                            people: 0,
+                            companies: 0,
+                          },
+                          referrer: document.referrer, 
+                          timestamp: new Date(),
+                        }
+                Meteor.call('saveCompanyTag', Session.get('url'), doc);
+             }
+            } 
+            else
+               Meteor.call('pushCompanyTag', Session.get('url'), matches[selection].getAttribute('name'));
+          }
+          tmpl.find('#'+targetId).value = "";
+            tmpl.find('#'+targetId).blur();
+            document.getElementById(targetId+'Options').style.display='none';
+        break;
+        default:
+          selection = -1;
+        break;
+      }
+
+      for(var j=0; j < matches.length; j++)
+      {
+        if(j==selection)
+          matches[j].className =targetId+' list-group-item active';
+        else
+          matches[j].className = targetId+' list-group-item';
+      }
+      matches = [];
+      //Session.set('keyControl', 0);
+      Session.set('keyControl', selection);
+      //alert(selection);
     },
 
-    'click .City' : function (evt, tmpl){
+
+    'blur #City,#User' : function(evt, tmpl){
+      var targetId = evt.target.id;
+      //alert(evt.currentTarget.id);
+      Session.set('keyControl', -1);
+      tmpl.find('#'+targetId).value = "";
+      document.getElementById(targetId+'Options').style.display='none';
+      
+    },
+
+    'mousedown .City' : function (evt, tmpl){
       //alert(this._id);
-      var targetClass = evt.target.getAttribute('class');
       //alert (targetClass);
       //Meteor.call('pushTag', Meteor.userId(), this._id);
-      tmpl.find('#'+targetClass).value = " ";
       Meteor.call('pushCompanyTag', Session.get('url'), this._id);
-      document.getElementById(targetClass+'Options').style.display='none';
-      return true;
+      //return true;
     },
     
     'click .pullCompanyTag' : function(evt, tmpl){
@@ -209,7 +322,7 @@ else
   });
 
   Template.addMember.events({
-    'click .addMember' : function(evt, tmpl){
+    'mousedown .addMember' : function(evt, tmpl){
       //alert("click")
     var typeOfExperience = tmpl.find('#Experience').value.trim();
     var name = tmpl.find('#User').value.trim()
@@ -225,7 +338,7 @@ else
     }
     },
 
-    'click .User': function(evt, tmpl){
+    'mousedown .User': function(evt, tmpl){
     var personId = evt.target.id.trim();
     //alert (this._id);
     var typeOfExperience = tmpl.find('#Experience').value.trim();
@@ -248,9 +361,6 @@ else
     company_id: Session.get('currentCompanyId')
     };
     Meteor.call('pushExperience', personId, Session.get('currentCompanyId'), companyDoc, personDoc);
-    tmpl.find('#User').value = "";
-    tmpl.find('#User').blur();
-    document.getElementById('UserOptions').style.display='none';
     }
     else
     {
