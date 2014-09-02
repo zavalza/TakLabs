@@ -97,6 +97,13 @@
         }
     });
 
+    Template.marketInput.helpers({
+       marketOptions: function()
+       {
+        return Tags.find({type:'Market'});
+       }
+    });
+
 
     Template.skillsInput.helpers({
        skillOptions : function()

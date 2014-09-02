@@ -13,7 +13,7 @@
     }
     Session.set('filters', filtersArray);
   },
- 	'keyup #City' : function(evt, tmpl){
+ 	'keyup #City,#Market' : function(evt, tmpl){
       //busca todo el string y no palabra por palabra
       //alert(evt.keyCode);
 
@@ -88,7 +88,7 @@
       //alert(selection);
     },
 
-    'blur #City' : function(evt, tmpl){
+    'blur #City,#Market' : function(evt, tmpl){
       var targetId = evt.target.id;
       //alert(evt.currentTarget.id);
       Session.set('keyControl', -1);
@@ -97,7 +97,7 @@
       
     },
 
-    'mousedown .City' : function (evt, tmpl){
+    'mousedown .City,.Market' : function (evt, tmpl){
       //alert(this._id);
       var targetClass = evt.target.getAttribute('class');
       var filtersArray = Session.get("filters");
@@ -134,9 +134,18 @@
 	  {
 	  		 return Tags.find({_id:{$in:tagsArray}, type:'City'});
 	  },
+  markets: function(tagsArray)
+    {
+         return Tags.find({_id:{$in:tagsArray}, type:'Market'});
+    },
   city: function(tagId)
   {
     return Tags.find({_id:tagId, type:'City'});
+  },
+
+  market: function(tagId)
+  {
+    return Tags.find({_id:tagId, type:'Market'});
   },
 
   typeOfCompanyOption: function()
@@ -158,6 +167,11 @@
     cityOption: function()
         {
             return Tags.find({"type": "City","counter.companies":{$gt:0}});
+        },
+
+    marketOption: function()
+        {
+            return Tags.find({"type": "Market","counter.companies":{$gt:0}});
         },
 
  })

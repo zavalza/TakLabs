@@ -86,6 +86,11 @@ Template.companyProfile.helpers ({
         return Tags.find({_id:{$in:tagsArray}, type:'City'});
       },
 
+      market: function(tagsArray)
+      {
+        return Tags.find({_id:{$in:tagsArray}, type:'Market'});
+      },
+
       typeOfCompany: function(tagsArray)
       {
         return Tags.find({_id:{$in:tagsArray}, type:'TypeOfCompany'});

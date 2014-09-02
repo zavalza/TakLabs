@@ -20,6 +20,9 @@
             {{#each city tag_ids}}
             <div class="btn tag btn-xs">{{name}}</div>
             {{/each}}
+            {{#each market tag_ids}}
+            <div class="btn tag btn-xs">{{name}}</div>
+            {{/each}}
           </div>
           <div class="row">
             {{#if canEdit currentUser.person_id}}
