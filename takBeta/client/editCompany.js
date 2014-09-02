@@ -2,8 +2,10 @@ Template.editCompany.events({
 'change #type' : function(evt, tmpl){
   var value = tmpl.find('#type').value;
   //alert(this._id);
-  if (value != ' ')
+  if (value != '')
+  {
     Meteor.call('pushCompanyType', Session.get('url'), value);
+  }
 },
 
 'change #logo' : function(evt, tmpl) {
@@ -405,6 +407,11 @@ Template.member.helpers({
         company: function()
         {
           return Companies.find({url:Session.get('url')});
+        },
+
+        typeOfCompanyOptions: function()
+        {
+          return Tags.find({type:'TypeOfCompany'}, {sort: ['name', 'desc']});
         },
 
         image: function(ids)

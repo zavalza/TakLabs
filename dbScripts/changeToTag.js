@@ -16,36 +16,43 @@ db.auth( "xxxx", "xxxx" );
 //roles, city, skill, college
 db.companies.find({}).forEach(function(doc){
 	print(">"+doc.name);
-	if(doc.city)
+	if(doc.types)
 	{
-		var tagDoc = db.tags.findOne({name:doc.city, type:"City"});
-		if(tagDoc)
+		for(var i = 0; i <doc.types.length; i++)
 		{
-			print(tagDoc._id);
-			db.companies.update({_id: doc._id}, {$addToSet:{tag_ids:tagDoc._id}});
+			if(doc.types[i])
+			{
+
+			var tagDoc = db.tags.findOne({name:doc.types[i], type:"TypeOfCompany"});
+			if(tagDoc)
+			{
+				print(tagDoc._id);
+				db.companies.update({_id: doc._id}, {$addToSet:{tag_ids:tagDoc._id}});
+			}
+			else
+			{
+				/*Al no tener id se genera uno como 
+				"_id": {
+			        "$oid": "53f61ce24467db0725d256e9"
+			    },*/
+			    var oid = new ObjectId();
+				var newTag = {
+					_id: oid.str,
+					type: 'TypeOfCompany',
+	                  name: doc.types[i],
+	                  counter:{
+	                    people: 0,
+	                    companies: 0,
+	                  },
+	                  timestamp: new Date(),
+				};
+				db.tags.insert(newTag);
+				db.companies.update({_id: doc._id}, {$addToSet:{tag_ids:oid.str}});
+				print("new tag");
+			}
 		}
-		else
-		{
-			/*Al no tener id se genera uno como 
-			"_id": {
-		        "$oid": "53f61ce24467db0725d256e9"
-		    },*/
-		    var oid = new ObjectId();
-			var newTag = {
-				_id: oid.str,
-				type: 'City',
-                  name: doc.city,
-                  counter:{
-                    people: 0,
-                    companies: 0,
-                  },
-                  timestamp: new Date(),
-			};
-			db.tags.insert(newTag);
-			db.companies.update({_id: doc._id}, {$addToSet:{tag_ids:oid.str}});
-			print("new tag");
 		}
 	}
 })
  
-print( "> Company city changed to tag" );
+print( "> Company types changed to tags" );

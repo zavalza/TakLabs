@@ -63,12 +63,9 @@
               Tipo de empresa:
               <select id="type">
                 <option value="">Selecciona</option>
-                <option value="Startup">Startup</option>
-                <option value="Cowork">Cowork</option>
-                <option value="Incubadora">Incubadora</option>
-                <option value="Aceleradora">Aceleradora</option>
-                <option value="Capital de Riesgo">Capital de Riesgo</option>
-                <option value="Pública">Pública</option>
+                {{#each typeOfCompanyOptions}}
+                <option id="{{_id}}" value="{{name}}">{{name}}</option>
+                {{/each}}
               </select>
             </div>
           </div>

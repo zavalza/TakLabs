@@ -1,4 +1,18 @@
  Template.companies.events({
+    'change #types': function(evt, tmpl){
+    //alert(evt.target.value);
+    var filtersArray = Session.get("filters");
+    if (evt.target.checked)
+    {
+    filtersArray.push(evt.target.value);
+    }
+    else
+    {
+      var pos= filtersArray.indexOf(evt.target.value);
+      filtersArray.splice(pos, 1);
+    }
+    Session.set('filters', filtersArray);
+  },
  	'keyup #City' : function(evt, tmpl){
       //busca todo el string y no palabra por palabra
       //alert(evt.keyCode);
@@ -124,6 +138,11 @@
   {
     return Tags.find({_id:tagId, type:'City'});
   },
+
+  typeOfCompanyOption: function()
+    {
+        return Tags.find({"type": "TypeOfCompany","counter.companies":{$gt:0}});
+    },
 
  	image: function(ids)
         {

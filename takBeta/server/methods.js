@@ -263,13 +263,17 @@
           console.log('Pushing type '+ type +' to company ' + companyUrl);
           Companies.update({url: companyUrl},
             {$push: {'types': type}});
+          var tag=Tags.findOne({name:type, type:"TypeOfCompany"});
+          Meteor.call('pushCompanyTag', companyUrl, tag._id);
           return true
       },
 
       pullCompanyType: function(companyUrl, type){
-          console.log('Pulling type '+ type +' to company ' + companyUrl);
+          console.log('Pulling type '+ type +' from company ' + companyUrl);
           Companies.update({url: companyUrl},
             {$pull: {'types': type}});
+          var tag=Tags.findOne({name:type, type:"TypeOfCompany"});
+          Meteor.call('pullCompanyTag', companyUrl, tag._id);
           return true
       },
 
