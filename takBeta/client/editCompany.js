@@ -51,7 +51,7 @@ Template.editCompany.events({
     });
   },
 
-  'click .saveTag' : function(evt, tmpl){
+  'mousedown .saveTag' : function(evt, tmpl){
       var targetName = evt.target.name;
       //alert (targetName)
       var value = tmpl.find('#'+targetName).value.trim();

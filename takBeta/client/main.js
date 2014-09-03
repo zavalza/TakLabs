@@ -1,5 +1,7 @@
 Meteor.startup(function () {
-
+//Redirect www to ROOT URL in meteor
+if(window.location.hostname.search('www') != -1)
+  window.location.assign("http://tak.mx");
 Session.set('currentCompanyId',"");
 Session.set('userToShow',"");
 Session.set('typeToShow',"");
