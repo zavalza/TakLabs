@@ -9,8 +9,15 @@ Template.loginForm.events({
           else
           {
             //Success
+            Meteor.call('userToPerson', Meteor.userId(), function(error, result)
+              {
+                if(!error){
+                  Session.set('userToShow', result);
+                  //alert(result);
+                  Router.go('people');
+                }
+              });
             
-            Router.go('people');
           }
       }); 
       }
@@ -28,8 +35,14 @@ Template.loginForm.events({
           else
           {
             //Success
-            
-            Router.go('people');
+             Meteor.call('userToPerson', Meteor.userId(), function(error, result)
+              {
+                if(!error){
+                  Session.set('userToShow', result);
+                  //alert(result);
+                  Router.go('people');
+                }
+              });
           }
       }); 
       }

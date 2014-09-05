@@ -41,7 +41,7 @@ Template.newUserForm.events({
             Session.set('errorMessage', err.reason || 'Unknown error');
           else
           {
-            Meteor.call('newUserToPerson', Meteor.userId(), function(error, result)
+            Meteor.call('userToPerson', Meteor.userId(), function(error, result)
               {
                 if(!error){
                   Session.set('userToShow', result);
@@ -68,7 +68,7 @@ Template.newUserForm.events({
           {
             //Success
             
-           Meteor.call('newUserToPerson', Meteor.userId(), function(error, result)
+           Meteor.call('userToPerson', Meteor.userId(), function(error, result)
               {
                 if(!error){
                   Session.set('userToShow', result);

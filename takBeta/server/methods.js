@@ -1,7 +1,13 @@
  Meteor.methods({
 
-          newUserToPerson: function(userId){
+          userToPerson: function(userId){
           var userDoc = Meteor.users.findOne({_id:userId}, {'profile':1,'_id':0});
+          if(userDoc.person_id)
+          {
+            return userDoc.person_id;
+          }
+          else
+          {
           //console.log(userDoc);
           var emptyProfile={followers:{count:0, user_ids:[]},
                             following:{count: 0, user_ids:[], company_ids:[]}
@@ -10,19 +16,29 @@
           var url = Meteor.call('generateUrl', userDoc.profile.name);
           if(userDoc.services.linkedin)
           {
+            var Future = Npm.require('fibers/future');
+
             for (var i=0; i < userDoc.services.linkedin.skills._total; i++)
             {
+              var enString =userDoc.services.linkedin.skills.values[i].skill.name;
+               var future = new Future();
+                HTTP.get("http://api.mymemory.translated.net/get?q="+enString+"&langpair=en|es&mt=0",function( error, result ){
+                    if(result)
+                    {
+                      //console.log(result);
+                      future.return(result.data.responseData.translatedText);
+                    }             
+                });
               var skillTag = {
-                          type: "Skill",
-                          name:userDoc.services.linkedin.skills.values[i].skill.name,
-                          counter:{
-                            people: 0,
-                            companies: 0,
-                          },
-                          timestamp: new Date(),
-                        }
-                    Meteor.call('saveTag', personId, skillTag);
-              
+                      type: "Skill",
+                      name:future.wait(),
+                      counter:{
+                        people: 0,
+                        companies: 0,
+                      },
+                      timestamp: new Date(),
+                    }
+                Meteor.call('saveTag', personId, skillTag);
             }
           } 
           People.update({_id:personId}, 
@@ -30,6 +46,7 @@
           Meteor.users.update({_id:Meteor.userId()},
             {$set:{'person_id':personId,'profile':emptyProfile}});
           return personId;
+          }
         },
 
         claimPerson: function(userId, personUrl){
