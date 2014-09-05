@@ -4,6 +4,8 @@
     "font-awesome-4-less": {},
     "iron-router": {},
     "cfs-gridfs": {},
-    "bootstrap3-datepicker": {}
+    "bootstrap3-datepicker": {},
+    "linkedin": {},
+    "accounts-linkedin": {}
   }
 }

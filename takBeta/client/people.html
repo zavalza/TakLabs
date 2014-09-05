@@ -67,7 +67,7 @@
 		{{#each person}}
 		<div class="row center-block">
 			<div class="col-md-2 col-xs-3">
-				<a style="height: 100px;" href="{{pathFor 'profile'}}"><img class="img-circle img-responsive" width="100" height="100" src="{{picture}}"></a>
+				<a style="height: 100px;" href="{{pathFor 'profile'}}"><img class="img-circle img-responsive" width="80" height="80" src="{{picture}}"></a>
 			</div>
 			<div class="col-md-7 col-xs-9">
 				<a href="{{pathFor 'profile'}}"><h6>{{name}}</h6></a>
@@ -82,6 +82,7 @@
 				{{/if}}
 			</div>
 		</div>
+		<br/>
 		{{/each}}
 	</div>
 </div>

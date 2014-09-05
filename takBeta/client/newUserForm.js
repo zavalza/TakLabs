@@ -57,6 +57,31 @@ Template.newUserForm.events({
           alert("Error en inicio de sesión");
       }
       
+    },
+    'click .tryLinkedinLogin': function(evt, tmpl){
+      if(Accounts.loginServicesConfigured()){
+        Meteor.loginWithLinkedin({
+        }, function (err) {
+          if (err)
+            Session.set('errorMessage', err.reason || 'Unknown error');
+          else
+          {
+            //Success
+            
+           Meteor.call('newUserToPerson', Meteor.userId(), function(error, result)
+              {
+                if(!error){
+                  Session.set('userToShow', result);
+                  //alert(result);
+                  Router.go('firstLogin');
+                }
+              });
+          }
+      }); 
+      }
+      else{
+        alert("Error en inicio de sesión");
+      }
     }
   });
 

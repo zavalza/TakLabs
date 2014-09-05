@@ -7,7 +7,24 @@
                             following:{count: 0, user_ids:[], company_ids:[]}
                             };
           personId = People.insert(userDoc.profile);
-          var url = Meteor.call('generateUrl', userDoc.profile.name); 
+          var url = Meteor.call('generateUrl', userDoc.profile.name);
+          if(userDoc.services.linkedin)
+          {
+            for (var i=0; i < userDoc.services.linkedin.skills._total; i++)
+            {
+              var skillTag = {
+                          type: "Skill",
+                          name:userDoc.services.linkedin.skills.values[i].skill.name,
+                          counter:{
+                            people: 0,
+                            companies: 0,
+                          },
+                          timestamp: new Date(),
+                        }
+                    Meteor.call('saveTag', personId, skillTag);
+              
+            }
+          } 
           People.update({_id:personId}, 
             {$set:{'user_id':Meteor.userId(), 'url':url}});
           Meteor.users.update({_id:Meteor.userId()},
