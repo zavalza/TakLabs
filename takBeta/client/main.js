@@ -5,6 +5,7 @@ if(window.location.hostname.search('www') != -1)
 Session.set('currentCompanyId',"");
 Session.set('userToShow',"");
 Session.set('typeToShow',"");
+Session.set('claimProfile', false);
 Session.set('filters',[]);
 Session.set('keyControl',-1);
 Session.set('screenshotToShow',"");

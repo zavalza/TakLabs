@@ -75,14 +75,8 @@ Template.userProfile.helpers({
 Template.userProfile.events({
   'click .claimProfile': function(evt, tmpl)
   {
-    if(Accounts.loginServicesConfigured()){
-        Meteor.loginWithFacebook({
-        requestPermissions: ['public_profile', 'user_friends', 'email']
-        }, function (err) {
-          if (err)
-            Session.set('errorMessage', err.reason || 'Unknown error');
-          else
-          {
+      if(Meteor.userId())
+      {
             Meteor.call('claimPerson', Meteor.userId(), Session.get('url'), function(error, result)
               {
                 if(!error){
@@ -92,11 +86,11 @@ Template.userProfile.events({
                 }
               });
             
-          }
-        }); 
-        }
-        else{
-          alert("Error en inicio de sesión");
+      }
+      else{
+          Session.set('claimProfile', true);
+          alert("Inicia sesión para reclamar tu perfil");
+          Router.go('loginForm');
       }
     }
   })

@@ -50,21 +50,39 @@
         },
 
         claimPerson: function(userId, personUrl){
+          Meteor.call('userToPerson', userId); //Not so efficient way
+
           var userDoc = Meteor.users.findOne({_id:userId}, {'profile':1,'_id':0});
-          var emptyProfile={followers:{count:0, user_ids:[]},
+          //Do we need an empty profile?
+          /*var emptyProfile={followers:{count:0, user_ids:[]},
                             following:{count: 0, user_ids:[], company_ids:[]}
-                            };
-          var personDoc = People.findOne({url:personUrl});
-          var personId = personDoc._id;
+          
+                            };*/
+          var claimedDoc = People.findOne({url:personUrl});
+          var personId = claimedDoc._id; //claimed personId will be updated
+         
+            //get current object
+          var currentDoc = People.findOne({_id: userDoc.person_id});
+          
+          //what happen to the names?, how do we use this or the email for verification
+
           console.log('Joint of user '+ userId + " with person "+personId);
           People.update({_id:personId}, 
             {$set:{'user_id':userId, 
-                  'picture': userDoc.profile.picture, 
-                  'facebook_url': userDoc.profile.facebook_url,
-                  'email':userDoc.profile.email}});
+                  'picture': currentDoc.picture, 
+                  'facebook_url': currentDoc.facebook_url,
+                  'linkedin_url': currentDoc.linkedin_url,
+                  'email':currentDoc.email}});
+          People.update({_id:personId}, 
+            {$addToSet:{'tag_ids':{$each:currentDoc.tag_ids}}});
+          //Experience is not mixed, just take the claimed one
+
+           People.remove({_id:userDoc.person_id}); //Remove old person doc
+          //Asign new person Id
           Meteor.users.update({_id:userId},
-            {$set:{'person_id':personId,'profile':emptyProfile}});
+            {$set:{'person_id':personId}});
           return personId;
+
         },
 
         generateUrl: function(name){

@@ -9,7 +9,22 @@ Template.loginForm.events({
           else
           {
             //Success
-            Meteor.call('userToPerson', Meteor.userId(), function(error, result)
+            if(Session.get('claimProfile'))
+            {
+               Meteor.call('claimPerson', Meteor.userId(), Session.get('url'), function(error, result)
+              {
+                if(!error){
+                  Session.set('userToShow', result);
+                  Session.set('claimProfile', false);
+                  //alert(result);
+                  Router.go('firstLogin');
+                }
+              });
+
+            }
+            else
+            {
+              Meteor.call('userToPerson', Meteor.userId(), function(error, result)
               {
                 if(!error){
                   Session.set('userToShow', result);
@@ -17,6 +32,8 @@ Template.loginForm.events({
                   Router.go('people');
                 }
               });
+            }
+        
             
           }
       }); 
@@ -35,7 +52,22 @@ Template.loginForm.events({
           else
           {
             //Success
-             Meteor.call('userToPerson', Meteor.userId(), function(error, result)
+            if(Session.get('claimProfile'))
+            {
+               Meteor.call('claimPerson', Meteor.userId(), Session.get('url'), function(error, result)
+              {
+                if(!error){
+                  Session.set('userToShow', result);
+                  Session.set('claimProfile', false);
+                  //alert(result);
+                  Router.go('firstLogin');
+                }
+              });
+
+            }
+            else
+            {
+              Meteor.call('userToPerson', Meteor.userId(), function(error, result)
               {
                 if(!error){
                   Session.set('userToShow', result);
@@ -43,6 +75,8 @@ Template.loginForm.events({
                   Router.go('people');
                 }
               });
+            }
+             
           }
       }); 
       }
