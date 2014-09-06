@@ -7,7 +7,7 @@
           <img class="img-circle img-responsive" height="80" width="80" src="{{picture}}">
         </div>
         <div class="col-md-9" >
-          <h2>{{name}}</h2>
+          <h2 class="name">{{name}}</h2>
           <div class="row">
             {{#each role tag_ids}}
             <div class="btn tag btn-xs">{{name}}</div>
@@ -23,14 +23,17 @@
           {{#if hasNoUser}}
           <a href="#"><button class="btn btn-warning claimProfile" type="button">Soy yo</button></a>
           {{/if}}
-            {{#if facebook_url}}
-              <a href="{{facebook_url}}"><img width="30" class="img-responsive pull-right" src="fbLogo.png"></a>
-            {{/if}}
-            {{#if twitter_url}}
-              <a href="{{twitter_url}}"><img width="30" class="img-responsive pull-right" src="twitterLogo.png"></a>
-            {{/if}}
             {{#if email}}
-              <a href="mailto:{{email}}"><img  width="30" class="img-responsive pull-right" src="emailLogo.png"></a>
+                <a href="mailto:{{email}}"><img  width="30" class="img-responsive pull-right icon" src="emailIcon.png"></a>
+              {{/if}}
+            {{#if twitter_url}}
+              <a href="{{twitter_url}}"><img width="30" class="img-responsive pull-right icon" src="twitterIcon.png"></a>
+            {{/if}}
+            {{#if linkedin_url}}
+              <a href="{{linkedin_url}}"><img width="30" class="img-responsive pull-right icon" src="linkedinIcon.png"></a>
+            {{/if}}
+            {{#if facebook_url}}
+              <a href="{{facebook_url}}"><img width="30" class="img-responsive pull-right icon" src="fbIcon.png"></a>
             {{/if}}
           </div>
         </div>

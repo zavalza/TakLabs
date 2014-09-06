@@ -11,7 +11,7 @@
           {{/each}}
         </div>
         <div class="col-md-9" >
-          <h2>{{name}}</h2>
+          <h2 class="name">{{name}}</h2>
           <i><h4>{{highConcept}}</h4></i>
           <div class="row">
             {{#each typeOfCompany tag_ids}}
@@ -28,11 +28,11 @@
             {{#if canEdit currentUser.person_id}}
             <a href="{{pathFor 'editCompany'}}"><button class="btn btn-info" type="button">Editar</button></a>
             {{/if}}
-            {{#if fb_url}}
-            <a href="{{fb_url}}"><img class="img-responsive pull-right" width="30" src="fbLogo.png"></a>
-            {{/if}}
             {{#if twitter_url}}
-            <a href="{{twitter_url}}"><img class="img-responsive pull-right" width="30" src="twitterLogo.png"></a>
+            <a href="{{twitter_url}}"><img class="img-responsive pull-right icon" width="30" src="twitterIcon.png"></a>
+            {{/if}}
+            {{#if fb_url}}
+            <a href="{{fb_url}}"><img class="img-responsive pull-right icon" width="30" src="fbIcon.png"></a>
             {{/if}}
             {{#if company_url}}
             {{#each externalLink company_url}}
