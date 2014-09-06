@@ -9,11 +9,11 @@ Template.editProfile.rendered=function() {
   };
 
 Template.editProfile.events({
-    'keyup #name,#email,#facebook_url,#twitter_url,#github_url,#behance_url,#personal_url' : function(evt, tmpl){
+    'keyup #name,#email,#facebook_url,#twitter_url,#linkedin_url,#github_url,#behance_url,#personal_url' : function(evt, tmpl){
       var targetId = evt.target.id;
       evt.target.style = "";
     },
-    'change #name,#email,#facebook_url,#twitter_url,#github_url,#behance_url,#personal_url' : function(evt, tmpl){
+    'change #name,#email,#facebook_url,#twitter_url,#linkedin_url,#github_url,#behance_url,#personal_url' : function(evt, tmpl){
       var targetId = evt.target.id;
       //alert (Session.get('userToShow'));
       var newValue = tmpl.find('#'+targetId).value.trim();

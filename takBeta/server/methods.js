@@ -22,23 +22,30 @@
             {
               var enString =userDoc.services.linkedin.skills.values[i].skill.name;
                var future = new Future();
-                HTTP.get("http://api.mymemory.translated.net/get?q="+enString+"&langpair=en|es&mt=0",function( error, result ){
+                HTTP.get("http://api.mymemory.translated.net/get?q="+enString+"&langpair=en|es",function( error, result ){
                     if(result)
                     {
                       //console.log(result);
                       future.return(result.data.responseData.translatedText);
                     }             
                 });
-              var skillTag = {
+               //formato y verificar que no sea null
+               if(future.wait() != null)
+              {
+                var skillTag = {
                       type: "Skill",
-                      name:future.wait(),
+                      name:future.wait()[0].toUpperCase()+future.wait().slice(1),
                       counter:{
                         people: 0,
                         companies: 0,
                       },
                       timestamp: new Date(),
                     }
+               
+
                 Meteor.call('saveTag', personId, skillTag);
+              }
+              
             }
           } 
           People.update({_id:personId}, 
