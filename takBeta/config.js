@@ -22,7 +22,7 @@ Router.map(function() {
   this.route('newUserForm', {path: '/registro'});
   this.route('news', {path: '/noticias'});
   this.route('firstLogin', {path: '/bienvenido'});
-  this.route('companies', {path: '/recursos',
+  this.route('companies', {path: '/organizaciones',
     waitOn: function() 
   { 
     Session.set('filters',[]);
