@@ -1,5 +1,5 @@
- Template.companies.events({
-    'change #types': function(evt, tmpl){
+ Template.startups.events({
+    'change #stages': function(evt, tmpl){
     //alert(evt.target.value);
     var filtersArray = Session.get("filters");
     if (evt.target.checked)
@@ -121,13 +121,13 @@
     }
  })
 
- Template.companies.helpers({
+ Template.startups.helpers({
   company: function()
   {
         if (Session.get('filters').length == 0)
-            return Companies.find({types:{$ne:'Startup'}});
+            return Companies.find({types:'Startup'});
            else
-            return Companies.find({types:{$ne:'Startup'},tag_ids:{$all:Session.get('filters')}});
+            return Companies.find({types:'Startup',tag_ids:{$all:Session.get('filters')}});
   },
 
   cities: function(tagsArray)
@@ -148,9 +148,9 @@
     return Tags.find({_id:tagId, type:'Market'});
   },
 
-  typeOfCompanyOption: function()
+  companyStageOption:function()
     {
-        return Tags.find({"type": "TypeOfCompany","counter.companies":{$gt:0}, "name":{$ne:"Startup"}});
+        return Tags.find({"type": "CompanyStage","counter.companies":{$gt:0}});
     },
 
   image: function(ids)
@@ -176,7 +176,7 @@
 
  })
 
-Template.companies.filters = function(){
+Template.startups.filters = function(){
   return Session.get('filters');
 };
  

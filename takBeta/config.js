@@ -22,7 +22,13 @@ Router.map(function() {
   this.route('newUserForm', {path: '/registro'});
   this.route('news', {path: '/noticias'});
   this.route('firstLogin', {path: '/bienvenido'});
-  this.route('companies', {path: '/companias',
+  this.route('companies', {path: '/recursos',
+    waitOn: function() 
+  { 
+    Session.set('filters',[]);
+    return Meteor.subscribe('allCompanies')},
+  });
+  this.route('startups', {path: '/startups',
     waitOn: function() 
   { 
     Session.set('filters',[]);
