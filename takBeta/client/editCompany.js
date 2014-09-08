@@ -5,6 +5,45 @@ Template.editCompany.events({
   if (value != '')
   {
     Meteor.call('pushCompanyType', Session.get('url'), value);
+    if(Session.get('lastType')!= '')
+    {
+
+      Meteor.call('pullCompanyType', Session.get('url'), Session.get('lastType'))
+    }
+  }
+  else
+  {
+    Meteor.call('pullCompanyType', Session.get('url'), Session.get('lastType'))
+  }
+},
+
+'click #type' : function(evt, tmpl){
+  var value = tmpl.find('#type').value;
+  //alert(this._id);
+    Session.set('lastType', value);
+},
+
+'click #stage' : function(evt, tmpl){
+ var stageId = evt.target.value;
+  //alert(this._id);
+    Session.set('lastStage', stageId);
+},
+
+'change #stage' : function(evt, tmpl){
+  var stageId = evt.target.value;
+  //alert(this._id);
+  if (stageId != '')
+  {
+    Meteor.call('pushCompanyTag', Session.get('url'), stageId);
+    if(Session.get('lastStage')!= '')
+    {
+
+      Meteor.call('pullCompanyTag', Session.get('url'), Session.get('lastStage'))
+    }
+  }
+  else
+  {
+    Meteor.call('pullCompanyTag', Session.get('url'), Session.get('lastStage'))
   }
 },
 
@@ -145,7 +184,8 @@ else
      //alert(this.company_id);
      Meteor.call('deleteExperience', this.person_id, Session.get('currentCompanyId'));
   },
-'click .pullCompanyType': function(evt, tmpl){
+  
+  'click .pullCompanyType': function(evt, tmpl){
   //alert(this);
   Meteor.call('pullCompanyType', Session.get('url'), this.toString());
 },
@@ -318,9 +358,9 @@ else
       //return true;
     },
     
-    'click .pullCompanyTag' : function(evt, tmpl){
+    /*'click .pullCompanyTag' : function(evt, tmpl){
        Meteor.call('pullCompanyTag', Session.get('url'), this._id);
-    }
+    }*/
   });
 
   Template.addMember.events({
@@ -399,6 +439,11 @@ Template.member.helpers({
           return Tags.find({type:'City'});
         },
 
+        selected:function()
+        {
+          return Companies.findOne({url:Session.get('url'), tag_ids:this._id});
+        },
+
         city: function(tagId)
         {
           return Tags.find({_id:tagId, type:'City'});
@@ -416,7 +461,12 @@ Template.member.helpers({
 
         typeOfCompanyOptions: function()
         {
-          return Tags.find({type:'TypeOfCompany'}, {sort: ['name', 'desc']});
+          return Tags.find({type:'TypeOfCompany'});
+        },
+
+         companyStageOptions: function()
+        {
+          return Tags.find({type:'CompanyStage'});
         },
 
         image: function(ids)

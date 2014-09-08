@@ -1,5 +1,5 @@
  Template.companies.events({
-    'change #types': function(evt, tmpl){
+    'change #types,#stages': function(evt, tmpl){
     //alert(evt.target.value);
     var filtersArray = Session.get("filters");
     if (evt.target.checked)
@@ -151,6 +151,10 @@
   typeOfCompanyOption: function()
     {
         return Tags.find({"type": "TypeOfCompany","counter.companies":{$gt:0}});
+    },
+  companyStageOption:function()
+    {
+        return Tags.find({"type": "CompanyStage","counter.companies":{$gt:0}});
     },
 
  	image: function(ids)

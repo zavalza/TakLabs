@@ -172,6 +172,10 @@
             People.update({_id: personId},
             {$set: {'twitter_url':value}});
             break;
+             case('linkedin_url'):
+            People.update({_id: personId},
+            {$set: {'linkedin_url':value}});
+            break;
             case('github_url'):
             People.update({_id: personId},
             {$set: {'github_url':value}});

@@ -73,26 +73,33 @@
           </div>
           <div class="row">
             <div class="col-md-8 col-xs-10">
-              Tipo de empresa:
+              <label>Tipo de empresa:</label>
               <select id="type">
                 <option value="">Selecciona</option>
                 {{#each typeOfCompanyOptions}}
+                {{#if selected}}
+                <option id="{{_id}}" value="{{name}}" selected>{{name}}</option>
+                {{else}}
                 <option id="{{_id}}" value="{{name}}">{{name}}</option>
+                {{/if}}
                 {{/each}}
               </select>
             </div>
           </div>
           <div class="row">
-            {{#each types}}
-            <div class="col-md-4">
-              <div class="input-group">
-                <input type="text" class="form-control " id="type" value="{{this}}" disabled>
-                <span class="input-group-btn">
-                <button name="Type" class="btn btn-danger pullCompanyType" type="button">x</button>
-                </span>
-              </div>
+            <div class="col-md-8 col-xs-10">
+              <label>Etapa alcanzada:</label>
+              <select id="stage">
+                <option value="">Selecciona</option>
+                {{#each companyStageOptions}}
+                {{#if selected}}
+                <option value="{{_id}}" selected>{{name}}</option>
+                {{else}}
+                <option value="{{_id}}">{{name}}</option>
+                {{/if}}
+                {{/each}}
+              </select>
             </div>
-            {{/each}}
           </div>
           <div class="row">
             <div class="col-md-8">
