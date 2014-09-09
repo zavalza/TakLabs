@@ -1,12 +1,21 @@
 {
-  "packages": {
-    "bootstrap3-less": {},
-    "font-awesome-4-less": {},
-    "iron-router": {},
-    "cfs-gridfs": {},
-    "bootstrap3-datepicker": {},
-    "linkedin": {},
-    "accounts-linkedin": {},
-    "googleAnalytics": {}
-  }
+"packages": {
+"bootstrap3-less": {},
+"font-awesome-4-less": {},
+"iron-router": {},
+"cfs-gridfs": {},
+"collectionFS":{  
+      "version": "0.4.8"
+    },
+"cfs-file":{
+	"version": "0.1.12"
+    },
+"data-man":{
+	"git":"https://github.com/zavalza/Meteor-data-man.git",
+	"branch":"beforeMeteor0.9"
+},
+"bootstrap3-datepicker": {},
+"linkedin": {},
+"accounts-linkedin": {}
+}
 }

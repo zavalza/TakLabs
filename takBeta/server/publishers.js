@@ -8,7 +8,7 @@
 });
 
   Meteor.publish('peopleToShow', function(filtersArray){
-    if(filtersArray.length == 0)
+    if(filtersArray != null && filtersArray.length == 0)
       return People.find({user_id:{$ne:null}});
     else
       return People.find({tag_ids:{$all:filtersArray}});
