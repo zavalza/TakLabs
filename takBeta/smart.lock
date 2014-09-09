@@ -8,7 +8,8 @@
       "cfs-gridfs": {},
       "bootstrap3-datepicker": {},
       "linkedin": {},
-      "accounts-linkedin": {}
+      "accounts-linkedin": {},
+      "googleAnalytics": {}
     },
     "packages": {
       "bootstrap3-less": {
@@ -45,6 +46,11 @@
         "git": "https://github.com/yefim/meteor-accounts-linkedin.git",
         "tag": "v0.0.6",
         "commit": "58ae8fc9da845c2eabcacc5cc6a238af6189d19d"
+      },
+      "googleAnalytics": {
+        "git": "https://github.com/yasaricli/googleAnalytics.git",
+        "tag": "v0.0.8",
+        "commit": "2c47f147d64554e870c7c02691d5c2efde040ee3"
       },
       "iron-layout": {
         "git": "https://github.com/EventedMind/iron-layout.git",
@@ -88,8 +94,8 @@
       },
       "cfs-file": {
         "git": "https://github.com/CollectionFS/Meteor-cfs-file.git",
-        "tag": "v0.1.12",
-        "commit": "c01f9cfcf230a2edb1e373ff6a0f2791892be649"
+        "tag": "v0.1.13",
+        "commit": "106d8875553dabc91358bbc11e29d3c659d88783"
       },
       "cfs-filesaver": {
         "git": "https://github.com/CollectionFS/Meteor-cfs-filesaver.git",
@@ -114,7 +120,7 @@
       "data-man": {
         "git": "https://github.com/CollectionFS/Meteor-data-man.git",
         "branch": "master",
-        "commit": "4c0e722ca058ae3304547376be5b117dbdd09cf5"
+        "commit": "6d11c922d86baa2c7d0cd158eba7fa849ca42e3c"
       },
       "cfs-upload-ddp": {
         "git": "https://github.com/CollectionFS/Meteor-cfs-upload-ddp.git",

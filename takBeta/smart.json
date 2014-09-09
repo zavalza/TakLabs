@@ -6,6 +6,7 @@
     "cfs-gridfs": {},
     "bootstrap3-datepicker": {},
     "linkedin": {},
-    "accounts-linkedin": {}
+    "accounts-linkedin": {},
+    "googleAnalytics": {}
   }
 }
