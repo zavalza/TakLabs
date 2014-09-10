@@ -6,6 +6,7 @@ Session.set('currentCompanyId',"");
 Session.set('userToShow',"");
 Session.set('typeToShow',"");
 Session.set('claimProfile', false);
+Session.set('waiting', false);
 Session.set('filters',[]);
 Session.set('selectedTags',[]);
 Session.set('keyControl',-1);
@@ -20,6 +21,19 @@ Meteor.subscribe("userData");
 Deps.autorun(function () {
   Meteor.subscribe("peopleToShow", Session.get('filters'));
 });
+
+/*Meteor.setInterval( function(){
+    if(Session.get('enWaiting'))
+    {
+      Session.set('waiting', !Session.get('waiting'));
+    }
+    /*var currentImage=Session.get("desireImg");
+    currentImage+=1;
+    if(currentImage==4)
+      currentImage =1;
+    Session.set("desireImg", currentImage);
+    //alert(addthis_config.pubid)
+ }, 2000 );*/
 
 Template.profile.helpers({
 	user: function()

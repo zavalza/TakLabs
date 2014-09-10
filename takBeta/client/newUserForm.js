@@ -1,3 +1,8 @@
+Template.newUserForm.waiting = function()
+{
+  return Session.get('waiting');
+}
+
 Template.newUserForm.events({
     'keyup #User' : function(evt, tmpl){
       //busca todo el string y no palabra por palabra
@@ -67,12 +72,13 @@ Template.newUserForm.events({
           else
           {
             //Success
-            
+           Session.set('waiting', true);
            Meteor.call('userToPerson', Meteor.userId(), function(error, result)
               {
                 if(!error){
                   Session.set('userToShow', result);
                   //alert(result);
+                  Session.set('waiting', false);
                   Router.go('firstLogin');
                 }
               });

@@ -1,3 +1,8 @@
+Template.loginForm.waiting = function()
+{
+  return Session.get('waiting');
+}
+
 Template.loginForm.events({
     'click .tryFacebookLogin': function(evt, tmpl){
       if(Accounts.loginServicesConfigured()){
@@ -54,9 +59,11 @@ Template.loginForm.events({
             //Success
             if(Session.get('claimProfile'))
             {
+              Session.set('waiting', true);
                Meteor.call('claimPerson', Meteor.userId(), Session.get('url'), function(error, result)
               {
                 if(!error){
+                  Session.set('waiting', false);
                   Session.set('userToShow', result);
                   Session.set('claimProfile', false);
                   //alert(result);

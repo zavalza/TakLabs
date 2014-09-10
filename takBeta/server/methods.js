@@ -22,7 +22,7 @@
             {
               var enString =userDoc.services.linkedin.skills.values[i].skill.name;
                var future = new Future();
-                HTTP.get("http://api.mymemory.translated.net/get?q="+enString+"&langpair=en|es",function( error, result ){
+                HTTP.get("http://api.mymemory.translated.net/get?q="+enString+"&langpair=en|es&de=paulz_91@hotmail.com",function( error, result ){
                     if(result)
                     {
                       //console.log(result);

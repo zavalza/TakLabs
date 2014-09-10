@@ -115,6 +115,11 @@ Template.companyProfile.helpers ({
       {
         return Impulses.find({_id:{$in:impulseIds}});
       },
+      
+       type: function (tagIds)
+      {
+        return Tags.find({_id:{$in:tagIds}, type:"ImpulseType"});
+      },
 
       tag: function (tagIds)
       {

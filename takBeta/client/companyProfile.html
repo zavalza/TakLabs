@@ -126,42 +126,44 @@
             <a href="{{pathFor 'newImpulse'}}"><button class="btn btn-info" type="button">Configurar nuevo</button></a>
             {{/if}}
             {{#if impulse_ids}}
-              {{#each impulse impulse_ids}}
-              <div class="thumbnail">
-                <div class="caption">
-                  <div class="row name text-center">{{title}}</div>
-                  <div class="row">
-                    {{description}}
-                  </div>
-                  <div class="row">
-                    <h6>Perfil:</h6>
-                    {{#each tag person_tags}}
-                    <div class="btn tag btn-xs">{{name}}</div>
-                    {{/each}}
-                  </div>
-                  <div class="row">
-                    <h6>Ofrece:</h6>
-                    {{#each reward tag_ids}}
-                    <div class="btn tag btn-xs"> {{name}}</div>
-                    {{/each}}
-                  </div>
-                  {{#if canEdit currentUser.person_id}}
-                  <div class="row text-center">
-                    <a href="{{pathFor 'editImpulse'}}"><button class="btn btn-warning" type="button">Editar</button></a>
-                    <a href="#"><button id="{{_id}}" class="btn btn-danger deleteImpulse" type="button">Eliminar</button></a>
-                  </div>
-                  {{else}}
-                  <div class="row text-center">
-                    <a href="#"><button id="{{_id}}" class="btn btn-default giveInterest" type="button">Me interesa</button></a>
-                  </div>
-                  {{/if}}
+            {{#each impulse impulse_ids}}
+            <div class="thumbnail">
+              <div class="caption">
+                <div class="row name text-center">{{title}}</div>
+                <div class="row">
+                  {{description}}
                 </div>
+                <div class="row">
+                  {{#each type tag_ids}}
+                  <div id="{{_id}}" class="btn tag btn-xs name">{{name}}</div>
+                  {{/each}}
+                  {{#each tag person_tags}}
+                  <div id="{{_id}}"  class="btn tag btn-xs">{{name}}</div>
+                  {{/each}}
+                </div>
+                <div class="row">
+                  <h6>Se Ofrece:</h6>
+                  {{#each reward tag_ids}}
+                  <div class="btn tag btn-xs"> {{name}}</div>
+                  {{/each}}
+                </div>
+                {{#if canEdit currentUser.person_id}}
+                <div class="row text-center">
+                  <a href="{{pathFor 'editImpulse'}}"><button class="btn btn-warning" type="button">Editar</button></a>
+                  <a href="#"><button id="{{_id}}" class="btn btn-danger deleteImpulse" type="button">Eliminar</button></a>
+                </div>
+                {{else}}
+                <div class="row text-center">
+                  <a href="#"><button id="{{_id}}" class="btn btn-default giveInterest" type="button">Me interesa</button></a>
+                </div>
+                {{/if}}
               </div>
-              <!--<div class="row">
-                <a href="{{pathFor 'newImpulse'}}"><button class="btn btn-info" type="button">Me interesa</button></a>
-                <br/>
-              </div>-->
-              {{/each}}
+            </div>
+            <!--<div class="row">
+              <a href="{{pathFor 'newImpulse'}}"><button class="btn btn-info" type="button">Me interesa</button></a>
+              <br/>
+            </div>-->
+            {{/each}}
             {{else}}
             <h5>{{name}} aún no publica ningún impulso</h5>
             {{/if}}
@@ -169,37 +171,37 @@
           
           {{#if article_urls}}
           <div class="row well">
-          <h3>Prensa</h3>
-          {{#each article_urls}}
-          <div class="row" style="color: blue">
-            <a href="{{this}}">{{this}}</a>
+            <h3>Prensa</h3>
+            {{#each article_urls}}
+            <div class="row" style="color: blue">
+              <a href="{{this}}">{{this}}</a>
+            </div>
+            <br/>
+            {{/each}}
           </div>
-          <br/>
-          {{/each}}
-        </div>
           {{/if}}
           
-          </div>
-          <!--
-          
-          -->
-          <!--div class="col-md-3 col-xs-12" >
-          <h4>Vacantes</h4>
-        </div-->
-      </div>
-      </div>
+        </div>
+        <!--
+        
+        -->
+        <!--div class="col-md-3 col-xs-12" >
+        <h4>Vacantes</h4>
+      </div-->
     </div>
   </div>
-  </template>
-  <template name="profileThumbnail">
-  <div class="thumbnail">
-    <a href="{{pathFor 'profile'}}"><img style="height: 80px;" class="img-circle" src="{{picture}}"></a>
-    <!--height:120px;-->
-    <span class="cvText" style="display:inline-block;">
-    <h6 class="text-center"><a href="{{pathFor 'profile'}}">{{name}}</a></h6>
-    {{#each miniCV experience}}
-    {{string}}{{#each company company_id}}<a href="{{pathFor 'profile'}}"> @{{name}};</a>{{/each}}
-    {{/each}}
-    </span>
-  </div>
-  </template>
+</div>
+</div>
+</template>
+<template name="profileThumbnail">
+<div class="thumbnail">
+<a href="{{pathFor 'profile'}}"><img style="height: 80px;" class="img-circle" src="{{picture}}"></a>
+<!--height:120px;-->
+<span class="cvText" style="display:inline-block;">
+<h6 class="text-center"><a href="{{pathFor 'profile'}}">{{name}}</a></h6>
+{{#each miniCV experience}}
+{{string}}{{#each company company_id}}<a href="{{pathFor 'profile'}}"> @{{name}};</a>{{/each}}
+{{/each}}
+</span>
+</div>
+</template>
