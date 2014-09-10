@@ -40,6 +40,12 @@ Router.map(function() {
     Session.set('filters',[]);
     return Meteor.subscribe('allCompanies')},
   });
+  this.route('impulses', {path: '/impulsa',
+    waitOn: function() 
+  { 
+    Session.set('filters',[]);
+    return Meteor.subscribe('allImpulses')},
+  });
   this.route('startups', {path: '/startups',
     waitOn: function() 
   { 
