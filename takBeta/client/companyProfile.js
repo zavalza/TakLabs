@@ -78,7 +78,7 @@ Template.companyProfile.helpers ({
     {
       //return true;
       return (People.find({_id: personId,
-        'experience':{$elemMatch:{'company_id': this._id}}}).count() > 0);
+        'experience':{$elemMatch:{'company_id': Session.get('currentCompanyId')}}}).count() > 0);
     },
 
       city: function(tagsArray)

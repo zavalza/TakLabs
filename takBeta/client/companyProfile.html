@@ -91,9 +91,12 @@
         </div>
         <div class="col-md-3 col-md-offset-1 well">
           <h3>Impulsos</h3>
+          {{#if canEdit currentUser.person_id}}
+          <a href="{{pathFor 'newImpulse'}}"><button class="btn btn-info" type="button">Configurar nuevo</button></a>
+          {{/if}}
           {{#if impulse_ids}}
           {{#each impulse impulse_ids}}
-            <div class="name">{{title}}</div>
+            <div class="row name">{{title}}</div>
             <div class="row">
             <h6>Necesita:</h6>
             {{#each tag person_tags}}
@@ -106,22 +109,24 @@
                <div class="btn tag btn-xs"> {{name}}</div>
               {{/each}}
           </div>
+          {{#if canEdit currentUser.person_id}}
+          <div class="row">
+          <a href="{{pathFor 'editImpulse'}}"><button class="btn btn-warning" type="button">Editar</button></a>
+          <a href="{{pathFor 'newImpulse'}}"><button class="btn btn-danger" type="button">Eliminar</button></a>
+        </div>
+          {{/if}}
           <!--<div class="row">
           <a href="{{pathFor 'newImpulse'}}"><button class="btn btn-info" type="button">Me interesa</button></a>
           <br/>
         </div>-->
           {{/each}}
-        
-          {{#if canEdit currentUser.person_id}}
-          <a href="{{pathFor 'newImpulse'}}"><button class="btn btn-info" type="button">Configurar nuevo</button></a>
-          {{/if}}
           {{else}}
           <h5>Este proyecto aún no publica ningun impulso</h5>
           {{/if}}
         </div>
         {{/if}}
         {{#if team}}
-          <div class="col-md-9 col-md-offset-1 well">
+          <div class="col-md-8 well">
             <h3>Equipo</h3>
             <div class="row">
               {{#each founder team}}
@@ -147,6 +152,7 @@
             </div>
           </div>
            {{/if}}
+           
         <!--
         {{#if article_urls}}
         <h4>Prensa</h4>

@@ -26,6 +26,12 @@ Router.map(function() {
     Session.set('selectedTags',[]);
     return Meteor.subscribe('allTags')},
   });
+  this.route('editImpulse',{path:'/editarImpulso/:_id',
+      waitOn: function() 
+  { 
+    Session.set('currentImpulse',this.params._id);
+    return Meteor.subscribe('allTags')},
+  });
   this.route('news', {path: '/noticias'});
   this.route('firstLogin', {path: '/bienvenido'});
   this.route('companies', {path: '/organizaciones',

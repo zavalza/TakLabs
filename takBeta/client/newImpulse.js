@@ -105,7 +105,13 @@ Template.newImpulse.events({
       var title= tmpl.find('#title').value;
       var description = tmpl.find('#description').value;
       var type = tmpl.find('#impulseType').value;
-      var remote = tmpl.find('#remote').value;
+      var remotes = document.getElementsByName('remote');
+      for(var i = 0; i < remotes.length; i++)
+      {
+        if(remotes[i].checked)
+           var remote= remotes[i].value;
+      }
+     
       if(title.length==0 || description.length == 0 || type.length == 0 || remote.length == 0)
       {
         alert ('Por favor llena todos los campos');
@@ -143,7 +149,7 @@ Template.newImpulse.events({
         remote:remote,
         tag_ids:reward_ids
       }
-      Meteor.call('saveImpulse', Session.get('url'), impulseDoc);
+      Meteor.call('insertImpulse', Session.get('url'), impulseDoc);
       //alert(EJSON.stringify(impulseDoc));
       Router.go('startups');
     }

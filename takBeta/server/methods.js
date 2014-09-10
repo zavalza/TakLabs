@@ -458,7 +458,7 @@
         return tagId;
       },
 
-      saveImpulse: function (companyUrl, impulseDoc)
+      insertImpulse: function (companyUrl, impulseDoc)
       {
         console.log('creating new Impulse on '+companyUrl);
         companyDoc = Companies.findOne({url: companyUrl});
@@ -471,6 +471,27 @@
         }
         Companies.update({url:companyUrl},{$addToSet:{impulse_ids:impulseId}});
             
+      },
+
+      saveImpulse: function (impulseDoc)
+      {
+       
+        
+        //console.log(impulseDoc);
+         Impulses.update({_id:impulseDoc._id}, impulseDoc);
+        for( var i = 0; i < impulseDoc.tag_ids.length; i++)
+        {
+          /*Falta cambiar los tags que se quitaron al editar*/
+          //Meteor.call('pushCompanyTag', companyUrl, impulseDoc.tag_ids[i]);
+        }
+            
+      },
+
+      getImpulseDoc: function(impulseId)
+      {
+        impulseDoc = Impulses.findOne({_id:impulseId});
+        //console.log(impulseDoc.person_tags);
+        return impulseDoc;
       }
       
     });
