@@ -467,7 +467,8 @@
         impulseId = Impulses.insert(impulseDoc);
         for( var i = 0; i < impulseDoc.tag_ids.length; i++)
         {
-          Meteor.call('pushCompanyTag', companyUrl, impulseDoc.tag_ids[i]);
+          //Need to know how to insert relation with tags
+          //Meteor.call('pushCompanyTag', companyUrl, impulseDoc.tag_ids[i]);
         }
         Companies.update({url:companyUrl},{$addToSet:{impulse_ids:impulseId}});
             
@@ -485,6 +486,13 @@
           //Meteor.call('pushCompanyTag', companyUrl, impulseDoc.tag_ids[i]);
         }
             
+      },
+
+      deleteImpulse: function(companyUrl, impulseId)
+      {
+        console.log('delete Impulse '+impulseId+ ' from '+companyUrl);
+        Companies.update({url:companyUrl},{$pull:{impulse_ids:impulseId}});
+        Impulses.remove({_id: impulseId});
       },
 
       getImpulseDoc: function(impulseId)

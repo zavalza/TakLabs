@@ -189,7 +189,7 @@ Template.editImpulse.events({
       }
       Meteor.call('saveImpulse', impulseDoc);
       //alert(EJSON.stringify(impulseDoc));
-      Router.go('startups');
+      window.history.back();
     }
   });
 Template.editImpulse.selectedTags = function()

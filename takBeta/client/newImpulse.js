@@ -151,7 +151,7 @@ Template.newImpulse.events({
       }
       Meteor.call('insertImpulse', Session.get('url'), impulseDoc);
       //alert(EJSON.stringify(impulseDoc));
-      Router.go('startups');
+      window.history.back();
     }
   });
 Template.newImpulse.selectedTags = function()

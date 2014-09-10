@@ -96,63 +96,72 @@
           {{/if}}
           {{#if impulse_ids}}
           {{#each impulse impulse_ids}}
-            <div class="row name">{{title}}</div>
+          <div class="thumbnail">
+            <div class="caption">
+            <div class="row name text-center">{{title}}</div>
             <div class="row">
-            <h6>Necesita:</h6>
-            {{#each tag person_tags}}
+              <h6>Necesita:</h6>
+              {{#each tag person_tags}}
               <div class="btn tag btn-xs">{{name}}</div>
-            {{/each}}
-            </div>
-          <div class="row">
-            <h6>Ofrece:</h6>
-              {{#each reward tag_ids}}
-               <div class="btn tag btn-xs"> {{name}}</div>
               {{/each}}
-          </div>
-          {{#if canEdit currentUser.person_id}}
-          <div class="row">
-          <a href="{{pathFor 'editImpulse'}}"><button class="btn btn-warning" type="button">Editar</button></a>
-          <a href="{{pathFor 'newImpulse'}}"><button class="btn btn-danger" type="button">Eliminar</button></a>
-        </div>
+            </div>
+            <div class="row">
+              <h6>Ofrece:</h6>
+              {{#each reward tag_ids}}
+              <div class="btn tag btn-xs"> {{name}}</div>
+              {{/each}}
+            </div>
+            {{#if canEdit currentUser.person_id}}
+            <div class="row text-center">
+              <a href="{{pathFor 'editImpulse'}}"><button class="btn btn-warning" type="button">Editar</button></a>
+              <a href="#"><button id="{{_id}}" class="btn btn-danger deleteImpulse" type="button">Eliminar</button></a>
+            </div>
+            {{else}}
+            <div class="row text-center">
+              <a href="{{pathFor 'editImpulse'}}"><button class="btn btn-success" type="button">Me interesa</button></a>
+            </div>
           {{/if}}
+            </div>
+
+          </div>
           <!--<div class="row">
-          <a href="{{pathFor 'newImpulse'}}"><button class="btn btn-info" type="button">Me interesa</button></a>
-          <br/>
-        </div>-->
+            <a href="{{pathFor 'newImpulse'}}"><button class="btn btn-info" type="button">Me interesa</button></a>
+            <br/>
+          </div>-->
           {{/each}}
           {{else}}
-          <h5>Este proyecto aún no publica ningun impulso</h5>
+          <h5>{{name}} aún no publica ningun impulso</h5>
           {{/if}}
         </div>
         {{/if}}
         {{#if team}}
-          <div class="col-md-8 well">
-            <h3>Equipo</h3>
-            <div class="row">
-              {{#each founder team}}
-              <div class="col-md-4 col-xs-6">
-                {{>profileThumbnail}}
-              </div>
-              {{/each}}
-              {{#each teamMember team}}
-              <div class="col-md-4 col-xs-6">
-                {{>profileThumbnail}}
-              </div>
-              {{/each}}
-              {{#each investor team}}
-              <div class="col-md-4 col-xs-6">
-                {{>profileThumbnail}}
-              </div>
-              {{/each}}
-              {{#each otherRole team}}
-              <div class="col-md-4 col-xs-6">
-                {{>profileThumbnail}}
-              </div>
-              {{/each}}
+        <div class="col-md-8 well">
+          <h3>Equipo</h3>
+          <div class="row">
+            {{#each founder team}}
+            <div class="col-md-4 col-xs-6">
+              {{>profileThumbnail}}
             </div>
+            {{/each}}
+            {{#each teamMember team}}
+            <div class="col-md-4 col-xs-6">
+              {{>profileThumbnail}}
+            </div>
+            {{/each}}
+            {{#each investor team}}
+            <div class="col-md-4 col-xs-6">
+              {{>profileThumbnail}}
+            </div>
+            {{/each}}
+            {{#each otherRole team}}
+            <div class="col-md-4 col-xs-6">
+              {{>profileThumbnail}}
+            </div>
+            {{/each}}
           </div>
-           {{/if}}
-           
+        </div>
+        {{/if}}
+        
         <!--
         {{#if article_urls}}
         <h4>Prensa</h4>
@@ -162,7 +171,7 @@
         </div>
         {{/each}}
         {{/if}}
-      -->
+        -->
       </div>
       <!--div class="col-md-3 col-xs-12" >
       <h4>Vacantes</h4>

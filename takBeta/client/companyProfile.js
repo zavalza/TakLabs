@@ -18,6 +18,13 @@ Template.profileThumbnail.rendered = function()
 Template.companyProfile.events({
   'mouseenter .screenshot':function(evt, tmpl){
     Session.set("screenshotToShow",this._id);
+  },
+
+  'click .deleteImpulse': function(evt, tmpl)
+  {
+    //alert(evt.target.id)
+    //alert(this._id);
+    Meteor.call('deleteImpulse', Session.get('url'), evt.target.id);
   }
 });
 
