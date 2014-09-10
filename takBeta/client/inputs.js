@@ -80,6 +80,7 @@
                   followers:{count:0, user_ids:[]},
                   referrer: document.referrer, 
                   timestamp: new Date(),
+                  isPublic:true
                 }
           Meteor.call('addExperience', Session.get('userToShow'), typeOfExperience, newCompany);
       }

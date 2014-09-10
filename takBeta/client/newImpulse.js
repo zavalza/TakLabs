@@ -46,9 +46,12 @@ Template.newImpulse.events({
           selection = selection -1;
         break;
         case 13: //Return
-          var filtersArray = Session.get("filters");
-          filtersArray.push(matches[selection].id);
-          Session.set('filters', filtersArray);
+          //alert('Enter')
+          var tagsArray = Session.get("selectedTags");
+          tagsArray.push(matches[selection].id);
+          Session.set('selectedTags', tagsArray);
+          //alert(Session.get('selectedTags'));
+          //alert(EJSON.stringify(Session.get('selectedTags')));
           tmpl.find('#'+targetId).value = "";
             tmpl.find('#'+targetId).blur();
             document.getElementById(targetId+'Options').style.display='none';
@@ -83,70 +86,83 @@ Template.newImpulse.events({
     'mousedown .Tag' : function (evt, tmpl){
       //alert(this._id);
       var targetClass = evt.target.getAttribute('class');
-      var filtersArray = Session.get("filters");
-      filtersArray.push(evt.target.id);
-      Session.set('filters', filtersArray);
+      var tagsArray = Session.get("selectedTags");
+      tagsArray.push(evt.target.id);
+      Session.set('selectedTags', tagsArray);
       //blur event is called after mousedown
     },
-
-    'click .tryFacebookLogin': function(evt, tmpl){
-        if(Accounts.loginServicesConfigured()){
-        Meteor.loginWithFacebook({
-        requestPermissions: ['public_profile', 'user_friends', 'email']
-        }, function (err) {
-          if (err)
-            Session.set('errorMessage', err.reason || 'Unknown error');
-          else
-          {
-            Meteor.call('userToPerson', Meteor.userId(), function(error, result)
-              {
-                if(!error){
-                  Session.set('userToShow', result);
-                  //alert(result);
-                  Router.go('firstLogin');
-                }
-              });
-            
-          }
-        }); 
-        }
-        else{
-          alert("Error en inicio de sesión");
-      }
+    'click .pullTag' : function(evt, tmpl){
+      //alert (targetName)
+      var tagsArray = Session.get('selectedTags');
+      var pos= tagsArray.indexOf(evt.target.id);
+      tagsArray.splice(pos, 1);
+      Session.set('selectedTags', tagsArray);
       
     },
-    'click .tryLinkedinLogin': function(evt, tmpl){
-      if(Accounts.loginServicesConfigured()){
-        Meteor.loginWithLinkedin({
-        }, function (err) {
-          if (err)
-            Session.set('errorMessage', err.reason || 'Unknown error');
-          else
-          {
-            //Success
-            
-           Meteor.call('userToPerson', Meteor.userId(), function(error, result)
-              {
-                if(!error){
-                  Session.set('userToShow', result);
-                  //alert(result);
-                  Router.go('firstLogin');
-                }
-              });
-          }
-      }); 
+    'click .saveImpulse': function(evt, tmpl)
+    {
+      //alert('salvar');
+      var title= tmpl.find('#title').value;
+      var description = tmpl.find('#description').value;
+      var type = tmpl.find('#impulseType').value;
+      var remote = tmpl.find('#remote').value;
+      if(title.length==0 || description.length == 0 || type.length == 0 || remote.length == 0)
+      {
+        alert ('Por favor llena todos los campos');
+        return false;
       }
-      else{
-        alert("Error en inicio de sesión");
+      var tags = Session.get('selectedTags');
+      if(tags.length == 0)
+      {
+        alert('Selecciona al menos un tag para el perfil');
+        return false;
       }
+      var reward_ids = [];
+      var rewards = document.getElementsByName('reward');
+      for (var i = 0; i < rewards.length; i++)
+      {
+        if(rewards[i].checked)
+        {
+          //alert(rewards[i].id);
+          reward_ids.push(rewards[i].id);
+        }
+      }
+      if(reward_ids.length == 0)
+      {
+        alert ("Selecciona qué darás a cambio");
+        return false;
+      }
+      reward_ids.push(type);
+
+      //var companyDoc = Companies.findOne({'url': Session.get('url')});
+      var impulseDoc = {
+        //company_id: will be added on server side
+        title:title,
+        description:description,
+        person_tags:tags,
+        remote:remote,
+        tag_ids:reward_ids
+      }
+      Meteor.call('saveImpulse', Session.get('url'), impulseDoc);
+      //alert(EJSON.stringify(impulseDoc));
+      Router.go('startups');
     }
   });
+Template.newImpulse.selectedTags = function()
+{
+  return Session.get('selectedTags');
+}
 
 Template.newImpulse.helpers({
   tagOptions : function()
     {
     return Tags.find({'counter.people':{$gt:0}});
     },
+  tag: function(tagId)
+  {
+    return Tags.find({_id:tagId});
+  },
+
   impulseTypeOptions: function()
   {
     return Tags.find({'type': 'ImpulseType'});

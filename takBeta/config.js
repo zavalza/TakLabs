@@ -1,5 +1,5 @@
 //MongoDB
-Jobs = new Meteor.Collection("jobs");
+Impulses = new Meteor.Collection("impulses");
 Companies = new Meteor.Collection("companies");
 People =  new Meteor.Collection("people");
 Tags = new Meteor.Collection("tags");
@@ -20,7 +20,12 @@ Router.map(function() {
   this.route('welcome', {path: '/'});
   this.route('loginForm', {path: '/entrar'});
   this.route('newUserForm', {path: '/registro'});
-  this.route('newImpulse',{path:'/nuevoImpulso'});
+  this.route('newImpulse',{path:'/nuevoImpulso',
+      waitOn: function() 
+  { 
+    Session.set('selectedTags',[]);
+    return Meteor.subscribe('allTags')},
+  });
   this.route('news', {path: '/noticias'});
   this.route('firstLogin', {path: '/bienvenido'});
   this.route('companies', {path: '/organizaciones',

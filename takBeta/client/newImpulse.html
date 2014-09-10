@@ -34,10 +34,20 @@
                 {{/each}}
               </ul>
             </div>
+            {{#each selectedTags}}
+                  {{#each tag this}}
+                    <div class="input-group">
+                      <input type="text" class="form-control " id="tag" value="{{name}}" disabled>
+                      <span class="input-group-btn">
+                        <button id="{{_id}}" name="Tag" class="btn btn-danger pullTag" type="button">x</button>
+                      </span>
+                    </div>
+                  {{/each}}
+                {{/each}}
           </div>
           <div class="row">
              <h4>Tipo de Impulso</h4>
-              <select id="stage">
+              <select id="impulseType">
                 <option value="">Selecciona</option>
                 {{#each impulseTypeOptions}}
                 <option value="{{_id}}">{{name}}</option>
@@ -59,16 +69,18 @@
           <h4>¿Qué darás a cambio?</h4>
         <div class="form-group">
         {{#each rewardTypeOptions}}
+        <div class="col-md-6">
         <label>
           {{name}}
-          <input class="form-control" type="checkbox" id="roles" value="{{name}}">
+          <input class="form-control" type="checkbox" id="{{_id}}" name="reward" value="{{name}}">
         </label>
+      </div>
         {{/each}}
       </div>
       </div>
       <div class="row">
-      <a class="btn btn-lg btn-success" href="{{pathFor 'newUserForm'}}">Salvar</a>
-      <a class="btn btn-lg btn-danger" href="{{pathFor 'newUserForm'}}">Cancelar</a>
+      <a class="btn btn-lg btn-success saveImpulse" href="#">Salvar</a>
+      <a class="btn btn-lg btn-danger" href="{{pathFor 'startups'}}">Cancelar</a>
     </div>
           <!--Descripción
           ¿Qué perfil necesitas? Introduce todos los tags que quieras.

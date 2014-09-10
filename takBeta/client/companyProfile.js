@@ -96,6 +96,21 @@ Template.companyProfile.helpers ({
         return Tags.find({_id:{$in:tagsArray}, type:'TypeOfCompany'});
       },
 
+      impulse: function (impulseIds)
+      {
+        return Impulses.find({_id:{$in:impulseIds}});
+      },
+
+      tag: function (tagIds)
+      {
+        return Tags.find({_id:{$in:tagIds}});
+      },
+
+      reward: function (tagIds)
+      {
+        return Tags.find({_id:{$in:tagIds}, type:"RewardType"});
+      },
+
         company: function(companyId)
         {
           if(companyId)

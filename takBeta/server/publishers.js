@@ -14,7 +14,10 @@
       return People.find({tag_ids:{$all:filtersArray}});
   });
 
-
+  Meteor.publish('allImpulses', function()
+  {
+    return Impulses.find({});
+  });
   Meteor.publish('allRegistredPeople', function(){
     return People.find({user_id:{$ne:null}});
   });

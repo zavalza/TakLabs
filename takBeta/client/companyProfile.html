@@ -91,18 +91,33 @@
         </div>
         <div class="col-md-3 col-md-offset-1 well">
           <h3>Impulsos</h3>
-          <!--
-          {{#each job job_ids}}
-            Necesita:
-          En ofrece es donde entran los taks o cualquier forma de retribución futura
-          Ofrece:
-          Me interesa
+          {{#if impulse_ids}}
+          {{#each impulse impulse_ids}}
+            <div class="name">{{title}}</div>
+            <div class="row">
+            <h6>Necesita:</h6>
+            {{#each tag person_tags}}
+              <div class="btn tag btn-xs">{{name}}</div>
+            {{/each}}
+            </div>
+          <div class="row">
+            <h6>Ofrece:</h6>
+              {{#each reward tag_ids}}
+               <div class="btn tag btn-xs"> {{name}}</div>
+              {{/each}}
+          </div>
+          <!--<div class="row">
+          <a href="{{pathFor 'newImpulse'}}"><button class="btn btn-info" type="button">Me interesa</button></a>
+          <br/>
+        </div>-->
           {{/each}}
-        -->
+        
           {{#if canEdit currentUser.person_id}}
           <a href="{{pathFor 'newImpulse'}}"><button class="btn btn-info" type="button">Configurar nuevo</button></a>
           {{/if}}
-          
+          {{else}}
+          <h5>Este proyecto aún no publica ningun impulso</h5>
+          {{/if}}
         </div>
         {{/if}}
         {{#if team}}

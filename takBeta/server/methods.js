@@ -457,5 +457,20 @@
         Meteor.call('pushCompanyTag', companyUrl, tagId);
         return tagId;
       },
+
+      saveImpulse: function (companyUrl, impulseDoc)
+      {
+        console.log('creating new Impulse on '+companyUrl);
+        companyDoc = Companies.findOne({url: companyUrl});
+        impulseDoc.company_id = companyDoc._id;
+        //console.log(impulseDoc);
+        impulseId = Impulses.insert(impulseDoc);
+        for( var i = 0; i < impulseDoc.tag_ids.length; i++)
+        {
+          Meteor.call('pushCompanyTag', companyUrl, impulseDoc.tag_ids[i]);
+        }
+        Companies.update({url:companyUrl},{$addToSet:{impulse_ids:impulseId}});
+            
+      }
       
     });
