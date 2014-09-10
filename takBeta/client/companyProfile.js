@@ -25,6 +25,14 @@ Template.companyProfile.events({
     //alert(evt.target.id)
     //alert(this._id);
     Meteor.call('deleteImpulse', Session.get('url'), evt.target.id);
+  },
+
+  'click .giveInterest': function(evt, tmpl)
+  {
+    //alert(evt.target.id)
+    //alert(this._id);
+    Meteor.call('giveInterest', evt.target.id, Meteor.user().person_id);
+    alert('Tu información se ha enviado, espera a que te contacten');
   }
 });
 

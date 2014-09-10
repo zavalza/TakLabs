@@ -474,6 +474,12 @@
             
       },
 
+      giveInterest: function(impulseId, userId)
+      {
+        console.log('interest from '+userId+' to '+impulseId)
+        Impulses.update({_id: impulseId},{$addToSet:{'people':userId}});
+      },
+
       saveImpulse: function (impulseDoc)
       {
        
