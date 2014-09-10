@@ -5,7 +5,7 @@ prodHost=ds063218.mongolab.com:63218
 testHost=ds059509.mongolab.com:59509
 prodDB=meteor
 testDB=meteor_test
-collections=('users' 'people' 'tags' 'companies' 'cfs._tempstore.chunks' 'cfs.images.filerecord' 'cfs_gridfs._tempstore.chunks' 'cfs_gridfs._tempstore.files' 'cfs_gridfs.images.chunks' 'cfs_gridfs.images.files')
+collections=('users' 'people' 'tags' 'impulses' 'companies' 'cfs._tempstore.chunks' 'cfs.images.filerecord' 'cfs_gridfs._tempstore.chunks' 'cfs_gridfs._tempstore.files' 'cfs_gridfs.images.chunks' 'cfs_gridfs.images.files')
 
 #number of collections
 amount=${#collections[@]}
