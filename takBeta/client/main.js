@@ -3,6 +3,7 @@ Meteor.startup(function () {
 if(window.location.hostname.search('www') != -1)
   window.location.assign("http://tak.mx");
 Session.set('currentCompanyId',"");
+Session.set('counterValue', 0);
 Session.set('userToShow',"");
 Session.set('typeToShow',"");
 Session.set('claimProfile', false);
@@ -22,18 +23,18 @@ Deps.autorun(function () {
   Meteor.subscribe("peopleToShow", Session.get('filters'));
 });
 
-/*Meteor.setInterval( function(){
-    if(Session.get('enWaiting'))
-    {
-      Session.set('waiting', !Session.get('waiting'));
-    }
-    /*var currentImage=Session.get("desireImg");
-    currentImage+=1;
-    if(currentImage==4)
-      currentImage =1;
-    Session.set("desireImg", currentImage);
+Meteor.setInterval( function(){
+    var pathValues=["personas", "colabora","organizaciones"];
+    var takValues=["talento", "equipo", "impulso"];
+    var counter = Session.get('counterValue');
+    Session.set('takValue', takValues[counter]);
+    Session.set('pathValue', pathValues[counter]);
+    counter +=1;
+    if(counter==3)
+      counter =0;
+    Session.set("counterValue", counter);
     //alert(addthis_config.pubid)
- }, 2000 );*/
+ }, 4000 );
 
 Template.profile.helpers({
 	user: function()
