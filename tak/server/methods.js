@@ -10,7 +10,7 @@
           {
           //console.log(userDoc);
           var emptyProfile={followers:{count:0, user_ids:[]},
-                            following:{count: 0, user_ids:[], company_ids:[]}
+                            following:{count: 0, user_ids:[], project_ids:[]}
                             };
           personId = People.insert(userDoc.profile);
           var url = Meteor.call('generateUrl', userDoc.profile.name);
@@ -37,7 +37,7 @@
                       name:future.wait()[0].toUpperCase()+future.wait().slice(1),
                       counter:{
                         people: 0,
-                        companies: 0,
+                        projects: 0,
                       },
                       timestamp: new Date(),
                     }
@@ -62,7 +62,7 @@
           var userDoc = Meteor.users.findOne({_id:userId}, {'profile':1,'_id':0});
           //Do we need an empty profile?
           /*var emptyProfile={followers:{count:0, user_ids:[]},
-                            following:{count: 0, user_ids:[], company_ids:[]}
+                            following:{count: 0, user_ids:[], project_ids:[]}
           
                             };*/
           var claimedDoc = People.findOne({url:personUrl});
@@ -100,7 +100,7 @@
             for (var i=0; i<notValid.length; i++) {
             url = url.replace(notValid.charAt(i), valid.charAt(i));
             }
-             var existing = Companies.find({'url': url}).count()+ People.find({'url': url}).count();
+             var existing = Projects.find({'url': url}).count()+ People.find({'url': url}).count();
             if(existing !=0)
             {
               url = url + existing.toString();
@@ -113,10 +113,10 @@
         var newUrl = Meteor.call('generateUrl', url);
         Meteor.call('updateTextField', personId , 'url', newUrl);
       },
-      addMember: function(companyUrl, typeOfExperience, name){
+      addMember: function(projectUrl, typeOfExperience, name){
       console.log('requesting new url');
       var url = Meteor.call('generateUrl', name);
-      var companyDoc = Companies.findOne({url:companyUrl});
+      var projectDoc = Projects.findOne({url:projectUrl});
       console.log("Creating a new person")
       var person={
                 url: url,
@@ -132,14 +132,14 @@
                 startedAt:null,
                 endedAt:null,
                 confirmed:false,
-                company_id: companyDoc._id,
+                project_id: projectDoc._id,
                 }], 
                 followers:{count:0, user_ids:[]},
-                following:{count: 0, user_ids:[], company_ids:[]}
+                following:{count: 0, user_ids:[], project_ids:[]}
                 }
       //Validar nombre no repetido?
       var personId= People.insert(person);
-      console.log('Adding experience to '+ companyUrl);
+      console.log('Adding experience to '+ projectUrl);
       var experience = {
       type:typeOfExperience,
       title:null,
@@ -149,7 +149,7 @@
       user_id: null,
       person_id: personId
       }
-      Companies.update({url: companyUrl},
+      Projects.update({url: projectUrl},
       {$push:{'team': experience}});
       },
 
@@ -197,25 +197,25 @@
           
       },
 
-      updateExperience: function(personId, companyId, field, value){
-          console.log('Updating field '+ field +' of person '+personId + ' and company '+ companyId);
+      updateExperience: function(personId, projectId, field, value){
+          console.log('Updating field '+ field +' of person '+personId + ' and project '+ projectId);
           switch(field){
             case ('title'):
-            People.update({_id: personId,'experience':{$elemMatch:{'company_id': companyId}}},
+            People.update({_id: personId,'experience':{$elemMatch:{'project_id': projectId}}},
              {$set: {'experience.$.title':value}});
-            Companies.update({_id: companyId,'team':{$elemMatch:{'person_id': personId}}},
+            Projects.update({_id: projectId,'team':{$elemMatch:{'person_id': personId}}},
              {$set: {'team.$.title':value}});
             break;
             case ('startedAt'):
-            People.update({_id: personId,'experience':{$elemMatch:{'company_id': companyId}}},
+            People.update({_id: personId,'experience':{$elemMatch:{'project_id': projectId}}},
              {$set: {'experience.$.startedAt':value}});
-            Companies.update({_id: companyId,'team':{$elemMatch:{'person_id': personId}}},
+            Projects.update({_id: projectId,'team':{$elemMatch:{'person_id': personId}}},
              {$set: {'team.$.startedAt':value}});
             break;
             case('endedAt'):
-            People.update({_id: personId,'experience':{$elemMatch:{'company_id': companyId}}},
+            People.update({_id: personId,'experience':{$elemMatch:{'project_id': projectId}}},
              {$set: {'experience.$.endedAt':value}});
-            Companies.update({_id: companyId,'team':{$elemMatch:{'person_id': personId}}},
+            Projects.update({_id: projectId,'team':{$elemMatch:{'person_id': personId}}},
              {$set: {'team.$.endedAt':value}});
             break;
             default: break;
@@ -223,12 +223,12 @@
           
       },
 
-      pushExperience: function(personId, companyId, companyDoc, personDoc){
-          console.log('Pushing experience to both '+personId+' and '+companyId);
+      pushExperience: function(personId, projectId, projectDoc, personDoc){
+          console.log('Pushing experience to both '+personId+' and '+projectId);
           People.update({_id: personId},
-          {$push:{'experience': companyDoc}});
+          {$push:{'experience': projectDoc}});
 
-          Companies.update({_id: companyId},
+          Projects.update({_id: projectId},
           {$push:{'team': personDoc}});
       },
 
@@ -244,55 +244,55 @@
           {$pull:{'portafolio_urls': link}});
       },
 
-      addArticle: function(companyId, link){
-          console.log('Adding an article to company'+ companyId);
-          Companies.update({_id: companyId},
+      addArticle: function(projectId, link){
+          console.log('Adding an article to project'+ projectId);
+          Projects.update({_id: projectId},
           {$push:{'article_urls': link}});
       },
 
-      deleteArticle: function(companyId, link){
-          console.log('Deleting the article '+link +' of profile '+ companyId);
-          Companies.update({_id: companyId},
+      deleteArticle: function(projectId, link){
+          console.log('Deleting the article '+link +' of profile '+ projectId);
+          Projects.update({_id: projectId},
           {$pull:{'article_urls': link}});
       },
 
-      addScreenshot: function(companyUrl, imageId)
+      addScreenshot: function(projectUrl, imageId)
       {
-        console.log('Adding image '+ imageId + ' to '+companyUrl);
-        Companies.update({url: companyUrl},
+        console.log('Adding image '+ imageId + ' to '+projectUrl);
+        Projects.update({url: projectUrl},
           {$push:{'screenshots':imageId}});
       },
 
-      deleteScreenshot: function(companyUrl, imageId)
+      deleteScreenshot: function(projectUrl, imageId)
       {
-        console.log('Deleting image '+ imageId + ' from '+companyUrl);
-        Companies.update({url: companyUrl},
+        console.log('Deleting image '+ imageId + ' from '+projectUrl);
+        Projects.update({url: projectUrl},
           {$pull:{'screenshots':imageId}});
         Images.remove({_id: imageId});
       },
 
-      updateCompanyLogo: function(companyUrl, imageId)
+      updateProjectLogo: function(projectUrl, imageId)
       {
         //Borrar el anterior?
-        console.log('New logo'+ imageId + ' in '+companyUrl);
-        Companies.update({url: companyUrl},
+        console.log('New logo'+ imageId + ' in '+projectUrl);
+        Projects.update({url: projectUrl},
           {$set:{'logo':imageId}});
       },
 
-       deleteCompanyLogo: function(companyUrl, imageId)
+       deleteProjectLogo: function(projectUrl, imageId)
       {
-        console.log('Deleting logo '+ imageId + ' from '+companyUrl);
-        Companies.update({url: companyUrl},
+        console.log('Deleting logo '+ imageId + ' from '+projectUrl);
+        Projects.update({url: projectUrl},
           {$set:{'logo':null}});
         Images.remove({_id: imageId});
       },
 
-      addExperience: function(personId, typeOfExperience, companyDoc){
-        console.log("Creating a new company")
+      addExperience: function(personId, typeOfExperience, projectDoc){
+        console.log("Creating a new project")
         //Validar nombre no repetido?
-        var companyId = Companies.insert(companyDoc);
-        var url = Meteor.call('generateUrl', companyDoc.name);
-        Companies.update({_id: companyId},{$set:{'url': url}});
+        var projectId = Projects.insert(projectDoc);
+        var url = Meteor.call('generateUrl', projectDoc.name);
+        Projects.update({_id: projectId},{$set:{'url': url}});
         console.log('Adding experience to '+ personId);
         var experience = {
                     type:typeOfExperience,
@@ -300,63 +300,63 @@
                     startedAt:null,
                     endedAt:null,
                     confirmed:false,
-                    company_id: companyId
+                    project_id: projectId
                   }
         People.update({_id: personId},
           {$push:{'experience': experience}});
 
       },
 
-      deleteExperience: function(personId, companyId){
+      deleteExperience: function(personId, projectId){
          People.update({_id: personId},
-             {$pull: {'experience':{'company_id':companyId}}});
-         Companies.update({_id: companyId},
+             {$pull: {'experience':{'project_id':projectId}}});
+         Projects.update({_id: projectId},
              {$pull: {'team':{'person_id':personId}}});
       },
 
-      getCompanyId: function(companyUrl){
-          var companyDoc = Companies.findOne({url: companyUrl});
-          if(companyDoc)
-            return companyDoc._id;
+      getProjectId: function(projectUrl){
+          var projectDoc = Projects.findOne({url: projectUrl});
+          if(projectDoc)
+            return projectDoc._id;
           else
             return null;
       },
 
-      pushCompanyType: function(companyUrl, type){
-          console.log('Pushing type '+ type +' to company ' + companyUrl);
-          Companies.update({url: companyUrl},
+      pushProjectType: function(projectUrl, type){
+          console.log('Pushing type '+ type +' to project ' + projectUrl);
+          Projects.update({url: projectUrl},
             {$push: {'types': type}});
-          var tag=Tags.findOne({name:type, type:"TypeOfCompany"});
-          Meteor.call('pushCompanyTag', companyUrl, tag._id);
+          var tag=Tags.findOne({name:type, type:"TypeOfProject"});
+          Meteor.call('pushProjectTag', projectUrl, tag._id);
           return true
       },
 
-      pullCompanyType: function(companyUrl, type){
-          console.log('Pulling type '+ type +' from company ' + companyUrl);
-          Companies.update({url: companyUrl},
+      pullProjectType: function(projectUrl, type){
+          console.log('Pulling type '+ type +' from project ' + projectUrl);
+          Projects.update({url: projectUrl},
             {$pull: {'types': type}});
-          var tag=Tags.findOne({name:type, type:"TypeOfCompany"});
-          Meteor.call('pullCompanyTag', companyUrl, tag._id);
+          var tag=Tags.findOne({name:type, type:"TypeOfProject"});
+          Meteor.call('pullProjectTag', projectUrl, tag._id);
           return true
       },
 
-      updateCompanyLink: function(companyUrl, field, link){
-        console.log('Updating field '+ field +' of company '+companyUrl);
+      updateProjectLink: function(projectUrl, field, link){
+        console.log('Updating field '+ field +' of project '+projectUrl);
           switch(field){
-            case ('company_url'):
-            Companies.update({url: companyUrl},
-            {$set: {'company_url': link}});
+            case ('project_url'):
+            Projects.update({url: projectUrl},
+            {$set: {'project_url': link}});
             break;
             case ('fb_url'):
-            Companies.update({url: companyUrl},
+            Projects.update({url: projectUrl},
             {$set: {'fb_url': link}});
             break;
             case ('twitter_url'):
-             Companies.update({url: companyUrl},
+             Projects.update({url: projectUrl},
             {$set: {'twitter_url': link}});
             break;
             case ('video_url'):
-             Companies.update({url: companyUrl},
+             Projects.update({url: projectUrl},
             {$set: {'video_url': link}});
             break;
             default:
@@ -364,23 +364,23 @@
           }
       },
 
-      updateCompanyText: function(companyUrl, field, value){
-        console.log('Updating field '+ field +' of company '+companyUrl);
+      updateProjectText: function(projectUrl, field, value){
+        console.log('Updating field '+ field +' of project '+projectUrl);
           switch(field){
             case ('name'):
-            Companies.update({url: companyUrl},
+            Projects.update({url: projectUrl},
             {$set: {'name': value}});
             break;
             case ('city'):
-            Companies.update({url: companyUrl},
+            Projects.update({url: projectUrl},
             {$set: {'city': value}});
             break;
             case ('highConcept'):
-             Companies.update({url: companyUrl},
+             Projects.update({url: projectUrl},
             {$set: {'highConcept': value}});
             break;
             case ('description'):
-             Companies.update({url: companyUrl},
+             Projects.update({url: projectUrl},
             {$set: {'description': value}});
             break;
             default:
@@ -397,11 +397,11 @@
           return true
       },
 
-      pushCompanyTag: function(companyUrl, tagId){
-          console.log('Pushing tag with id '+ tagId +' to company ' + companyUrl);
-          var updatedDoc = Companies.update({url: companyUrl},
+      pushProjectTag: function(projectUrl, tagId){
+          console.log('Pushing tag with id '+ tagId +' to project ' + projectUrl);
+          var updatedDoc = Projects.update({url: projectUrl},
             {$addToSet: {'tag_ids': tagId}});
-          Tags.update({_id: tagId}, {$inc:{'counter.companies':updatedDoc}});
+          Tags.update({_id: tagId}, {$inc:{'counter.projects':updatedDoc}});
           return true
       },
     
@@ -413,11 +413,11 @@
           return true
       },
 
-      pullCompanyTag: function (companyUrl, tagId){
-          console.log('Unlink tag with id '+ tagId +' from company '+ companyUrl);
-          Companies.update({url: companyUrl},
+      pullProjectTag: function (projectUrl, tagId){
+          console.log('Unlink tag with id '+ tagId +' from project '+ projectUrl);
+          Projects.update({url: projectUrl},
             {$pull: {'tag_ids': tagId}});
-          Tags.update({_id: tagId}, {$inc:{'counter.companies':-1}});
+          Tags.update({_id: tagId}, {$inc:{'counter.projects':-1}});
           return true
       },
 
@@ -440,7 +440,7 @@
         return tagId;
       },
 
-      saveCompanyTag: function(companyUrl, doc){
+      saveProjectTag: function(projectUrl, doc){
         console.log('addingTag');
         //protection method against duplication
         var tagDoc= Tags.findOne({name: doc.name, type: doc.type});
@@ -454,23 +454,23 @@
           tagId = Tags.insert(doc);
           console.log('new tag has id ' +tagId);
         }
-        Meteor.call('pushCompanyTag', companyUrl, tagId);
+        Meteor.call('pushProjectTag', projectUrl, tagId);
         return tagId;
       },
 
-      insertImpulse: function (companyUrl, impulseDoc)
+      insertImpulse: function (projectUrl, impulseDoc)
       {
-        console.log('creating new Impulse on '+companyUrl);
-        companyDoc = Companies.findOne({url: companyUrl});
-        impulseDoc.company_id = companyDoc._id;
+        console.log('creating new Impulse on '+projectUrl);
+        projectDoc = Projects.findOne({url: projectUrl});
+        impulseDoc.project_id = projectDoc._id;
         //console.log(impulseDoc);
         impulseId = Impulses.insert(impulseDoc);
         for( var i = 0; i < impulseDoc.tag_ids.length; i++)
         {
           //Need to know how to insert relation with tags
-          //Meteor.call('pushCompanyTag', companyUrl, impulseDoc.tag_ids[i]);
+          //Meteor.call('pushProjectTag', projectUrl, impulseDoc.tag_ids[i]);
         }
-        Companies.update({url:companyUrl},{$addToSet:{impulse_ids:impulseId}});
+        Projects.update({url:projectUrl},{$addToSet:{impulse_ids:impulseId}});
             
       },
 
@@ -489,15 +489,15 @@
         for( var i = 0; i < impulseDoc.tag_ids.length; i++)
         {
           /*Falta cambiar los tags que se quitaron al editar*/
-          //Meteor.call('pushCompanyTag', companyUrl, impulseDoc.tag_ids[i]);
+          //Meteor.call('pushProjectTag', projectUrl, impulseDoc.tag_ids[i]);
         }
             
       },
 
-      deleteImpulse: function(companyUrl, impulseId)
+      deleteImpulse: function(projectUrl, impulseId)
       {
-        console.log('delete Impulse '+impulseId+ ' from '+companyUrl);
-        Companies.update({url:companyUrl},{$pull:{impulse_ids:impulseId}});
+        console.log('delete Impulse '+impulseId+ ' from '+projectUrl);
+        Projects.update({url:projectUrl},{$pull:{impulse_ids:impulseId}});
         Impulses.remove({_id: impulseId});
       },
 

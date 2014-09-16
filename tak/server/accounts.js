@@ -15,7 +15,7 @@
                       facebook_url:fbLink,
                       tag_ids:[],
                       portafolio_urls:[],
-                      experience:[], //current and past jobs with title, started, ended and id of the company
+                      experience:[], //current and past jobs with title, started, ended and id of the project
                     }
    
     }
@@ -38,7 +38,7 @@
                       linkedin_url:linkedinLink,
                       tag_ids:[],
                       portafolio_urls:[],
-                      experience:[], //current and past jobs with title, started, ended and id of the company
+                      experience:[], //current and past jobs with title, started, ended and id of the project
                     }
     }
     /*else{

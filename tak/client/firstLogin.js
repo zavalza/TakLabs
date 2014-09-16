@@ -34,7 +34,7 @@ Template.firstLogin.events({
                   name:value,
                   counter:{
                     people: 0,
-                    companies: 0,
+                    projects: 0,
                   },
                   referrer: document.referrer, 
                   timestamp: new Date(),
@@ -51,12 +51,12 @@ Template.firstLogin.events({
     },
 
     'click .deleteExperience': function(evt, tmpl){
-       //alert(this.company_id);
-       Meteor.call('deleteExperience', Session.get('userToShow'), this.company_id)
+       //alert(this.project_id);
+       Meteor.call('deleteExperience', Session.get('userToShow'), this.project_id)
     },
 
     'change #title,#startedAt,#endedAt': function(evt, tmpl){
-      //alert(this.company_id);
+      //alert(this.project_id);
       var field = evt.target.id;
       //alert(field);
       var value = evt.target.value.trim();
@@ -64,14 +64,14 @@ Template.firstLogin.events({
       var re = /([a-zA-Z]+)/g;
       if(value.match(re))
       {
-        Meteor.call('updateExperience', Session.get('userToShow'),this.company_id, field, value);
+        Meteor.call('updateExperience', Session.get('userToShow'),this.project_id, field, value);
         evt.target.style = "border-color: #44c444;";
       }
       else
         evt.target.style = "border-color: #f41717;";
     },
 
-    'keyup #City,#Skill,#College,#Role,#Company' : function(evt, tmpl){
+    'keyup #City,#Skill,#College,#Role,#Project' : function(evt, tmpl){
       //busca todo el string y no palabra por palabra
       //alert(evt.keyCode);
 
@@ -121,26 +121,26 @@ Template.firstLogin.events({
           selection = selection -1;
         break;
         case 13: //Return
-          if(targetId == 'Company')
+          if(targetId == 'Project')
           {
 
               var typeOfExperience = tmpl.find('#Experience').value.trim();
               if (typeOfExperience != "")
               {
-                  if(matches.length == 0) //New company name
+                  if(matches.length == 0) //New project name
                   {
-                    var companyName = tmpl.find('#Company').value.trim();
+                    var projectName = tmpl.find('#Project').value.trim();
                     var re = /([a-zA-Z]+)/g;
-                    if(companyName.match(re))
+                    if(projectName.match(re))
                     {
-                      var newCompany={
+                      var newProject={
                       types: [], //startup, incubator, accelerator, cowork etc.
-                      name:companyName,
+                      name:projectName,
                       url:null,
                       logo:"", //id of logo image
                       description:"",
                       highConcept:"",
-                      company_url:"",
+                      project_url:"",
                       fb_url:"",
                       twitter_url:"",
                       tag_ids:[],
@@ -159,7 +159,7 @@ Template.firstLogin.events({
                       timestamp: new Date(),
                       isPublic:true
                     }
-                    Meteor.call('addExperience', Session.get('userToShow'), typeOfExperience, newCompany);
+                    Meteor.call('addExperience', Session.get('userToShow'), typeOfExperience, newProject);
                     }
                   }
                   else
@@ -172,15 +172,15 @@ Template.firstLogin.events({
                               confirmed:false,
                               person_id: Session.get('userToShow')
                             };
-                    var companyDoc = {
+                    var projectDoc = {
                               type:typeOfExperience,
                               title:null,
                               startedAt:null,
                               endedAt:null,
                               confirmed:false,
-                              company_id: matches[selection].getAttribute('name')
+                              project_id: matches[selection].getAttribute('name')
                   };
-                  Meteor.call('pushExperience', Session.get('userToShow'), matches[selection].getAttribute('name'), companyDoc, personDoc);
+                  Meteor.call('pushExperience', Session.get('userToShow'), matches[selection].getAttribute('name'), projectDoc, personDoc);
                   }
             }
             else
@@ -202,7 +202,7 @@ Template.firstLogin.events({
                           name:value,
                           counter:{
                             people: 0,
-                            companies: 0,
+                            projects: 0,
                           },
                           referrer: document.referrer, 
                           timestamp: new Date(),
@@ -235,7 +235,7 @@ Template.firstLogin.events({
       //alert(selection);
     },
 
-    'blur #City,#Skill,#Role,#Company' : function(evt, tmpl){
+    'blur #City,#Skill,#Role,#Project' : function(evt, tmpl){
       var targetId = evt.target.id;
       //alert(evt.currentTarget.id);
       Session.set('keyControl', -1);
@@ -274,8 +274,8 @@ Template.firstLogin.helpers({
     return Tags.find({_id:tagId, type:'Skill'});
   },
 
-  company: function(companyId)
+  project: function(projectId)
   {
-    return Companies.find({_id:companyId});
+    return Projects.find({_id:projectId});
   },
 })

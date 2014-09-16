@@ -15,7 +15,7 @@ Template.profileThumbnail.rendered = function()
     });
 }
 
-Template.companyProfile.events({
+Template.projectProfile.events({
   'mouseenter .screenshot':function(evt, tmpl){
     Session.set("screenshotToShow",this._id);
   },
@@ -37,7 +37,7 @@ Template.companyProfile.events({
 });
 
 
- Template.companyProfile.screenshotToShow = function() {
+ Template.projectProfile.screenshotToShow = function() {
     var selection = Session.get("screenshotToShow");
     if(selection)
       return selection
@@ -45,15 +45,15 @@ Template.companyProfile.events({
       return this.screenshots[0]
   };
 
-  Template.companyProfile.someDescription = function()
+  Template.projectProfile.someDescription = function()
   {
     return (this.description||this.video_url||this.screenshots);
   }
 
 Template.profileThumbnail.helpers({
-  company: function(companyId)
+  project: function(projectId)
         {
-            return Companies.find({_id:companyId}); 
+            return Projects.find({_id:projectId}); 
         },
 
     miniCV: function(experience)
@@ -71,8 +71,8 @@ Template.profileThumbnail.helpers({
         text = experience[i].type;
       }
       var doc= {string: text,
-                company_id: experience[i].company_id}
-      if(experience[i].company_id == Session.get('currentCompanyId'))
+                project_id: experience[i].project_id}
+      if(experience[i].project_id == Session.get('currentProjectId'))
       {
         CV.splice(0,0,doc);
       }
@@ -88,12 +88,12 @@ Template.profileThumbnail.helpers({
   }
 })
 
-Template.companyProfile.helpers ({
+Template.projectProfile.helpers ({
         canEdit: function(personId)
     {
       //return true;
       return (People.find({_id: personId,
-        'experience':{$elemMatch:{'company_id': Session.get('currentCompanyId')}}}).count() > 0);
+        'experience':{$elemMatch:{'project_id': Session.get('currentProjectId')}}}).count() > 0);
     },
 
       city: function(tagsArray)
@@ -106,9 +106,9 @@ Template.companyProfile.helpers ({
         return Tags.find({_id:{$in:tagsArray}, type:'Market'});
       },
 
-      typeOfCompany: function(tagsArray)
+      typeOfProject: function(tagsArray)
       {
-        return Tags.find({_id:{$in:tagsArray}, type:'TypeOfCompany'});
+        return Tags.find({_id:{$in:tagsArray}, type:'TypeOfProject'});
       },
 
       impulse: function (impulseIds)
@@ -131,14 +131,14 @@ Template.companyProfile.helpers ({
         return Tags.find({_id:{$in:tagIds}, type:"RewardType"});
       },
 
-        company: function(companyId)
+        project: function(projectId)
         {
-          if(companyId)
-            return Companies.find({_id:companyId});
+          if(projectId)
+            return Projects.find({_id:projectId});
           else
           {
-            //alert(Session.get('currentCompanyId'));
-             return Companies.find({_id:Session.get('currentCompanyId')});
+            //alert(Session.get('currentProjectId'));
+             return Projects.find({_id:Session.get('currentProjectId')});
           }
            
         },

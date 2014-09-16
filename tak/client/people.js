@@ -14,7 +14,7 @@ Template.people.events({
     Session.set('filters', filtersArray);
   },
 
-  'keyup #City,#Skill,#Company' : function(evt, tmpl){
+  'keyup #City,#Skill,#Project' : function(evt, tmpl){
       //busca todo el string y no palabra por palabra
       //alert(evt.keyCode);
 
@@ -150,12 +150,12 @@ Template.people.helpers({
            else
             return People.find({user_id:{$ne:null}, tag_ids:{$all:Session.get('filters')}});
         },
-    company: function(companyId)
+    project: function(projectId)
         {
-          if(companyId)
-            return Companies.find({_id:companyId});
+          if(projectId)
+            return Projects.find({_id:projectId});
           else
-            return Companies.find({_id:Session.get('currentCompanyId')});
+            return Projects.find({_id:Session.get('currentProjectId')});
         },
     tags: function(tagIds)
         {
@@ -177,8 +177,8 @@ Template.people.helpers({
               text = experience[i].type;
             }
             var doc= {string: text,
-                      company_id: experience[i].company_id}
-            if(experience[i].company_id == Session.get('currentCompanyId'))
+                      project_id: experience[i].project_id}
+            if(experience[i].project_id == Session.get('currentProjectId'))
             {
               CV.splice(0,0,doc);
             }

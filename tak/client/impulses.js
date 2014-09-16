@@ -5,9 +5,9 @@
 			return Impulses.find({});
 		},
 
-		company:function(companyId)
+		project:function(projectId)
 		{
-			return Companies.find({_id:companyId});
+			return Projects.find({_id:projectId});
 		},
 
 		image: function(ids)

@@ -43,9 +43,9 @@ Template.userProfile.helpers({
           
         },
 
-       company: function(companyId)
+       project: function(projectId)
        {
-        return Companies.find({_id:companyId});
+        return Projects.find({_id:projectId});
        },
 
        role: function(tagsArray)

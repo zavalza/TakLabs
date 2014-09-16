@@ -21,8 +21,8 @@ Template.navigation.helpers ({
     return People.find({_id: personId});
   },
 
-   company: function(companyId)
+   project: function(projectId)
         {
-          return Companies.find({_id:companyId});
+          return Projects.find({_id:projectId});
         }
 });

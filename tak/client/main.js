@@ -2,7 +2,7 @@ Meteor.startup(function () {
 //Redirect www to ROOT URL in meteor
 if(window.location.hostname.search('www') != -1)
   window.location.assign("http://tak.mx");
-Session.set('currentCompanyId',"");
+Session.set('currentProjectId',"");
 Session.set('counterValue', 0);
 Session.set('userToShow',"");
 Session.set('typeToShow',"");
@@ -12,7 +12,7 @@ Session.set('filters',[]);
 Session.set('selectedTags',[]);
 Session.set('keyControl',-1);
 Session.set('screenshotToShow',"");
-Meteor.subscribe("allCompanies");
+Meteor.subscribe("allProjects");
 Meteor.subscribe("allImpulses");
 Meteor.subscribe("allTags");
 Meteor.subscribe("allImages");
@@ -42,13 +42,13 @@ Template.profile.helpers({
        		Meteor.subscribe('personUrl', Session.get('url'));
              return People.find({url:Session.get('url')});
         },
-    company: function()
+    project: function()
        {
-       	     Meteor.call('getCompanyId',Session.get('url'), function(error, result){
+       	     Meteor.call('getProjectId',Session.get('url'), function(error, result){
        	     	if(!error)
-       	     		Session.set('currentCompanyId', result)
+       	     		Session.set('currentProjectId', result)
        	     } );
-             return Companies.find({url:Session.get('url')});
+             return Projects.find({url:Session.get('url')});
      	}
 })
  

@@ -1,4 +1,4 @@
-<template name="companyProfile">
+<template name="projectProfile">
 <div class="wrap">
   <div class="row">
     <div class="col-md-10 col-xs-10 col-md-offset-1 col-xs-offset-1">
@@ -14,7 +14,7 @@
           <h2 class="name">{{name}}</h2>
           <i><h4>{{highConcept}}</h4></i>
           <div class="row">
-            {{#each typeOfCompany tag_ids}}
+            {{#each typeOfProject tag_ids}}
             <div class="btn tag btn-xs">{{name}}</div>
             {{/each}}
             {{#each city tag_ids}}
@@ -26,7 +26,7 @@
           </div>
           <div class="row">
             {{#if canEdit currentUser.person_id}}
-            <a href="{{pathFor 'editCompany'}}"><button class="btn btn-info" type="button">Editar</button></a>
+            <a href="{{pathFor 'editProject'}}"><button class="btn btn-info" type="button">Editar</button></a>
             {{/if}}
             {{#if twitter_url}}
             <a href="{{twitter_url}}"><img class="img-responsive pull-right icon" width="30" src="twitterIcon.png"></a>
@@ -34,8 +34,8 @@
             {{#if fb_url}}
             <a href="{{fb_url}}"><img class="img-responsive pull-right icon" width="30" src="fbIcon.png"></a>
             {{/if}}
-            {{#if company_url}}
-            {{#each externalLink company_url}}
+            {{#if project_url}}
+            {{#each externalLink project_url}}
             <a class="pull-right" href="{{this}}">{{this}}</a>
             {{/each}}
             {{/if}}
@@ -200,7 +200,7 @@
 <span class="cvText" style="display:inline-block;">
 <h6 class="text-center"><a href="{{pathFor 'profile'}}">{{name}}</a></h6>
 {{#each miniCV experience}}
-{{string}}{{#each company company_id}}<a href="{{pathFor 'profile'}}"> @{{name}};</a>{{/each}}
+{{string}}{{#each project project_id}}<a href="{{pathFor 'profile'}}"> @{{name}};</a>{{/each}}
 {{/each}}
 </span>
 </div>

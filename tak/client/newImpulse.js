@@ -140,9 +140,9 @@ Template.newImpulse.events({
       }
       reward_ids.push(type);
 
-      //var companyDoc = Companies.findOne({'url': Session.get('url')});
+      //var projectDoc = Projects.findOne({'url': Session.get('url')});
       var impulseDoc = {
-        //company_id: will be added on server side
+        //project_id: will be added on server side
         title:title,
         description:description,
         person_tags:tags,

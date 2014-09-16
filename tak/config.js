@@ -1,6 +1,6 @@
 //MongoDB
 Impulses = new Meteor.Collection("impulses");
-Companies = new Meteor.Collection("companies");
+Projects = new Meteor.Collection("projects");
 People =  new Meteor.Collection("people");
 Tags = new Meteor.Collection("tags");
 
@@ -34,7 +34,7 @@ Router.map(function() {
   });
   this.route('news', {path: '/noticias'});
   this.route('firstLogin', {path: '/bienvenido'});
-  this.route('companies', {path: '/organizaciones',
+  this.route('projects', {path: '/proyectos',
     waitOn: function() 
   { 
     Session.set('filters',[]);
@@ -46,12 +46,6 @@ Router.map(function() {
     Session.set('filters',[]);
     return Meteor.subscribe('allImpulses')},
   });
-  this.route('startups', {path: '/startups',
-    waitOn: function() 
-  { 
-    Session.set('filters',[]);
-    return Meteor.subscribe('allCompanies')},
-  });
   this.route('people', 
   {path: '/personas',
   waitOn: function() 
@@ -59,7 +53,7 @@ Router.map(function() {
     Session.set('filters',[]);
     return Meteor.subscribe('allRegistredPeople')},
   });
-  this.route('editCompany', {path: '/editarCompania'});
+  this.route('editProject', {path: '/editarProyecto'});
   this.route('editProfile', {path: '/editarPerfil'});
   this.route('profile', 
     {path: '/:url',

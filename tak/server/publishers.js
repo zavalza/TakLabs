@@ -26,14 +26,14 @@
     return People.find({url:urlToFind});
   });
 
-  Meteor.publish("companyProfile", function (companyId) {
-  //console.log("publishing company with id: " +companyId);
-    return Companies.find({_id: companyId});
+  Meteor.publish("projectProfile", function (projectId) {
+  //console.log("publishing project with id: " +projectId);
+    return Projects.find({_id: projectId});
     //limitar campos a los que sean públicos para seguridad
   });
 
- Meteor.publish('allCompanies', function(){
- 	return Companies.find({});
+ Meteor.publish('allProjects', function(){
+ 	return Projects.find({});
  })
 
  Meteor.publish('allTags', function(){

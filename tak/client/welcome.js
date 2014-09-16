@@ -14,7 +14,7 @@ Template.headerwrap.pathValue = function()
   }
 
   Template.headerwrap.startupsAmount = function(){
-    Meteor.subscribe("allCompanies");
+    Meteor.subscribe("allProjects");
     //maybe just type=startup
-    return Companies.find({types:'Startup',isPublic:true}).count();
+    return Projects.find({types:'Startup',isPublic:true}).count();
   }

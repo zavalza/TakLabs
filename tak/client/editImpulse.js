@@ -177,10 +177,10 @@ Template.editImpulse.events({
       }
       reward_ids.push(type);
 
-      //var companyDoc = Companies.findOne({'url': Session.get('url')});
+      //var projectDoc = Projects.findOne({'url': Session.get('url')});
       var impulseDoc = {
         _id: Session.get('currentImpulse'),
-        company_id: Session.get('currentCompanyId'),
+        project_id: Session.get('currentProjectId'),
         title:title,
         description:description,
         person_tags:tags,
@@ -202,7 +202,7 @@ Template.editImpulse.helpers({
     {
       //return true;
       return (People.find({_id: personId,
-        'experience':{$elemMatch:{'company_id': Session.get('currentCompanyId')}}}).count() > 0);
+        'experience':{$elemMatch:{'project_id': Session.get('currentProjectId')}}}).count() > 0);
     },
   currentImpulse:function()
   {

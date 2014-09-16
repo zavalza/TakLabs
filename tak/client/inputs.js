@@ -20,8 +20,8 @@
   });
 
   Template.experienceInput.events({
-    'mousedown .Company': function(evt, tmpl){
-      var companyName = evt.target.id.trim();
+    'mousedown .Project': function(evt, tmpl){
+      var projectName = evt.target.id.trim();
       //alert (this._id);
       var typeOfExperience = tmpl.find('#Experience').value.trim();
       if (typeOfExperience != "")
@@ -34,15 +34,15 @@
                     confirmed:false,
                     person_id: Session.get('userToShow')
                   };
-        var companyDoc = {
+        var projectDoc = {
                     type:typeOfExperience,
                     title:null,
                     startedAt:null,
                     endedAt:null,
                     confirmed:false,
-                    company_id: this._id
+                    project_id: this._id
         };
-      Meteor.call('pushExperience', Session.get('userToShow'), this._id, companyDoc, personDoc);
+      Meteor.call('pushExperience', Session.get('userToShow'), this._id, projectDoc, personDoc);
       }
       else
       {
@@ -52,18 +52,18 @@
 
     'mousedown .addExperience' : function(evt, tmpl){
       var typeOfExperience = tmpl.find('#Experience').value.trim();
-      var companyName = tmpl.find('#Company').value.trim()
+      var projectName = tmpl.find('#Project').value.trim()
       var re = /([a-zA-Z]+)/g;
-      if (typeOfExperience != "" && companyName.match(re))
+      if (typeOfExperience != "" && projectName.match(re))
       {
-        var newCompany={
+        var newProject={
                   types: [], //startup, incubator, accelerator, cowork etc.
-                  name:companyName,
+                  name:projectName,
                   url:null,
                   logo:"", //id of logo image
                   description:"",
                   highConcept:"",
-                  company_url:"",
+                  project_url:"",
                   fb_url:"",
                   twitter_url:"",
                   tag_ids:[],
@@ -82,7 +82,7 @@
                   timestamp: new Date(),
                   isPublic:true
                 }
-          Meteor.call('addExperience', Session.get('userToShow'), typeOfExperience, newCompany);
+          Meteor.call('addExperience', Session.get('userToShow'), typeOfExperience, newProject);
       }
       else
       {
@@ -128,8 +128,8 @@
     });
 
     Template.experienceInput.helpers ({
-        companyOptions : function()
+        projectOptions : function()
         {
-          return Companies.find();
+          return Projects.find();
         }
     });

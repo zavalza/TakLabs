@@ -1,5 +1,5 @@
 
- Template.companyThumbnail.rendered = function()
+ Template.projectThumbnail.rendered = function()
  {
 
   var maxHeight = 0;
@@ -16,7 +16,7 @@
     });
 }
 
-Template.companyThumbnail.helpers({
+Template.projectThumbnail.helpers({
     image: function(ids)
         {
           if (typeof (ids) == 'object')
@@ -38,7 +38,7 @@ Template.companyThumbnail.helpers({
     },
 })
 
- Template.companies.events({
+ Template.projects.events({
     'change #types': function(evt, tmpl){
     //alert(evt.target.value);
     var filtersArray = Session.get("filters");
@@ -161,13 +161,13 @@ Template.companyThumbnail.helpers({
     }
  })
 
- Template.companies.helpers({
-  company: function()
+ Template.projects.helpers({
+  project: function()
   {
         if (Session.get('filters').length == 0)
-            return Companies.find({types:{$ne:'Startup'}, isPublic:true});
+            return Projects.find({types:{$ne:'Startup'}, isPublic:true});
            else
-            return Companies.find({types:{$ne:'Startup'}, isPublic:true, tag_ids:{$all:Session.get('filters')}});
+            return Projects.find({types:{$ne:'Startup'}, isPublic:true, tag_ids:{$all:Session.get('filters')}});
   },
 
   city: function(tagId)
@@ -180,25 +180,25 @@ Template.companyThumbnail.helpers({
     return Tags.find({_id:tagId, type:'Market'});
   },
 
-  typeOfCompanyOption: function()
+  typeOfProjectOption: function()
     {
-        return Tags.find({"type": "TypeOfCompany","counter.companies":{$gt:0}, "name":{$ne:"Startup"}});
+        return Tags.find({"type": "TypeOfProject","counter.projects":{$gt:0}, "name":{$ne:"Startup"}});
     },
 
 
     cityOption: function()
         {
-            return Tags.find({"type": "City","counter.companies":{$gt:0}});
+            return Tags.find({"type": "City","counter.projects":{$gt:0}});
         },
 
     marketOption: function()
         {
-            return Tags.find({"type": "Market","counter.companies":{$gt:0}});
+            return Tags.find({"type": "Market","counter.projects":{$gt:0}});
         },
 
  })
 
-Template.companies.filters = function(){
+Template.projects.filters = function(){
   return Session.get('filters');
 };
  

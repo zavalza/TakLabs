@@ -1,19 +1,19 @@
-Template.editCompany.events({
+Template.editProject.events({
 'change #type' : function(evt, tmpl){
   var value = tmpl.find('#type').value;
   //alert(this._id);
   if (value != '')
   {
-    Meteor.call('pushCompanyType', Session.get('url'), value);
+    Meteor.call('pushProjectType', Session.get('url'), value);
     if(Session.get('lastType')!= '')
     {
 
-      Meteor.call('pullCompanyType', Session.get('url'), Session.get('lastType'))
+      Meteor.call('pullProjectType', Session.get('url'), Session.get('lastType'))
     }
   }
   else
   {
-    Meteor.call('pullCompanyType', Session.get('url'), Session.get('lastType'))
+    Meteor.call('pullProjectType', Session.get('url'), Session.get('lastType'))
   }
 },
 
@@ -34,16 +34,16 @@ Template.editCompany.events({
   //alert(this._id);
   if (stageId != '')
   {
-    Meteor.call('pushCompanyTag', Session.get('url'), stageId);
+    Meteor.call('pushProjectTag', Session.get('url'), stageId);
     if(Session.get('lastStage')!= '')
     {
 
-      Meteor.call('pullCompanyTag', Session.get('url'), Session.get('lastStage'))
+      Meteor.call('pullProjectTag', Session.get('url'), Session.get('lastStage'))
     }
   }
   else
   {
-    Meteor.call('pullCompanyTag', Session.get('url'), Session.get('lastStage'))
+    Meteor.call('pullProjectTag', Session.get('url'), Session.get('lastStage'))
   }
 },
 
@@ -51,7 +51,7 @@ Template.editCompany.events({
     var error = false;
     if(this.logo){
       //alert('Ya tenía un logo');
-      Meteor.call('deleteCompanyLogo', Session.get('url'), this.logo)
+      Meteor.call('deleteProjectLogo', Session.get('url'), this.logo)
     }
     FS.Utility.eachFile(evt, function(file) {
       im = Images.insert(file, function (err, fileObj) {
@@ -64,7 +64,7 @@ Template.editCompany.events({
       {
 
         //alert(EJSON.stringify(im));
-        Meteor.call("updateCompanyLogo", Session.get('url'), im._id);
+        Meteor.call("updateProjectLogo", Session.get('url'), im._id);
         //var encontrada = Images.findOne({_id : im._id});
         //alert(encontrada._id)
       }   
@@ -103,12 +103,12 @@ Template.editCompany.events({
                   name:value,
                   counter:{
                     people: 0,
-                    companies: 0,
+                    projects: 0,
                   },
                   referrer: document.referrer, 
                   timestamp: new Date(),
                 }
-        var tagId = Meteor.call('saveCompanyTag', Session.get('url'), doc);
+        var tagId = Meteor.call('saveProjectTag', Session.get('url'), doc);
         tmpl.find('#'+targetName).value = "";
         tmpl.find('#'+targetName).blur();
         document.getElementById(targetName+'options').style.display='none';
@@ -129,11 +129,11 @@ Template.editCompany.events({
     {
       targetId = targetId.toLowerCase();
     }
-    Meteor.call('updateCompanyText', Session.get('url'), targetId, value);
+    Meteor.call('updateProjectText', Session.get('url'), targetId, value);
   }
 },
 
-'change #company_url,#fb_url,#twitter_url,#video_url': function (evt, tmpl){
+'change #project_url,#fb_url,#twitter_url,#video_url': function (evt, tmpl){
 var targetId = evt.target.id;
 var link = tmpl.find('#'+targetId).value;
 var re = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
@@ -143,17 +143,17 @@ if(!link.match(re))
 }
 else
 {
-  Meteor.call('updateCompanyLink', Session.get('url'), targetId, link);
+  Meteor.call('updateProjectLink', Session.get('url'), targetId, link);
 }
 },
 
 'change #title,#startedAt,#endedAt': function(evt, tmpl){
-      //alert(this.company_id);
+      //alert(this.project_id);
       var field = evt.target.id;
       //alert(field);
       var value = evt.target.value.trim();
       //alert(value);
-      Meteor.call('updateExperience', this.person_id, Session.get('currentCompanyId'), field, value);
+      Meteor.call('updateExperience', this.person_id, Session.get('currentProjectId'), field, value);
   },
 
   'click .addArticle' : function (evt, tmpl){
@@ -163,7 +163,7 @@ else
       var re = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
       if (link.match(re))
       {
-        Meteor.call('addArticle', Session.get('currentCompanyId'), link);
+        Meteor.call('addArticle', Session.get('currentProjectId'), link);
         tmpl.find('#newLink').value = "";
       }
       else
@@ -176,18 +176,18 @@ else
 
     'click .deleteArticle' : function (evt, tmpl){
       //alert(this.toString());
-      Meteor.call('deleteArticle', Session.get('currentCompanyId'), this.toString());
+      Meteor.call('deleteArticle', Session.get('currentProjectId'), this.toString());
       return true;
     },
 
  'click .deleteExperience': function(evt, tmpl){
-     //alert(this.company_id);
-     Meteor.call('deleteExperience', this.person_id, Session.get('currentCompanyId'));
+     //alert(this.project_id);
+     Meteor.call('deleteExperience', this.person_id, Session.get('currentProjectId'));
   },
   
-  'click .pullCompanyType': function(evt, tmpl){
+  'click .pullProjectType': function(evt, tmpl){
   //alert(this);
-  Meteor.call('pullCompanyType', Session.get('url'), this.toString());
+  Meteor.call('pullProjectType', Session.get('url'), this.toString());
 },
 
 'click .deleteScreenshot': function(evt, tmpl){
@@ -199,7 +199,7 @@ else
 'click .deleteLogo': function(evt, tmpl){
   //alert(this._id)
 
-  Meteor.call('deleteCompanyLogo', Session.get('url'), this._id);
+  Meteor.call('deleteProjectLogo', Session.get('url'), this._id);
 },
 
 'keyup #City,#User,#Market' : function(evt, tmpl){
@@ -275,15 +275,15 @@ else
                     confirmed:false,
                     person_id: personId
                     };
-                    var companyDoc = {
+                    var projectDoc = {
                     type:typeOfExperience,
                     title:null,
                     startedAt:null,
                     endedAt:null,
                     confirmed:false,
-                    company_id: Session.get('currentCompanyId')
+                    project_id: Session.get('currentProjectId')
                     };
-                    Meteor.call('pushExperience', personId, Session.get('currentCompanyId'), companyDoc, personDoc);
+                    Meteor.call('pushExperience', personId, Session.get('currentProjectId'), projectDoc, personDoc);
               }
             }
             else
@@ -307,16 +307,16 @@ else
                           name:value,
                           counter:{
                             people: 0,
-                            companies: 0,
+                            projects: 0,
                           },
                           referrer: document.referrer, 
                           timestamp: new Date(),
                         }
-                Meteor.call('saveCompanyTag', Session.get('url'), doc);
+                Meteor.call('saveProjectTag', Session.get('url'), doc);
              }
             } 
             else
-               Meteor.call('pushCompanyTag', Session.get('url'), matches[selection].getAttribute('name'));
+               Meteor.call('pushProjectTag', Session.get('url'), matches[selection].getAttribute('name'));
           }
           tmpl.find('#'+targetId).value = "";
             tmpl.find('#'+targetId).blur();
@@ -354,12 +354,12 @@ else
       //alert(this._id);
       //alert (targetClass);
       //Meteor.call('pushTag', Meteor.userId(), this._id);
-      Meteor.call('pushCompanyTag', Session.get('url'), this._id);
+      Meteor.call('pushProjectTag', Session.get('url'), this._id);
       //return true;
     },
     
-    /*'click .pullCompanyTag' : function(evt, tmpl){
-       Meteor.call('pullCompanyTag', Session.get('url'), this._id);
+    /*'click .pullProjectTag' : function(evt, tmpl){
+       Meteor.call('pullProjectTag', Session.get('url'), this._id);
     }*/
   });
 
@@ -394,15 +394,15 @@ else
     confirmed:false,
     person_id: personId
     };
-    var companyDoc = {
+    var projectDoc = {
     type:typeOfExperience,
     title:null,
     startedAt:null,
     endedAt:null,
     confirmed:false,
-    company_id: Session.get('currentCompanyId')
+    project_id: Session.get('currentProjectId')
     };
-    Meteor.call('pushExperience', personId, Session.get('currentCompanyId'), companyDoc, personDoc);
+    Meteor.call('pushExperience', personId, Session.get('currentProjectId'), projectDoc, personDoc);
     }
     else
     {
@@ -433,7 +433,7 @@ Template.member.helpers({
 })
 
 
-    Template.editCompany.helpers ({
+    Template.editProject.helpers ({
         cityOptions : function()
         {
           return Tags.find({type:'City'});
@@ -441,7 +441,7 @@ Template.member.helpers({
 
         selected:function()
         {
-          return Companies.findOne({url:Session.get('url'), tag_ids:this._id});
+          return Projects.findOne({url:Session.get('url'), tag_ids:this._id});
         },
 
         city: function(tagId)
@@ -454,19 +454,19 @@ Template.member.helpers({
           return Tags.find({_id:tagId, type:'Market'});
         },
 
-        company: function()
+        project: function()
         {
-          return Companies.find({url:Session.get('url')});
+          return Projects.find({url:Session.get('url')});
         },
 
-        typeOfCompanyOptions: function()
+        typeOfProjectOptions: function()
         {
-          return Tags.find({type:'TypeOfCompany'});
+          return Tags.find({type:'TypeOfProject'});
         },
 
-         companyStageOptions: function()
+         projectStageOptions: function()
         {
-          return Tags.find({type:'CompanyStage'});
+          return Tags.find({type:'ProjectStage'});
         },
 
         image: function(ids)
