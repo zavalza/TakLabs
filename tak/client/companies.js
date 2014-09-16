@@ -1,3 +1,43 @@
+
+ Template.companyThumbnail.rendered = function()
+ {
+
+  var maxHeight = 0;
+  $('.thumbText').each(function(){
+        var h = $(this).height();
+        if(h > maxHeight)
+        {
+          //alert(h);
+          maxHeight = h;
+        }
+    });
+  $('.thumbText').each(function(){
+        $(this).css('height',maxHeight+2);
+    });
+}
+
+Template.companyThumbnail.helpers({
+    image: function(ids)
+        {
+          if (typeof (ids) == 'object')
+          return Images.find({_id:{$in: ids}});
+          else
+          {
+            //alert(typeof (ids)) string
+            return Images.find({_id:ids})
+          }
+          
+        },
+  cities: function(tagsArray)
+    {
+         return Tags.find({_id:{$in:tagsArray}, type:'City'});
+    },
+  markets: function(tagsArray)
+    {
+         return Tags.find({_id:{$in:tagsArray}, type:'Market'});
+    },
+})
+
  Template.companies.events({
     'change #types': function(evt, tmpl){
     //alert(evt.target.value);
@@ -130,14 +170,6 @@
             return Companies.find({types:{$ne:'Startup'}, isPublic:true, tag_ids:{$all:Session.get('filters')}});
   },
 
-  cities: function(tagsArray)
-    {
-         return Tags.find({_id:{$in:tagsArray}, type:'City'});
-    },
-  markets: function(tagsArray)
-    {
-         return Tags.find({_id:{$in:tagsArray}, type:'Market'});
-    },
   city: function(tagId)
   {
     return Tags.find({_id:tagId, type:'City'});
@@ -153,17 +185,7 @@
         return Tags.find({"type": "TypeOfCompany","counter.companies":{$gt:0}, "name":{$ne:"Startup"}});
     },
 
-  image: function(ids)
-        {
-          if (typeof (ids) == 'object')
-          return Images.find({_id:{$in: ids}});
-          else
-          {
-            //alert(typeof (ids)) string
-            return Images.find({_id:ids})
-          }
-          
-        },
+
     cityOption: function()
         {
             return Tags.find({"type": "City","counter.companies":{$gt:0}});
