@@ -4,7 +4,6 @@
 # but you can also edit it by hand.
 
 meteor-platform
-autopublish
 insecure
 pauli:accounts-linkedin
 pauli:linkedin
@@ -19,4 +18,6 @@ bootstrap3-less
 jquery
 mrt:font-awesome-4-less
 rajit:bootstrap3-datepicker
+accounts-facebook
+http
 
