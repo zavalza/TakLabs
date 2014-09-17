@@ -18,3 +18,14 @@ Template.headerwrap.pathValue = function()
     //maybe just type=startup
     return Projects.find({types:'Startup',isPublic:true}).count();
   }
+  Template.slider.desireImg = function() {
+    return Session.get("desireImg");
+  };
+
+  Template.slider.message = function(){
+    return Session.get('message');
+  };
+
+  Template.slider.callToAction = function(){
+    return Session.get('callToAction');
+  }
