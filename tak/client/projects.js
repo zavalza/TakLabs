@@ -36,8 +36,11 @@ Template.projectThumbnail.helpers({
     {
          return Tags.find({_id:{$in:tagsArray}, type:'Market'});
     },
-})
 
+})
+Template.projectThumbnail.screenshotToShow = function() {
+      return this.screenshots[0]
+  };
  Template.projects.events({
     'change #types': function(evt, tmpl){
     //alert(evt.target.value);
@@ -165,9 +168,9 @@ Template.projectThumbnail.helpers({
   project: function()
   {
         if (Session.get('filters').length == 0)
-            return Projects.find({types:{$ne:'Startup'}, isPublic:true});
+            return Projects.find( {isPublic:true});
            else
-            return Projects.find({types:{$ne:'Startup'}, isPublic:true, tag_ids:{$all:Session.get('filters')}});
+            return Projects.find({isPublic:true, tag_ids:{$all:Session.get('filters')}});
   },
 
   city: function(tagId)

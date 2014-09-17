@@ -73,16 +73,24 @@
 
 <template name="projectThumbnail">
 <div class="thumbnail">
+						{{#if screenshots}}
 						<a href="{{pathFor 'profile'}}">
-							{{#each image logo}}
-							<img class="img-responsive" width="100" style="height: 100px;" src="{{url}}">
-							{{else}}
-							<img class="img-responsive" width="100" style="height: 100px;" src="companyLogo.png">
+							{{#each image screenshotToShow}}
+							<img class="img-responsive" width="180" style="height: 180px;" src="{{url}}">
 							{{/each}}
 						</a>
+						{{else}}
+						<a href="{{pathFor 'profile'}}">
+							{{#each image logo}}
+							<img class="img-responsive" width="180" style="height: 180px;" src="{{url}}">
+							{{else}}
+							<img class="img-responsive" width="180" style="height: 180px;" src="companyLogo.png">
+							{{/each}}
+						</a>
+						{{/if}}
 					<span class="thumbText" style="display:inline-block;">
-						<h5><a href="{{pathFor 'profile'}}">{{name}}</a>
-						</h5>
+						<h4 class="text-center"><a  href="{{pathFor 'profile'}}"><b>{{name}}</b></a>
+						</h4>
 						<h5>{{highConcept}}</h5>
 						{{#each cities tag_ids}}
 						<div id="{{_id}}" style="font-size: 10px;" class="btn tag btn-xs">{{name}}</div>
