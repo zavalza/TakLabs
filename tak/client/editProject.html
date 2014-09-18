@@ -43,7 +43,7 @@
           </div>
           <div class="row">
             <div class="col-md-8">
-              <label>Propaganda - Eslogan (150 caracteres max.)</label>
+              <label>Propaganda-Descripción Breve (150 caracteres max.)</label>
                <textarea class="form-control" rows="3" id="highConcept" placeholder="Un mensaje atractivo y breve para que la gente visite tu perfil" value="{{highConcept}}"></textarea>
             </div>
             <div class="row">
@@ -90,26 +90,32 @@
               {{/each}}
             </div>
           </div>
+          <h4 class="name">Equipo</h4>
           <div class="row">
-            <h4 class="name">Redes</h4>
+            {{#each team}}
+            {{>member}}
+            {{/each}}
           </div>
           <div class="row">
-            <div class="col-md-8">
-              <input type="text" class="form-control col-md-5 " id="project_url" placeholder="Sitio web" value="{{project_url}}">
+            {{>addMember}}
+          </div>
+           <div class="row">
+            <h4 class="name">Detalles del Proyecto</h4>
+          </div>
+          <div class="col-md-8">
+              <label>Tu causa -¿Por qué trabajas en este proyecto?</label>
+               <textarea class="form-control" rows="3" id="purpose" placeholder="Explica la razón de ser de tu proyecto. Logra que los demás se identifiquen." value="{{purpose}}"></textarea>
             </div>
+          <div class="row">
+            <label>Tu valor - ¿Qué ofreces que sea diferente a lo que se conoce? </label>
+            <textarea class="form-control" rows="5" id="description" placeholder="Cómo resuelves el problema?" value="{{description}}"></textarea>
           </div>
           <div class="row">
-            <div class="col-md-8 col-xs-10">
-              <input type="text" class="form-control col-md-5 " id="fb_url" placeholder="Facebook" value="{{fb_url}}">
-            </div>
+            <label>Tu solución - ¿Cuál será el resultado de tu trabajo? </label>
+            <textarea class="form-control" rows="5" id="description" placeholder="Cómo resuelves el problema?" value="{{description}}"></textarea>
           </div>
           <div class="row">
-            <div class="col-md-8 col-xs-10">
-              <input type="text" class="form-control col-md-5 " id="twitter_url" placeholder="Twitter" value="{{twitter_url}}">
-            </div>
-          </div>
-          <div class="row">
-            <h4>Video</h4>
+            <h4 class="name">Video</h4>
           </div>
           <div class="row">
             <div class="col-md-8 col-xs-6">
@@ -136,7 +142,7 @@
             </div>
           </div>
           <div class="row">
-            <h4>Imágenes / Screenshots</h4>
+            <h4 class="name">Imágenes / Screenshots</h4>
           </div>
           <div class="row">
             {{#each image screenshots}}
@@ -152,46 +158,28 @@
           <div class="row">
             <input type="file" id="image" name="image">
           </div>
+         
           <div class="row">
-            <h4>Descripción</h4>
+            <h4 class="name">Redes</h4>
           </div>
-          <div class="col-md-8">
-              <label>Tu causa</label>
-               <textarea class="form-control" rows="3" id="purpose" placeholder="Explica la razón de ser de tu proyecto" value="{{purpose}}"></textarea>
+          <div class="row">
+            <div class="col-md-8">
+              <label>Sitio web del proyecto</label>
+              <input type="text" class="form-control col-md-5 " id="project_url" placeholder="Sitio web" value="{{project_url}}">
             </div>
-          <div class="row">
-            <textarea class="form-control" rows="5" id="description" placeholder="Tu pitch: ¿Qué es lo que haces? ¿Qué problema resuelves?" value="{{description}}"></textarea>
-          </div>
-          <h4>Equipo</h4>
-          <div class="row">
-            {{#each team}}
-            {{>member}}
-            {{/each}}
           </div>
           <div class="row">
-            {{>addMember}}
-          </div>
-          <div class="row">
-            <h4>Prensa/Noticias</h4>
-          </div>
-          <div class="row">
-            <div class="col-md-6 col-xs-10">
-            <div class="input-group">
-            <input type="url" class="form-control " id="newLink" placeholder="Nuevo Enlace">
-            <span class="input-group-btn">
-            <button class="btn btn-info addArticle" type="button">+</button>
-            </span>
-          </div>
-          {{#each article_urls}}
-            <div class="input-group">
-              <input type="text" class="form-control " id="link" value="{{this}}" disabled>
-              <span class="input-group-btn">
-              <button name="Link" class="btn btn-danger deleteArticle" type="button">x</button>
-              </span>
+            <div class="col-md-8 col-xs-10">
+              <label>Facebook del proyecto</label>
+              <input type="text" class="form-control col-md-5 " id="fb_url" placeholder="Facebook" value="{{fb_url}}">
             </div>
-          {{/each}}
-        </div>
-        </div>
+          </div>
+          <div class="row">
+            <div class="col-md-8 col-xs-10">
+              <label>Twitter del proyecto</label>
+              <input type="text" class="form-control col-md-5 " id="twitter_url" placeholder="Twitter" value="{{twitter_url}}">
+            </div>
+          </div>
 
           <div class="row">
             <ul class="pager">
