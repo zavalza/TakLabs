@@ -17,6 +17,10 @@
 }
 
 Template.projectThumbnail.helpers({
+  typeOfProject: function(tagsArray)
+      {
+        return Tags.find({_id:{$in:tagsArray}, type:'TypeOfProject'});
+      },
     image: function(ids)
         {
           if (typeof (ids) == 'object')

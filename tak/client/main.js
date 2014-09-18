@@ -28,7 +28,7 @@ Deps.autorun(function () {
 
 Meteor.setInterval( function(){
     //alert('clock is working');
-    var messages=["Una gran idea requiere un gran equipo", "Trabaja en lo que te apasiona", "Apoya un proyecto con tus habilidades"];
+    var messages=["Una gran idea requiere un gran equipo", "Trabaja en un problema que te apasione", "Apoya un proyecto con tus habilidades"];
     var callsToAction=["Encuéntralo", "Descubre tu causa", "Colabora"];
     var currentImage=Session.get("desireImg");
     currentImage+=1;

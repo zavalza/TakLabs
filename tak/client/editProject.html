@@ -4,13 +4,13 @@
     {{#each project}}
     <a href="{{pathFor 'profile'}}" class="btn btn-success pull-right">Hecho</a>
     <div class="panel-heading">
-      <h3 class="panel-title text-center">Editar Compañía</h3>
+      <h3 class="panel-title text-center">Editar Proyecto</h3>
     </div>
     <div class="panel-body">
       <form class="form col-md-10 col-md-offset-1 " name="editProject">
         <div class="form-group">
           <div class="row">
-            <h4>Logo</h4>
+            <h4 class="name">Imagen del Proyecto</h4>
           </div>
           <div class="row">
             <div class="col-md-2 col-xs-4">
@@ -33,31 +33,36 @@
             </div>
           </div>
           <div class="row">
-            <h4>Información Básica</h4>
+            <h4 class="name">Información Básica</h4>
           </div>
           <div class="row">
             <div class="col-md-8 ">
+              <label>Título del Proyecto</label>
               <input type="text" class="form-control " id="name" placeholder="Nombre" value="{{name}}">
             </div>
           </div>
           <div class="row">
             <div class="col-md-8">
-              <input type="text" class="form-control col-md-5 " id="highConcept" placeholder="Describe tu compañía en menos de 10 palabras" value="{{highConcept}}">
+              <label>Propaganda - Eslogan (150 caracteres max.)</label>
+               <textarea class="form-control" rows="3" id="highConcept" placeholder="Un mensaje atractivo y breve para que la gente visite tu perfil" value="{{highConcept}}"></textarea>
             </div>
-            <div class="col-md-8">
-              {{>marketInput}}
-              {{#each tag_ids}}
-              {{#each market this}}
-                <div class="input-group">
-                  <input type="text" class="form-control " id="market" value="{{name}}" disabled>
-                  <span class="input-group-btn">
-                  <button name="Market" class="btn btn-danger pullProjectTag" type="button">x</button>
-                  </span>
-                </div>
-              {{/each}}
-              {{/each}}
+            <div class="row">
+            <div class="col-md-6">
+              <label>Categoría</label>
+              <select class="form-control" id="type">
+                <option value="">Selecciona</option>
+                {{#each typeOfProjectOptions}}
+                {{#if selected}}
+                <option id="{{_id}}" value="{{name}}" selected>{{name}}</option>
+                {{else}}
+                <option id="{{_id}}" value="{{name}}">{{name}}</option>
+                {{/if}}
+                {{/each}}
+              </select>
             </div>
+          </div>
             <div class="col-md-8">
+              <label>Ubicación</label>
               {{>locationInput}}
               {{#each tag_ids}}
                 {{#each city this}}
@@ -70,44 +75,28 @@
                 {{/each}}
               {{/each}}
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-8 col-xs-10">
-              <label>Tipo de empresa:</label>
-              <select id="type">
-                <option value="">Selecciona</option>
-                {{#each typeOfProjectOptions}}
-                {{#if selected}}
-                <option id="{{_id}}" value="{{name}}" selected>{{name}}</option>
-                {{else}}
-                <option id="{{_id}}" value="{{name}}">{{name}}</option>
-                {{/if}}
-                {{/each}}
-              </select>
+            <div class="col-md-8">
+              <label>Etiquetas - Palabras clave</label>
+              {{>marketInput}}
+              {{#each tag_ids}}
+              {{#each market this}}
+                <div class="input-group">
+                  <input type="text" class="form-control " id="market" value="{{name}}" disabled>
+                  <span class="input-group-btn">
+                  <button name="Market" class="btn btn-danger pullProjectTag" type="button">x</button>
+                  </span>
+                </div>
+              {{/each}}
+              {{/each}}
             </div>
           </div>
           <div class="row">
-            <div class="col-md-8 col-xs-10">
-              <label>Etapa alcanzada:</label>
-              <select id="stage">
-                <option value="">Selecciona</option>
-                {{#each projectStageOptions}}
-                {{#if selected}}
-                <option value="{{_id}}" selected>{{name}}</option>
-                {{else}}
-                <option value="{{_id}}">{{name}}</option>
-                {{/if}}
-                {{/each}}
-              </select>
-            </div>
+            <h4 class="name">Redes</h4>
           </div>
           <div class="row">
             <div class="col-md-8">
               <input type="text" class="form-control col-md-5 " id="project_url" placeholder="Sitio web" value="{{project_url}}">
             </div>
-          </div>
-          <div class="row">
-            <h4>Redes Sociales</h4>
           </div>
           <div class="row">
             <div class="col-md-8 col-xs-10">
@@ -166,6 +155,10 @@
           <div class="row">
             <h4>Descripción</h4>
           </div>
+          <div class="col-md-8">
+              <label>Tu causa</label>
+               <textarea class="form-control" rows="3" id="purpose" placeholder="Explica la razón de ser de tu proyecto" value="{{purpose}}"></textarea>
+            </div>
           <div class="row">
             <textarea class="form-control" rows="5" id="description" placeholder="Tu pitch: ¿Qué es lo que haces? ¿Qué problema resuelves?" value="{{description}}"></textarea>
           </div>

@@ -72,6 +72,9 @@
 </template>
 
 <template name="projectThumbnail">
+	{{#each typeOfProject tag_ids}}
+		<h3>{{name}}</h3>
+	{{/each}}
 <div class="thumbnail">
 						{{#if screenshots}}
 						<a href="{{pathFor 'profile'}}">
