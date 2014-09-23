@@ -1,16 +1,102 @@
 <template name="editProject">
 <div class="wrap">
-  <div class="panel panel-primary col-md-8 col-md-offset-2">
+  <div class="panel panel-default col-md-8 col-md-offset-2">
     {{#each project}}
     <a href="{{pathFor 'profile'}}" class="btn btn-success pull-right">Hecho</a>
     <div class="panel-heading">
-      <h3 class="panel-title text-center">Editar Proyecto</h3>
+      <h3 class="panel-title text-center">Tu Idea</h3>
     </div>
     <div class="panel-body">
       <form class="form col-md-10 col-md-offset-1 " name="editProject">
         <div class="form-group">
+              <!--
+              <label>Propaganda-Eslogan(150 caracteres max.)</label>
+               <textarea class="form-control" rows="3" id="highConcept" placeholder="¿Qué soluciona tu idea? Un mensaje atractivo y breve para que la gente se una." value="{{highConcept}}"></textarea>
+             -->
+            
+           <div class="row">
+            <h4 class="name">Detalles</h4>
+          </div>
           <div class="row">
-            <h4 class="name">Imagen del Proyecto</h4>
+            <div class="col-md-8 ">
+              <label>Título de la Idea</label>
+              <input type="text" class="form-control " id="name" placeholder="Nombre" value="{{name}}">
+            </div>
+          </div>
+          <div class="row">
+              <label>Tu causa - ¿Qué problema ves? ¿Qué quieres cambiar?</label>
+               <textarea class="form-control" rows="3" id="purpose" placeholder="Explica la razón de ser de tu idea. Logra que los demás se identifiquen." value="{{purpose}}"></textarea>
+            </div>
+            <div class="row">
+            <div class="col-md-8">
+              <label>Palabras clave de la causa</label>
+              {{>marketInput}}
+              {{#each tag_ids}}
+              {{#each market this}}
+                <div class="input-group">
+                  <input type="text" class="form-control " id="market" value="{{name}}" disabled>
+                  <span class="input-group-btn">
+                  <button name="Market" class="btn btn-danger pullProjectTag" type="button">x</button>
+                  </span>
+                </div>
+              {{/each}}
+              {{/each}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>¿Qué área estás atacando?</label>
+              <select class="form-control" id="type">
+                <option value="">Selecciona</option>
+                {{#each typeOfProjectOptions}}
+                {{#if selected}}
+                <option id="{{_id}}" value="{{name}}" selected>{{name}}</option>
+                {{else}}
+                <option id="{{_id}}" value="{{name}}">{{name}}</option>
+                {{/if}}
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          
+          <div class="row">
+            <label>Tu solución - ¿Qué imaginas hecho realidad? </label>
+            <textarea class="form-control" rows="5" id="description" placeholder="Describe tu solución. Incluye también qué te hace diferente a lo que ya existe." value="{{description}}"></textarea>
+          </div>
+          <div class="row">
+          <div class="col-md-8">
+              <label>Palabras clave de la solución</label>
+              {{>marketInput}}
+              {{#each tag_ids}}
+              {{#each market this}}
+                <div class="input-group">
+                  <input type="text" class="form-control " id="market" value="{{name}}" disabled>
+                  <span class="input-group-btn">
+                  <button name="Market" class="btn btn-danger pullProjectTag" type="button">x</button>
+                  </span>
+                </div>
+              {{/each}}
+              {{/each}}
+            </div>
+          </div>
+          <div class="row">
+             <div class="col-md-8">
+            <label>Tu rol - ¿Cómo ayudarás a que la idea se haga realidad? </label>
+            <select class="form-control" id="type">
+                <option value="">Selecciona</option>
+                {{#each typeOfProjectOptions}}
+                {{#if selected}}
+                <option id="{{_id}}" value="{{name}}" selected>{{name}}</option>
+                {{else}}
+                <option id="{{_id}}" value="{{name}}">{{name}}</option>
+                {{/if}}
+                {{/each}}
+              </select>
+            </div>
+          </div>
+         
+          <div class="row">
+            <h4 class="name">Imagen Principal</h4>
           </div>
           <div class="row">
             <div class="col-md-2 col-xs-4">
@@ -33,85 +119,7 @@
             </div>
           </div>
           <div class="row">
-            <h4 class="name">Información Básica</h4>
-          </div>
-          <div class="row">
-            <div class="col-md-8 ">
-              <label>Título del Proyecto</label>
-              <input type="text" class="form-control " id="name" placeholder="Nombre" value="{{name}}">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-8">
-              <label>Propaganda-Descripción Breve (150 caracteres max.)</label>
-               <textarea class="form-control" rows="3" id="highConcept" placeholder="Un mensaje atractivo y breve para que la gente visite tu perfil" value="{{highConcept}}"></textarea>
-            </div>
-            <div class="row">
-            <div class="col-md-6">
-              <label>Categoría</label>
-              <select class="form-control" id="type">
-                <option value="">Selecciona</option>
-                {{#each typeOfProjectOptions}}
-                {{#if selected}}
-                <option id="{{_id}}" value="{{name}}" selected>{{name}}</option>
-                {{else}}
-                <option id="{{_id}}" value="{{name}}">{{name}}</option>
-                {{/if}}
-                {{/each}}
-              </select>
-            </div>
-          </div>
-            <div class="col-md-8">
-              <label>Ubicación</label>
-              {{>locationInput}}
-              {{#each tag_ids}}
-                {{#each city this}}
-                <div class="input-group">
-                  <input type="text" class="form-control " id="city" value="{{name}}" disabled>
-                  <span class="input-group-btn">
-                  <button name="City" class="btn btn-danger pullProjectTag" type="button">x</button>
-                  </span>
-                </div>
-                {{/each}}
-              {{/each}}
-            </div>
-            <div class="col-md-8">
-              <label>Etiquetas - Palabras clave</label>
-              {{>marketInput}}
-              {{#each tag_ids}}
-              {{#each market this}}
-                <div class="input-group">
-                  <input type="text" class="form-control " id="market" value="{{name}}" disabled>
-                  <span class="input-group-btn">
-                  <button name="Market" class="btn btn-danger pullProjectTag" type="button">x</button>
-                  </span>
-                </div>
-              {{/each}}
-              {{/each}}
-            </div>
-          </div>
-          <h4 class="name">Equipo</h4>
-          <div class="row">
-            {{#each team}}
-            {{>member}}
-            {{/each}}
-          </div>
-          <div class="row">
-            {{>addMember}}
-          </div>
-           <div class="row">
-            <h4 class="name">Detalles del Proyecto</h4>
-          </div>
-          <div class="row">
-              <label>Tu causa - ¿Qué problema ves? ¿Qué quieres cambiar?</label>
-               <textarea class="form-control" rows="3" id="purpose" placeholder="Explica la razón de ser de tu proyecto. Logra que los demás se identifiquen." value="{{purpose}}"></textarea>
-            </div>
-          <div class="row">
-            <label>Tu solución - ¿Qué construyes? </label>
-            <textarea class="form-control" rows="5" id="description" placeholder="Describe tu solución. Incluye también qué te hace diferente a lo que ya existe." value="{{description}}"></textarea>
-          </div>
-          <div class="row">
-            <h4 class="name">Video</h4>
+            <h4 class="name">Video de tu idea (Opcional)</h4>
           </div>
           <div class="row">
             <div class="col-md-8 col-xs-6">
@@ -138,7 +146,7 @@
             </div>
           </div>
           <div class="row">
-            <h4 class="name">Imágenes / Screenshots</h4>
+            <h4 class="name"> Más Imágenes / Screenshots (Opcional)</h4>
           </div>
           <div class="row">
             {{#each image screenshots}}
@@ -155,27 +163,6 @@
             <input type="file" id="image" name="image">
           </div>
          
-          <div class="row">
-            <h4 class="name">Redes</h4>
-          </div>
-          <div class="row">
-            <div class="col-md-8">
-              <label>Sitio web del proyecto</label>
-              <input type="text" class="form-control col-md-5 " id="project_url" placeholder="Sitio web" value="{{project_url}}">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-8 col-xs-10">
-              <label>Facebook del proyecto</label>
-              <input type="text" class="form-control col-md-5 " id="fb_url" placeholder="Facebook" value="{{fb_url}}">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-8 col-xs-10">
-              <label>Twitter del proyecto</label>
-              <input type="text" class="form-control col-md-5 " id="twitter_url" placeholder="Twitter" value="{{twitter_url}}">
-            </div>
-          </div>
 
           <div class="row">
             <ul class="pager">

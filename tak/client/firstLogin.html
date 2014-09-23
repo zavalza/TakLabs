@@ -1,6 +1,6 @@
 <template name="firstLogin">
 <div class="wrap">
-  <div class="panel panel-primary col-md-8 col-xs-12 col-md-offset-2">
+  <div class="panel panel-default col-md-8 col-xs-12 col-md-offset-2">
     {{#each person currentUser.person_id}}
     <a href="{{pathFor 'profile'}}" class="btn btn-success pull-right">Hecho</a>
     <div class="panel-heading">
@@ -9,7 +9,7 @@
     <div class="panel-body">
       <div class="row">
         <div class="col-md-6 col-xs-10" >
-          <h4>Ciudades donde trabajo</h4>
+          <h4 class="name">Ciudades donde trabajo</h4>
         </div>
       </div>
       <div class="row">
@@ -29,7 +29,7 @@
       </div>
       <div class="row">
         <div class="col-md-8 col-xs-10" >
-          <h4>Si te unes a una Startup, ¿qué roles asumes?</h4>
+          <h4 class="name">Si te unes a un proyecto, ¿qué roles asumes?</h4>
           <h5>Más comunes: <br/> Administración, Desarrollo, Diseño, Inversión, Mentoría, Mercadotecnia, Ventas</h5>
         </div>
       </div>
@@ -48,9 +48,11 @@
           {{/each}}
         </div>
       </div>
+      <!--Dejar o quitar?-->
       <div class="row">
         <div class="col-md-6 col-xs-10" >
-          <h4>Mi experiencia</h4>
+          <h4 class="name">Mi experiencia en proyectos (Opcional)</h4>
+          <h5>¿En qué proyectos has llevado ideas a la realidad?</h5>
         </div>
       </div>
       <div class="row">
@@ -92,7 +94,7 @@
       </div>
       <div class="row">
         <div class="col-md-6 col-xs-6" >
-          <h4>¿Con qué habilidades ayudo a una Startup?</h4>
+          <h4 class="name">¿Con qué habilidades puedes apoyar un proyecto?</h4>
           <h5>Ejemplos: <br/> Photoshop, HTML, Ilustrator, PHP, Marketing Digital, Relaciones, etc.</h5>
         </div>
       </div>
