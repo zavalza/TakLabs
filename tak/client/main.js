@@ -8,6 +8,7 @@ Session.set('typeToShow',"");
 Session.set('claimProfile', false);
 Session.set('hasIdea', false);
 Session.set('waiting', false);
+Session.set('screenshots', []);
 Session.set('filters',[]);
 Session.set('selectedTags',[]);
 Session.set("desireImg", 1);

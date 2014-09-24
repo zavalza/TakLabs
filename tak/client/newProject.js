@@ -108,12 +108,70 @@ Template.newIdea.events({
       Session.set('selectedTags', tagsArray);
       
     },
+
+    'change #logo' : function(evt, tmpl) {
+    var error = false;
+    FS.Utility.eachFile(evt, function(file) {
+      im = Images.insert(file, function (err, fileObj) {
+        //Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
+        if(err){
+          error = true;
+        }
+      });
+      if(!error)
+      {
+
+        //alert(EJSON.stringify(im));
+       Session.set('logo', im._id);
+        //var encontrada = Images.findOne({_id : im._id});
+        //alert(encontrada._id)
+      }   
+    });
+  },
+
+'change #image' : function(evt, tmpl) {
+    var error = false;
+    //Esto no debería de ir en el server??
+    FS.Utility.eachFile(evt, function(file) {
+      im = Images.insert(file, function (err, fileObj) {
+        //Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
+        if(err){
+          error = true;
+        }
+      });
+      if(!error)
+      {
+        var screenshots = Session.get('screenshots');
+        screenshots.push(im._id);
+        Session.set('screenshots', screenshots);
+        //var encontrada = Images.findOne({_id : im._id});
+        //alert(encontrada._id)
+      }   
+    });
+  },
+    'change #video_url': function (evt, tmpl){
+    var targetId = evt.target.id;
+    var link = tmpl.find('#'+targetId).value;
+    var re = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+    if(!link.match(re))
+    {
+      alert("No es una liga válida");
+    }
+    else
+    {
+     Session.set('video_url', link);
+    }
+    },
     'click .saveIdea': function(evt, tmpl)
     {
       //alert('salvar');
       var name= tmpl.find('#name').value;
       var purpose = tmpl.find('#purpose').value;
       var description = tmpl.find('#description').value;
+      var video_url = Session.get('video_url');
+      var logo = Session.get('logo');
+      
+      var screenshots = Session.get('screenshots');
       //var type = tmpl.find('#impulseType').value;
       //var remotes = document.getElementsByName('remote');
       /*for(var i = 0; i < remotes.length; i++)
@@ -156,16 +214,36 @@ Template.newIdea.events({
         name:name,
         purpose:purpose,
         description:description,
+        video_url: video_url,
+        logo:logo, 
+        screenshots: screenshots,
         //person_tags:tags,
         //remote:remote,
         //tag_ids:reward_ids
       }
+      Session.set('logo', null);
+      Session.set('screenshots', []);
       Meteor.call('insertIdea', Meteor.user().person_id, ideaDoc);
       //go to new idea profile
       //alert(EJSON.stringify(impulseDoc));
       window.history.back();
     }
   });
+
+  Template.newIdea.video_url = function()
+  {
+    return Session.get('video_url');
+  }
+
+  Template.newIdea.screenshots = function()
+  {
+    return Session.get('screenshots');
+  }
+
+  Template.newIdea.logo = function()
+  {
+    return Session.get('logo');
+  }
 
     Template.newIdea.helpers ({
         cityOptions : function()
