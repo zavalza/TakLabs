@@ -34,7 +34,15 @@ Template.loginForm.events({
                 if(!error){
                   Session.set('userToShow', result);
                   //alert(result);
-                  Router.go('people');
+                   if(Session.get('hasIdea'))
+                    {
+                      Router.go('newIdea');
+                      Session.set('hasIdea', false);
+                    }
+                    else
+                    {
+                    Router.go('people');
+                    }
                 }
               });
             }
@@ -74,12 +82,21 @@ Template.loginForm.events({
             }
             else
             {
+              
               Meteor.call('userToPerson', Meteor.userId(), function(error, result)
               {
                 if(!error){
                   Session.set('userToShow', result);
                   //alert(result);
-                  Router.go('people');
+                   if(Session.get('hasIdea'))
+                    {
+                      Router.go('newIdea');
+                      Session.set('hasIdea', false);
+                    }
+                    else
+                    {
+                    Router.go('people');
+                  }
                 }
               });
             }

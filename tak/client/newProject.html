@@ -1,18 +1,13 @@
-<template name="editProject">
+<template name="newIdea">
 <div class="wrap">
   <div class="panel panel-default col-md-8 col-md-offset-2">
-    {{#each project}}
-    <a href="{{pathFor 'profile'}}" class="btn btn-success pull-right">Hecho</a>
+    <a class="btn btn-success pull-right saveIdea">Hecho</a>
     <div class="panel-heading">
       <h3 class="panel-title text-center">Tu Idea</h3>
     </div>
     <div class="panel-body">
       <form class="form col-md-10 col-md-offset-1 " name="editProject">
         <div class="form-group">
-              <!--
-              <label>Propaganda-Eslogan(150 caracteres max.)</label>
-               <textarea class="form-control" rows="3" id="highConcept" placeholder="¿Qué soluciona tu idea? Un mensaje atractivo y breve para que la gente se una." value="{{highConcept}}"></textarea>
-             -->
             
            <div class="row">
             <h4 class="name">Detalles</h4>
@@ -20,12 +15,12 @@
           <div class="row">
             <div class="col-md-8 ">
               <label>Título de la Idea</label>
-              <input type="text" class="form-control " id="name" placeholder="Nombre Creativo" value="{{name}}">
+              <input type="text" class="form-control " id="name" placeholder="Nombre Creativo">
             </div>
           </div>
           <div class="row">
               <label>Tu causa - ¿Qué problema ves? ¿Qué quieres cambiar?</label>
-               <textarea class="form-control" rows="3" id="purpose" placeholder="Explica la razón de ser de tu idea. Logra que los demás se identifiquen." value="{{purpose}}"></textarea>
+               <textarea class="form-control" rows="3" id="purpose" placeholder="Explica la razón de ser de tu idea. Logra que los demás se identifiquen."></textarea>
             </div>
             <div class="row">
             <div class="col-md-8">
@@ -61,7 +56,7 @@
           
           <div class="row">
             <label>Tu solución - ¿Qué imaginas hecho realidad? </label>
-            <textarea class="form-control" rows="5" id="description" placeholder="Describe tu solución. Incluye también qué te hace diferente a lo que ya existe." value="{{description}}"></textarea>
+            <textarea class="form-control" rows="5" id="description" placeholder="Describe tu solución. Incluye también qué te hace diferente a lo que ya existe."></textarea>
           </div>
           <div class="row">
           <div class="col-md-8">
@@ -166,74 +161,11 @@
 
           <div class="row">
             <ul class="pager">
-              <li><a href="{{pathFor 'profile'}}">Hecho</a></li>
+              <li><a class="btn saveIdea">Hecho</a></li>
             </ul>
           </div>
         </div>
       </form>
-    </div>
-       {{/each}}
-  </div>
-</div>
-</template>
-<template name="member">
-<ul class="list-group">
-  <li class="list-group-item">
-    <div class="row">
-      <div class="col-md-6 col-xs-12">
-        {{type}} -
-        {{#each user user_id}}
-        {{profile.firstName}} {{profile.lastName}}
-        {{/each}}
-        {{#each person person_id}}
-        {{name}}
-        {{/each}}
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4 col-xs-10">
-        <input type="text" class="form-control " id="title" placeholder="Nombre del Puesto" value="{{title}}">
-      </div>
-      <div class="col-md-3 col-xs-10" >
-        <div class="input-group date">
-          <input type="text" id="startedAt" class="form-control" placeholder="Inicio" value="{{startedAt}}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-        </div>
-      </div>
-      <div class="col-md-3 col-xs-10" >
-        <div class="input-group date">
-          <input type="text" id="endedAt" class="form-control" placeholder="Fin" value="{{endedAt}}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-        </div>
-      </div>
-      <div class="col-md-2 col-xs-10" >
-        <button type="button" class="btn btn-danger deleteExperience">Eliminar</button>
-      </div>
-    </div>
-  </li>
-</ul>
-</template>
-<template name="addMember">
-<div class="row">
-  <div class="col-md-3 col-xs-6">
-    <select id="Experience">
-      <option value="">Tipo de experiencia</option>
-      <option value="Fundador">Fundador</option>
-      <option value="Miembro del equipo">Miembro del equipo</option>
-      <option value="Inversionista">Inversionista</option>
-      <option value="Asesor">Asesor</option>
-      <option value="Miembro del consejo">Miembro del consejo</option>
-    </select>
-  </div>
-  <div class="col-md-6 col-xs-10">
-    <div class="input-group">
-      <input type="text" class="form-control dropdown-toggle" id="User" placeholder="Nombre" data-toggle="dropdown">
-      <span class="input-group-btn">
-      <button name="User" class="btn btn-warning addMember" type="button">Añadir Miembro</button>
-      </span>
-      <ul class="dropdown-menu" style="display: none;" id="UserOptions">
-        {{#each userOptions}}
-        <a href="#"><li style="display: none;" class="User" id="{{_id}}">{{name}}</li></a>
-        {{/each}}
-      </ul>
     </div>
   </div>
 </div>

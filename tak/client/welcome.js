@@ -29,3 +29,32 @@ Template.headerwrap.pathValue = function()
   Template.slider.callToAction = function(){
     return Session.get('callToAction');
   }
+
+  Template.slider.action = function(){
+    return Session.get('action');
+  }
+
+  Template.welcome.events({
+    'click .hasIdea': function(evt, tmpl)
+  {
+      if(Meteor.userId())
+      {
+          Router.go('newIdea');
+      }
+      else{
+          Session.set('hasIdea', true);
+          alert("Inicia sesión para publicar tu idea");
+          Router.go('loginForm');
+      }
+    },
+
+    'click .findIdeas':function(evt, tmpl)
+    {
+      Router.go('projects');
+    },
+
+    'click .help':function(evt, tmpl)
+    {
+      Router.go('newUserForm');
+    }
+  });

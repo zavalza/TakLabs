@@ -48,50 +48,7 @@
           {{/each}}
         </div>
       </div>
-      <!--Dejar o quitar?-->
-      <div class="row">
-        <div class="col-md-6 col-xs-10" >
-          <h4 class="name">Mi experiencia en proyectos (Opcional)</h4>
-          <h5>¿En qué proyectos has llevado ideas a la realidad?</h5>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12 col-xs-12">
-          {{>experienceInput}}
-          <ul class="list-group">
-            {{#each experience}}
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-md-6 col-xs-10">
-                  {{type}} -
-                  {{#each project project_id}}
-                  {{name}}
-                  {{/each}}
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4 col-xs-10">
-                  <input type="text" class="form-control " id="title" placeholder="Nombre del Puesto" value="{{title}}">
-                </div>
-                <div class="col-md-3 col-xs-10" >
-                  <div class="input-group date">
-                    <input type="text" id="startedAt" class="form-control" placeholder="Inicio" value="{{startedAt}}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-                  </div>
-                </div>
-                <div class="col-md-3 col-xs-10" >
-                  <div class="input-group date">
-                    <input type="text" id="endedAt" class="form-control" placeholder="Fin" value="{{endedAt}}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-                  </div>
-                </div>
-                <div class="col-md-2 col-xs-10" >
-                  <button type="button" class="btn btn-danger deleteExperience">Eliminar</button>
-                </div>
-              </div>
-            </li>
-            {{/each}}
-          </ul>
-        </div>
-      </div>
+      
       <div class="row">
         <div class="col-md-6 col-xs-6" >
           <h4 class="name">¿Con qué habilidades puedes apoyar un proyecto?</h4>
@@ -113,6 +70,18 @@
           {{/each}}
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-6 col-xs-10" >
+          <h4 class="name">¿Desde cuándo empezaste a llevar tus ideas a la realidad?</h4>
+        </div>
+      </div>
+      <div class="row">
+      <div class="col-md-3 col-xs-10" >
+                  <div class="input-group date">
+                    <input type="text" id="startedAt" class="form-control" placeholder="Fecha Inicio" value="{{startedAt}}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                  </div>
+                </div>
+       </div>
       <div class="row">
               <ul class="pager">
               <li><a href="{{pathFor 'profile'}}">Hecho</a></li>

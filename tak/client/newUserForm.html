@@ -5,22 +5,6 @@
       <h3 class="panel-title text-center">Nuevo Usuario</h3>
     </div>
     <div class="panel-body">
-       <div class="row">
-      <div class="col-lg-4 col-lg-offset-4 centered">
-      <h4>Busca tu perfil</h4>
-      <div class="input-group">
-        <input type="text" class="form-control dropdown-toggle" id="User" placeholder="Nombre" data-toggle="dropdown">
-        <ul class="dropdown-menu" style="display: none;" id="UserOptions">
-          {{#each userOptions}}
-          <a href="{{pathFor 'profile'}}"><li style="display: none;" class="User" id="{{url}}">{{name}}</li></a>
-          {{/each}}
-        </ul>
-      </div>
-      </div>
-    </div>
-        <div class="row">
-        <h5 class="text-center">¿No te encuentras? Crea un perfil nuevo</h5>
-        </div>
         {{#if waiting}}
         <h4 class="text-center">Cargando tu información...</h4>
         <div class="row">

@@ -458,19 +458,19 @@
         return tagId;
       },
 
-      insertImpulse: function (projectUrl, impulseDoc)
+      insertIdea: function (personId, ideaDoc)
       {
-        console.log('creating new Impulse on '+projectUrl);
-        projectDoc = Projects.findOne({url: projectUrl});
-        impulseDoc.project_id = projectDoc._id;
-        //console.log(impulseDoc);
-        impulseId = Impulses.insert(impulseDoc);
-        for( var i = 0; i < impulseDoc.tag_ids.length; i++)
+        console.log('creating new Idea on '+personId);
+        personDoc = People.findOne({_id: personId});
+        ideaDoc.author_id = personDoc._id;
+        //console.log(ideaDoc);
+        ideaId = Projects.insert(ideaDoc);
+        /*for( var i = 0; i < ideaDoc.tag_ids.length; i++)
         {
           //Need to know how to insert relation with tags
-          //Meteor.call('pushProjectTag', projectUrl, impulseDoc.tag_ids[i]);
-        }
-        Projects.update({url:projectUrl},{$addToSet:{impulse_ids:impulseId}});
+          //Meteor.call('pushProjectTag', personId, ideaDoc.tag_ids[i]);
+        }*/
+        People.update({id:personId},{$addToSet:{idea_ids:ideaId}});
             
       },
 
