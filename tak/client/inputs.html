@@ -13,13 +13,26 @@
 </template>
 <template name="marketInput">
 <div class="input-group">
-  <input type="text" class="form-control dropdown-toggle" id="Market" placeholder="Nuevo mercado" data-toggle="dropdown">
+  <input type="text" class="form-control dropdown-toggle" id="Market" placeholder="Palabra clave" data-toggle="dropdown">
   <span class="input-group-btn">
   <button name="Market" class="btn btn-info saveTag" type="button">+</button>
   </span>
   <ul class="dropdown-menu" style="display: none;" id="MarketOptions">
     {{#each marketOptions}}
     <a href="#"><li style="display: none;" class="Market list-group-item" id="{{name}}" name="{{_id}}">{{name}}</li></a>
+    {{/each}}
+  </ul>
+</div>
+</template>
+<template name="industryInput">
+<div class="input-group">
+  <input type="text" class="form-control dropdown-toggle" id="Industry" placeholder="Palabra clave" data-toggle="dropdown">
+  <span class="input-group-btn">
+  <button name="Industry" class="btn btn-info saveTag" type="button">+</button>
+  </span>
+  <ul class="dropdown-menu" style="display: none;" id="IndustryOptions">
+    {{#each IndustryOptions}}
+    <a href="#"><li style="display: none;" class="Industry list-group-item" id="{{name}}" name="{{_id}}">{{name}}</li></a>
     {{/each}}
   </ul>
 </div>

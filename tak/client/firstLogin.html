@@ -9,7 +9,7 @@
     <div class="panel-body">
       <div class="row">
         <div class="col-md-6 col-xs-10" >
-          <h4 class="name">Ciudades donde trabajo</h4>
+          <h4 class="name">¿En qué áreas te gusta innovar?</h4>
         </div>
       </div>
       <div class="row">
@@ -29,7 +29,7 @@
       </div>
       <div class="row">
         <div class="col-md-8 col-xs-10" >
-          <h4 class="name">Si te unes a un proyecto, ¿qué roles asumes?</h4>
+          <h4 class="name">¿Qué roles puedes aportar a un proyecto innovador?</h4>
           <h5>Más comunes: <br/> Administración, Desarrollo, Diseño, Inversión, Mentoría, Mercadotecnia, Ventas</h5>
         </div>
       </div>
@@ -72,16 +72,24 @@
       </div>
       <div class="row">
         <div class="col-md-6 col-xs-10" >
-          <h4 class="name">¿Desde cuándo empezaste a llevar tus ideas a la realidad?</h4>
+          <h4 class="name">Ciudades donde trabajas y puedes ser contactad@</h4>
         </div>
       </div>
       <div class="row">
-      <div class="col-md-3 col-xs-10" >
-                  <div class="input-group date">
-                    <input type="text" id="startedAt" class="form-control" placeholder="Fecha Inicio" value="{{startedAt}}"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-                  </div>
-                </div>
-       </div>
+        <div class="col-md-4 col-xs-10">
+          {{>locationInput}}
+          {{#each tag_ids}}
+          {{#each city this}}
+          <div class="input-group">
+            <input type="text" class="form-control " id="location" value="{{name}}" disabled>
+            <span class="input-group-btn">
+            <button name="City" class="btn btn-danger pullTag" type="button">x</button>
+            </span>
+          </div>
+          {{/each}}
+          {{/each}}
+        </div>
+      </div>
       <div class="row">
               <ul class="pager">
               <li><a href="{{pathFor 'profile'}}">Hecho</a></li>

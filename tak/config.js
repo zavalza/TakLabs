@@ -20,7 +20,7 @@ Router.map(function() {
   this.route('welcome', {path: '/'});
   this.route('loginForm', {path: '/entrar'});
   this.route('newUserForm', {path: '/registro'});
-  this.route('newIdea', {path:'/nuevaIdea'});
+  this.route('newProject', {path:'/nuevaIdea'});
   this.route('newImpulse',{path:'/nuevoImpulso',
       waitOn: function() 
   { 
@@ -35,7 +35,7 @@ Router.map(function() {
   });
   this.route('news', {path: '/noticias'});
   this.route('firstLogin', {path: '/bienvenido'});
-  this.route('projects', {path: '/ideas',
+  this.route('projects', {path: '/proyectos',
     waitOn: function() 
   { 
     Session.set('filters',[]);

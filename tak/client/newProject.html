@@ -1,12 +1,11 @@
-<template name="newIdea">
+<template name="newProject">
 <div class="wrap">
   <div class="panel panel-default col-md-8 col-md-offset-2">
-    <a class="btn btn-success pull-right saveIdea">Hecho</a>
     <div class="panel-heading">
-      <h3 class="panel-title text-center">Tu Idea</h3>
+      <h3 class="panel-title text-center">Nueva Idea</h3>
     </div>
     <div class="panel-body">
-      <form class="form col-md-10 col-md-offset-1 " name="editProject">
+      <form class="form col-md-10 col-md-offset-1 " name="newProject">
         <div class="form-group">
             
            <div class="row">
@@ -14,13 +13,13 @@
           </div>
           <div class="row">
             <div class="col-md-8 ">
-              <label>Título de la Idea</label>
+              <label>Nombre</label>
               <input type="text" class="form-control " id="name" placeholder="Nombre Creativo">
             </div>
           </div>
           <div class="row">
               <label>Tu causa - ¿Qué problema ves? ¿Qué quieres cambiar?</label>
-               <textarea class="form-control" rows="3" id="purpose" placeholder="Explica la razón de ser de tu idea. Logra que los demás se identifiquen."></textarea>
+               <textarea class="form-control" rows="3" id="problem" placeholder="Explica la razón de ser de tu idea. Logra que los demás se identifiquen."></textarea>
             </div>
             <div class="row">
             <div class="col-md-8">
@@ -56,27 +55,30 @@
           
           <div class="row">
             <label>Tu solución - ¿Qué imaginas hecho realidad? </label>
-            <textarea class="form-control" rows="5" id="description" placeholder="Describe tu solución. Incluye también qué te hace diferente a lo que ya existe."></textarea>
+            <textarea class="form-control" rows="5" id="solution" placeholder="Describe tu solución. Incluye también qué te hace diferente a lo que ya existe."></textarea>
           </div>
           <div class="row">
           <div class="col-md-8">
               <label>Palabras clave de la solución</label>
-              {{>marketInput}}
+              {{>industryInput}}
               {{#each tag_ids}}
-              {{#each market this}}
+              {{#each industry this}}
                 <div class="input-group">
-                  <input type="text" class="form-control " id="market" value="{{name}}" disabled>
+                  <input type="text" class="form-control " id="industry" value="{{name}}" disabled>
                   <span class="input-group-btn">
-                  <button name="Market" class="btn btn-danger pullProjectTag" type="button">x</button>
+                  <button name="Industry" class="btn btn-danger pullProjectTag" type="button">x</button>
                   </span>
                 </div>
               {{/each}}
               {{/each}}
             </div>
           </div>
+           <div class="row">
+            <h4 class="name">Equipo</h4>
+          </div>
           <div class="row">
              <div class="col-md-8">
-            <label>Tu rol - ¿Cómo ayudarás a que la idea se haga realidad? </label>
+            <label>Tus roles - ¿Cómo ayudarás a que la idea se haga realidad? </label>
             <select class="form-control" id="type">
                 <option value="">Selecciona</option>
                 {{#each typeOfProjectOptions}}
@@ -89,7 +91,43 @@
               </select>
             </div>
           </div>
-         
+          <!--Palabras clave de las personas que necesitan -->
+          <div class="row">
+             <div class="col-md-8">
+            <label>¿Qué roles necesitas en tu equipo? </label>
+            <select class="form-control" id="type">
+                <option value="">Selecciona</option>
+                {{#each typeOfProjectOptions}}
+                {{#if selected}}
+                <option id="{{_id}}" value="{{name}}" selected>{{name}}</option>
+                {{else}}
+                <option id="{{_id}}" value="{{name}}">{{name}}</option>
+                {{/if}}
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="row">
+             <div class="col-md-8">
+            <label>¿Qué habilidades necesitas tener en tu equipo? </label>
+            <select class="form-control" id="type">
+                <option value="">Selecciona</option>
+                {{#each typeOfProjectOptions}}
+                {{#if selected}}
+                <option id="{{_id}}" value="{{name}}" selected>{{name}}</option>
+                {{else}}
+                <option id="{{_id}}" value="{{name}}">{{name}}</option>
+                {{/if}}
+                {{/each}}
+              </select>
+            </div>
+          </div>
+         <div class="row">
+            <div class="col-md-8 ">
+              <label>¿Cuántas personas integrarían tu equipo ideal?</label>
+              <input type="text" class="form-control " id="amount" placeholder="Cantidad de personas">
+            </div>
+          </div>
           <div class="row">
             <h4 class="name">Imagen Principal</h4>
           </div>
@@ -157,13 +195,10 @@
           <div class="row">
             <input type="file" id="image" name="image">
           </div>
-         
-
-          <div class="row">
-            <ul class="pager">
-              <li><a class="btn saveIdea">Hecho</a></li>
-            </ul>
-          </div>
+        <div class="row">
+      <a class="btn btn-lg btn-success saveProject" href="#">Salvar</a>
+      <a class="btn btn-lg btn-danger cancel" href="#">Cancelar</a>
+    </div>
         </div>
       </form>
     </div>

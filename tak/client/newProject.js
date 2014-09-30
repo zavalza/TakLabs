@@ -1,4 +1,4 @@
-Template.newIdea.rendered = function () {
+Template.newProject.rendered = function () {
   if(Meteor.userId() == null)
   {
     alert('Debes iniciar sesión antes');
@@ -7,8 +7,8 @@ Template.newIdea.rendered = function () {
   }
 }
 
-Template.newIdea.events({
-    'keyup #Tag' : function(evt, tmpl){
+Template.newProject.events({
+    'keyup #Market, #Industry' : function(evt, tmpl){
       var targetId = evt.target.id;
       //alert(targetId)
       filter = tmpl.find('#'+targetId).value.trim().toUpperCase();
@@ -57,7 +57,7 @@ Template.newIdea.events({
         case 13: //Return
           //alert('Enter')
           var tagsArray = Session.get("selectedTags");
-          tagsArray.push(matches[selection].id);
+          tagsArray.push(matches[selection].getAttribute('name'));
           Session.set('selectedTags', tagsArray);
           //alert(Session.get('selectedTags'));
           //alert(EJSON.stringify(Session.get('selectedTags')));
@@ -83,7 +83,7 @@ Template.newIdea.events({
       //alert(selection);
     },
 
-    'blur #Tag' : function(evt, tmpl){
+    'blur #Market, #Industry' : function(evt, tmpl){
       var targetId = evt.target.id;
       //alert(evt.currentTarget.id);
       Session.set('keyControl', -1);
@@ -92,11 +92,12 @@ Template.newIdea.events({
       
     },
 
-    'mousedown .Tag' : function (evt, tmpl){
+    'mousedown .Market, .Industry' : function (evt, tmpl){
       //alert(this._id);
       var targetClass = evt.target.getAttribute('class');
       var tagsArray = Session.get("selectedTags");
-      tagsArray.push(evt.target.id);
+      alert(evt.target.getAttribute('name'));
+      tagsArray.push(evt.target.getAttribute('name'));
       Session.set('selectedTags', tagsArray);
       //blur event is called after mousedown
     },
@@ -162,12 +163,16 @@ Template.newIdea.events({
      Session.set('video_url', link);
     }
     },
-    'click .saveIdea': function(evt, tmpl)
+    'click .cancel':function(evt, tmpl)
+    {
+      window.history.back();
+    },
+    'click .saveProject': function(evt, tmpl)
     {
       //alert('salvar');
       var name= tmpl.find('#name').value;
-      var purpose = tmpl.find('#purpose').value;
-      var description = tmpl.find('#description').value;
+      var purpose = tmpl.find('#problem').value;
+      var description = tmpl.find('#solution').value;
       var video_url = Session.get('video_url');
       var logo = Session.get('logo');
       
@@ -230,22 +235,27 @@ Template.newIdea.events({
     }
   });
 
-  Template.newIdea.video_url = function()
+  Template.newProject.tag_ids = function()
+  {
+    return Session.get('selectedTags');
+  }
+
+  Template.newProject.video_url = function()
   {
     return Session.get('video_url');
   }
 
-  Template.newIdea.screenshots = function()
+  Template.newProject.screenshots = function()
   {
     return Session.get('screenshots');
   }
 
-  Template.newIdea.logo = function()
+  Template.newProject.logo = function()
   {
     return Session.get('logo');
   }
 
-    Template.newIdea.helpers ({
+    Template.newProject.helpers ({
         cityOptions : function()
         {
           return Tags.find({type:'City'});
@@ -264,6 +274,11 @@ Template.newIdea.events({
         market: function(tagId)
         {
           return Tags.find({_id:tagId, type:'Market'});
+        },
+
+        industry: function(tagId)
+        {
+            return Tags.find({_id:tagId, type:'Industry'});
         },
 
         project: function()

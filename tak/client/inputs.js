@@ -105,6 +105,13 @@
        }
     });
 
+    Template.industryInput.helpers({
+        industryOptions: function()
+       {
+        return Tags.find({type:'Industrie'});
+       }
+     });
+
 
     Template.skillsInput.helpers({
        skillOptions : function()
