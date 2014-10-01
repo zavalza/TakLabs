@@ -100,6 +100,11 @@ Template.projectProfile.helpers ({
         'experience':{$elemMatch:{'project_id': Session.get('currentProjectId')}}}).count() > 0);
     },
 
+    person:function(personId)
+    {
+      return People.find({_id:personId});
+    },
+
       city: function(tagsArray)
       {
         return Tags.find({_id:{$in:tagsArray}, type:'City'});
