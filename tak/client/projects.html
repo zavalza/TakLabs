@@ -1,13 +1,18 @@
 <template name="projects">
 <div class="wrap row">
 	<div class="col-md-3">
+		<div class="row">
+			<div class="col-md-offset-3 col-xs-offset-1">
+			<h2 class="name">¿Qué tipo de problema quieres resolver?</h2>
+		</div>
+		</div>
 		<form name="roles" role="form" class="form-inline col-md-6 col-xs-10 col-md-offset-3 col-xs-offset-1">
 			<div class="form-group">
-				<h4><b>CATEGORÍA</b></h4>
-				{{#each typeOfProjectOption}}
+				<h4><b>ÁREA</b></h4>
+				{{#each areaOption}}
 				<label>
 					{{name}}
-					<input class="form-control" type="checkbox" id="types" value="{{_id}}">
+					<input class="form-control" type="checkbox" id="area" value="{{_id}}">
 				</label>
 				{{/each}}
 			</div>
@@ -35,6 +40,7 @@
 				</div>
 			</div>
 		</div>
+		<!--
 				<div class="row">
 			<div class="col-md-6 col-xs-6 col-md-offset-3 col-xs-offset-3">
 				<h4><b>UBICACIÓN</b></h4>
@@ -58,6 +64,7 @@
 				</div>
 			</div>
 		</div>
+	-->
 	</div>
 	<div class="col-md-8 col-md-offset-0 col-xs-10 col-xs-offset-1">
 		<div class="row center-block">
@@ -72,17 +79,8 @@
 </template>
 
 <template name="projectThumbnail">
-	{{#each typeOfProject tag_ids}}
-		<h3>{{name}}</h3>
-	{{/each}}
 <div class="thumbnail">
-						{{#if screenshots}}
-						<a href="{{pathFor 'profile'}}">
-							{{#each image screenshotToShow}}
-							<img class="img-responsive" width="180" style="height: 180px;" src="{{url}}">
-							{{/each}}
-						</a>
-						{{else}}
+						{{#if logo}}
 						<a href="{{pathFor 'profile'}}">
 							{{#each image logo}}
 							<img class="img-responsive" width="180" style="height: 180px;" src="{{url}}">
@@ -90,17 +88,17 @@
 							<img class="img-responsive" width="180" style="height: 180px;" src="companyLogo.png">
 							{{/each}}
 						</a>
+						{{else}}
+						<a href="{{pathFor 'profile'}}">
+							{{#each image screenshotToShow}}
+							<img class="img-responsive" width="180" style="height: 180px;" src="{{url}}">
+							{{/each}}
+						</a>
 						{{/if}}
 					<span class="thumbText" style="display:inline-block;">
 						<h4 class="text-center"><a  href="{{pathFor 'profile'}}"><b>{{name}}</b></a>
 						</h4>
-						<h5>{{highConcept}}</h5>
-						{{#each cities tag_ids}}
-						<div id="{{_id}}" style="font-size: 10px;" class="btn tag btn-xs">{{name}}</div>
-						{{/each}}
-						{{#each markets tag_ids}}
-						<div id="{{_id}}" style="font-size: 10px;" class="btn tag btn-xs">{{name}}</div>
-						{{/each}}
+						<h5>{{description}}</h5>
 					</span>
 				</div>
 </template>

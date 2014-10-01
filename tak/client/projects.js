@@ -32,6 +32,11 @@ Template.projectThumbnail.helpers({
           }
           
         },
+    areas: function(tagsArray)
+    {
+         return Tags.find({_id:{$in:tagsArray}, type:'Area'});
+    },
+
   cities: function(tagsArray)
     {
          return Tags.find({_id:{$in:tagsArray}, type:'City'});
@@ -172,9 +177,9 @@ Template.projectThumbnail.screenshotToShow = function() {
   project: function()
   {
         if (Session.get('filters').length == 0)
-            return Projects.find( {isPublic:true});
+            return Projects.find();
            else
-            return Projects.find({isPublic:true, tag_ids:{$all:Session.get('filters')}});
+            return Projects.find({tag_ids:{$all:Session.get('filters')}});
   },
 
   city: function(tagId)
@@ -182,14 +187,19 @@ Template.projectThumbnail.screenshotToShow = function() {
     return Tags.find({_id:tagId, type:'City'});
   },
 
+  area: function(tagId)
+  {
+    return Tags.find({_id:tagId, type:'Area'});
+  },
+
   market: function(tagId)
   {
     return Tags.find({_id:tagId, type:'Market'});
   },
 
-  typeOfProjectOption: function()
+  areaOption: function()
     {
-        return Tags.find({"type": "TypeOfProject","counter.projects":{$gt:0}, "name":{$ne:"Startup"}});
+        return Tags.find({"type": "Area","counter.projects":{$gt:0}});
     },
 
 

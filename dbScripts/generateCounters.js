@@ -4,10 +4,10 @@
  
 // Connect to the MongoLab database.
 //main db host
-var connection = new Mongo( "ds063218.mongolab.com:63218" );
+var connection = new Mongo( "ds059509.mongolab.com:59509" );
  
 // Connect to the database.
-var db = connection.getDB( "meteor" );
+var db = connection.getDB( "meteor_test" );
  
 // Authorize this connection.
 //db.auth("user", "password");
@@ -18,9 +18,9 @@ db.tags.find({}).forEach(function(doc){
 	print(">"+doc.name);
 	var amountPeople = db.people.find({tag_ids:doc._id}).count();
 	print(amountPeople);
-	var amountCompanies = db.companies.find({tag_ids:doc._id}).count();
-	print(amountCompanies);
-	db.tags.update({_id:doc._id}, {$set:{'counter.people':amountPeople, 'counter.companies':amountCompanies}});
+	var amountProjects = db.projects.find({tag_ids:doc._id}).count();
+	print(amountProjects);
+	db.tags.update({_id:doc._id}, {$set:{'counter.people':amountPeople, 'counter.projects':amountProjects}});
 })
  
 print( "> Counters generated." );

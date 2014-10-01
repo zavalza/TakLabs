@@ -39,7 +39,7 @@ Template.headerwrap.pathValue = function()
   {
       if(Meteor.userId())
       {
-          Router.go('newIdea');
+          Router.go('newProject');
       }
       else{
           Session.set('hasIdea', true);
