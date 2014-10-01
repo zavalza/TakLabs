@@ -14,16 +14,12 @@
       </div>
       <div class="row">
         <div class="col-md-4 col-xs-10">
-          {{>locationInput}}
-          {{#each tag_ids}}
-          {{#each city this}}
-          <div class="input-group">
-            <input type="text" class="form-control " id="location" value="{{name}}" disabled>
-            <span class="input-group-btn">
-            <button name="City" class="btn btn-danger pullTag" type="button">x</button>
-            </span>
-          </div>
-          {{/each}}
+          {{#each areaOptions}}
+           {{#if selected}}
+            <input type="checkbox" class="Area" value="{{_id}}" checked>{{name}}<br>
+            {{else}}
+            <input type="checkbox" class="Area" value="{{_id}}">{{name}}<br>
+          {{/if}}
           {{/each}}
         </div>
       </div>

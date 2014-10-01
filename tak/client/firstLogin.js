@@ -1,12 +1,3 @@
-Template.firstLogin.rendered=function() {
-    $('.input-group.date').datepicker({
-      format: "M-yyyy",
-      minViewMode: 1, 
-      language: "es",
-      autoclose: true
-      });
-  };
-
 Template.firstLogin.events({
     'click .pullTag' : function(evt, tmpl){
       var targetName = evt.target.name;
@@ -50,28 +41,7 @@ Template.firstLogin.events({
       }
     },
 
-    'click .deleteExperience': function(evt, tmpl){
-       //alert(this.project_id);
-       Meteor.call('deleteExperience', Session.get('userToShow'), this.project_id)
-    },
-
-    'change #title,#startedAt,#endedAt': function(evt, tmpl){
-      //alert(this.project_id);
-      var field = evt.target.id;
-      //alert(field);
-      var value = evt.target.value.trim();
-      //alert(value);
-      var re = /([a-zA-Z]+)/g;
-      if(value.match(re))
-      {
-        Meteor.call('updateExperience', Session.get('userToShow'),this.project_id, field, value);
-        evt.target.style = "border-color: #44c444;";
-      }
-      else
-        evt.target.style = "border-color: #f41717;";
-    },
-
-    'keyup #City,#Skill,#College,#Role,#Project' : function(evt, tmpl){
+    'keyup #City,#Skill,#Role' : function(evt, tmpl){
       //busca todo el string y no palabra por palabra
       //alert(evt.keyCode);
 
@@ -235,7 +205,7 @@ Template.firstLogin.events({
       //alert(selection);
     },
 
-    'blur #City,#Skill,#Role,#Project' : function(evt, tmpl){
+    'blur #City,#Skill,#Role' : function(evt, tmpl){
       var targetId = evt.target.id;
       //alert(evt.currentTarget.id);
       Session.set('keyControl', -1);
@@ -249,7 +219,19 @@ Template.firstLogin.events({
       var targetClass = evt.target.getAttribute('class').split(' ')[0];
       Meteor.call('pushTag', Session.get('userToShow'), this._id);
       //blur event is called after mousedown
+    },
+
+    'change .Area': function(evt, tmpl){
+      if(evt.target.checked)
+      {
+        Meteor.call('pushTag', Session.get('userToShow'), evt.target.value);
+      }
+      else
+      {
+        Meteor.call('pullTag', Session.get('userToShow'), evt.target.value);
+      }
     }
+
   });
 
 Template.firstLogin.helpers({
@@ -257,6 +239,11 @@ Template.firstLogin.helpers({
           Session.set('userToShow', personId);
           Meteor.subscribe('person', personId);
     return People.find({_id:personId});
+  },
+
+  selected : function(){
+    //alert(this._id);
+    return People.findOne({_id:Session.get('userToShow'), tag_ids: this._id});
   },
 
   city: function(tagId)
@@ -274,8 +261,13 @@ Template.firstLogin.helpers({
     return Tags.find({_id:tagId, type:'Skill'});
   },
 
-  project: function(projectId)
+  area: function(tagId)
   {
-    return Projects.find({_id:projectId});
+    return Tags.find({_id:tagId, type:'Area'});
   },
+
+  areaOptions : function()
+        {
+          return Tags.find({type:'Area'});
+        }
 })
