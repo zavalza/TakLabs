@@ -1,90 +1,86 @@
 <template name="editProfile">
-  <div class="wrap">
-    {{#each person currentUser.person_id}}
-    <div class="panel panel-default col-md-8 col-md-offset-2">
-      <a href="{{pathFor 'profile'}}" class="btn btn-success pull-right">Hecho</a>
-      <div class="panel-heading">
-          <h3 class="panel-title text-center">Editar Perfil</h3>
-      </div>
-      <div class="panel-body">
-        <form class="form col-md-12" name="editProfile">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-md-2">
-                <img class="img-responsive" width="120" src="{{picture}}">
-              </div>
-              <div class="col-md-4 col-xs-10">
-                <label for="name">Nombre</label>
-                <input type="text" class="form-control " id="name" placeholder="Nombre" value="{{name}}">
-              </div>
-              <div class="col-md-4 col-xs-10">
-                <label for="url">Liga a tu perfil</label>
-                <input type="text" class="form-control" id="url" placeholder="mi-nombre" value="{{url}}">
-              </div>
-              <br/><br/>
-              <!--
-              <div class="col-md-4 col-xs-6">
-                <input type="text" class="form-control col-md-5 " id="url" placeholder="Url" value="{{currentUser.profile.url}}">
-              </div>
-              -->
+<div class="wrap">
+  {{#each person currentUser.person_id}}
+  <div class="panel panel-default col-md-8 col-md-offset-2">
+    <a href="{{pathFor 'profile'}}" class="btn btn-success pull-right">Hecho</a>
+    <div class="panel-heading">
+      <h3 class="panel-title text-center">Editar Perfil</h3>
+    </div>
+    <div class="panel-body">
+      <form class="form col-md-12" name="editProfile">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-2">
+              <img class="img-responsive" width="120" src="{{picture}}">
             </div>
-            <div class="row">
-              <div class="col-md-6 col-xs-10" >
-                <h4 class="name">Datos de Contacto</h4>
-              </div>
+            <div class="col-md-4 col-xs-10">
+              <label for="name">Nombre</label>
+              <input type="text" class="form-control " id="name" placeholder="Nombre" value="{{name}}">
             </div>
-            <div class="row">
-              <div class="col-md-6 col-xs-10">
-                <label>Liga a perfil de Facebook</label>
-                <input type="url" class="form-control" id="facebook_url" placeholder="https://www.facebook.com/mi.nombre" value="{{facebook_url}}">
-              </div>
+            <div class="col-md-4 col-xs-10">
+              <label for="url">Liga a tu perfil</label>
+              <input type="text" class="form-control" id="url" placeholder="mi-nombre" value="{{url}}">
             </div>
-            <div class="row">
-              <div class="col-md-6 col-xs-10">
-                <label>Usuario de Twitter con @</label>
-                <input type="text" class="form-control " id="twitter_url" placeholder="@usuario Twitter" value="{{twitter_url}}">
-              </div>
+            <br/><br/>
+            <!--
+            <div class="col-md-4 col-xs-6">
+              <input type="text" class="form-control col-md-5 " id="url" placeholder="Url" value="{{currentUser.profile.url}}">
             </div>
-            <div class="row">
-              <div class="col-md-6 col-xs-10">
-                <label>Liga a perfil de Linkedin</label>
-                <input type="url" class="form-control" id="linkedin_url" placeholder="Liga a Linkedin" value="{{linkedin_url}}">
-              </div>
+            -->
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-xs-10" >
+              <h4 class="name">Datos de Contacto</h4>
             </div>
-            <div class="row">
-              <div class="col-md-6 col-xs-10">
-                <label>Correo Electrónico</label>
-                <input type="email" class="form-control " id="email" placeholder="Email" value="{{email}}">
-              </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-xs-10">
+              <label>Liga a perfil de Facebook</label>
+              <input type="url" class="form-control" id="facebook_url" placeholder="https://www.facebook.com/mi.nombre" value="{{facebook_url}}">
             </div>
-            <div class="row">
-              <div class="col-md-6 col-xs-10" >
-                <h4 class="name">¿En qué áreas te gusta innovar?</h4>
-              </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-xs-10">
+              <label>Usuario de Twitter con @</label>
+              <input type="text" class="form-control " id="twitter_url" placeholder="@usuario Twitter" value="{{twitter_url}}">
             </div>
-            <div class="row">
-              <div class="col-md-4 col-xs-10">
-                {{>locationInput}}
-                {{#each tag_ids}}
-                  {{#each city this}}
-                    <div class="input-group">
-                      <input type="text" class="form-control " id="location" value="{{name}}" disabled>
-                      <span class="input-group-btn">
-                        <button name="City" class="btn btn-danger pullTag" type="button">x</button>
-                      </span>
-                    </div>
-                  {{/each}}
-                {{/each}}
-              </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-xs-10">
+              <label>Liga a perfil de Linkedin</label>
+              <input type="url" class="form-control" id="linkedin_url" placeholder="Liga a Linkedin" value="{{linkedin_url}}">
             </div>
-            <div class="row">
-              <div class="col-md-8 col-xs-10" >
-                <h4 class="name">¿Qué roles puedes aportar a un proyecto innovador?</h4>
-                <h5>Más comunes: <br/> Administración, Desarrollo, Diseño, Inversión, Mentoría, Mercadotecnia, Ventas</h5>
-              </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-xs-10">
+              <label>Correo Electrónico</label>
+              <input type="email" class="form-control " id="email" placeholder="Email" value="{{email}}">
             </div>
-            <div class="row">
-              <div class="col-md-4 col-xs-10">
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-xs-10" >
+              <h4 class="name">¿En qué áreas te gusta innovar?</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-xs-10">
+              {{#each areaOptions}}
+              {{#if selected}}
+              <input type="checkbox" class="Area" value="{{_id}}" checked>{{name}}<br>
+              {{else}}
+              <input type="checkbox" class="Area" value="{{_id}}">{{name}}<br>
+              {{/if}}
+              {{/each}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-8 col-xs-10" >
+              <h4 class="name">¿Qué roles puedes aportar a un proyecto innovador?</h4>
+              <h5>Más comunes: <br/> Administración, Desarrollo, Diseño, Inversión, Mentoría, Mercadotecnia, Ventas</h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-xs-10">
               {{>rolesInput}}
               {{#each tag_ids}}
               {{#each role this}}
@@ -96,90 +92,90 @@
               </div>
               {{/each}}
               {{/each}}
-              </div>
             </div>
-            <div class="row">
-              <div class="col-md-6 " >
-                <h4 class="name">¿Con qué habilidades puedes apoyar un proyecto?</h4>
-                <h5>Ejemplos: <br/> Photoshop, HTML, Ilustrator, PHP, Marketing Digital, Relaciones, etc.</h5>
-              </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 col-xs-10">
-                  {{>skillsInput}}
-                  {{#each tag_ids}}
-                    {{#each skill this}}
-                    <div class="input-group">
-                      <input type="text" class="form-control " id="skill" value="{{name}}" disabled>
-                      <span class="input-group-btn">
-                      <button name="Skill" class="btn btn-danger pullTag" type="button">x</button>
-                      </span>
-                    </div>
-                    {{/each}}
-                  {{/each}}
-                </div>
           </div>
           <div class="row">
-              <div class="col-md-6 col-xs-10" >
-                <h4 class="name">Ciudades donde trabajas y puedes ser contactad@</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4 col-xs-10">
-                {{>locationInput}}
-                {{#each tag_ids}}
-                  {{#each city this}}
-                    <div class="input-group">
-                      <input type="text" class="form-control " id="location" value="{{name}}" disabled>
-                      <span class="input-group-btn">
-                        <button name="City" class="btn btn-danger pullTag" type="button">x</button>
-                      </span>
-                    </div>
-                  {{/each}}
-                {{/each}}
-              </div>
-            </div>
-                <div class="row">
-                <div class="col-md-6 col-xs-10" >
-                <h4 class="name">Portafolio</h4>
-                </div>
-              </div>
-              <div class="row">
-                  <div class="col-md-4 col-xs-10">
-                    <input type="text" class="form-control col-md-5 " id="github_url" placeholder="Usuario de Github" value="{{github_url}}">
-                    <input type="text" class="form-control col-md-5 " id="behance_url" placeholder="Usuario de Behance" value="{{behance_url}}">
-                    <input type="text" class="form-control col-md-5 " id="personal_url" placeholder="Página Personal" value="{{personal_url}}">
-                  </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 col-xs-10" >
-                <h4 class="name">Estudios</h4>
-              </div>
-            </div>
-                <div class="row">
-                  <div class="col-md-4 col-xs-10">
-                    {{>collegesInput}}
-                    {{#each tag_ids}}
-                    {{#each college this}}
-                    <div class="input-group">
-                      <input type="text" class="form-control " id="college" value="{{name}}" disabled>
-                      <span class="input-group-btn">
-                      <button name="College" class="btn btn-danger pullTag" type="button">x</button>
-                      </span>
-                    </div>
-                    {{/each}}
-                    {{/each}}
-                  </div>
-                  </div>
-            <div class="row">
-              <ul class="pager">
-              <li><a href="{{pathFor 'profile'}}">Hecho</a></li>
-              </ul>
+            <div class="col-md-6 " >
+              <h4 class="name">¿Con qué habilidades puedes apoyar un proyecto?</h4>
+              <h5>Ejemplos: <br/> Photoshop, HTML, Ilustrator, PHP, Marketing Digital, Relaciones, etc.</h5>
             </div>
           </div>
-        </form>
-      </div>
+          <div class="row">
+            <div class="col-md-4 col-xs-10">
+              {{>skillsInput}}
+              {{#each tag_ids}}
+              {{#each skill this}}
+              <div class="input-group">
+                <input type="text" class="form-control " id="skill" value="{{name}}" disabled>
+                <span class="input-group-btn">
+                <button name="Skill" class="btn btn-danger pullTag" type="button">x</button>
+                </span>
+              </div>
+              {{/each}}
+              {{/each}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-xs-10" >
+              <h4 class="name">Ciudades donde trabajas y puedes ser contactad@</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-xs-10">
+              {{>locationInput}}
+              {{#each tag_ids}}
+              {{#each city this}}
+              <div class="input-group">
+                <input type="text" class="form-control " id="location" value="{{name}}" disabled>
+                <span class="input-group-btn">
+                <button name="City" class="btn btn-danger pullTag" type="button">x</button>
+                </span>
+              </div>
+              {{/each}}
+              {{/each}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-xs-10" >
+              <h4 class="name">Portafolio</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-xs-10">
+              <input type="text" class="form-control col-md-5 " id="github_url" placeholder="Usuario de Github" value="{{github_url}}">
+              <input type="text" class="form-control col-md-5 " id="behance_url" placeholder="Usuario de Behance" value="{{behance_url}}">
+              <input type="text" class="form-control col-md-5 " id="personal_url" placeholder="Página Personal" value="{{personal_url}}">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-xs-10" >
+              <h4 class="name">Estudios</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-xs-10">
+              {{>collegesInput}}
+              {{#each tag_ids}}
+              {{#each college this}}
+              <div class="input-group">
+                <input type="text" class="form-control " id="college" value="{{name}}" disabled>
+                <span class="input-group-btn">
+                <button name="College" class="btn btn-danger pullTag" type="button">x</button>
+                </span>
+              </div>
+              {{/each}}
+              {{/each}}
+            </div>
+          </div>
+          <div class="row">
+            <ul class="pager">
+              <li><a href="{{pathFor 'profile'}}">Hecho</a></li>
+            </ul>
+          </div>
+        </div>
+      </form>
     </div>
-    {{/each}}
   </div>
+  {{/each}}
+</div>
 </template>

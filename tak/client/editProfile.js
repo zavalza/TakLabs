@@ -314,6 +314,17 @@ Template.editProfile.events({
       //alert(selection);
     },
 
+     'change .Area': function(evt, tmpl){
+      if(evt.target.checked)
+      {
+        Meteor.call('pushTag', Session.get('userToShow'), evt.target.value);
+      }
+      else
+      {
+        Meteor.call('pullTag', Session.get('userToShow'), evt.target.value);
+      }
+    },
+
     'blur #City,#Skill,#College,#Role,#Project' : function(evt, tmpl){
       var targetId = evt.target.id;
       //alert(evt.currentTarget.id);
@@ -361,5 +372,20 @@ Template.editProfile.helpers({
  college: function(tagId)
   {
     return Tags.find({_id:tagId, type:'College'});
-  }
+  },
+
+  selected : function(){
+    //alert(this._id);
+    return People.findOne({_id:Session.get('userToShow'), tag_ids: this._id});
+  },
+
+   area: function(tagId)
+  {
+    return Tags.find({_id:tagId, type:'Area'});
+  },
+
+  areaOptions : function()
+        {
+          return Tags.find({type:'Area'});
+        }
 })
