@@ -458,19 +458,15 @@
         return tagId;
       },
 
-      insertIdea: function (personId, ideaDoc)
+      insertProject: function (personId, projectDoc)
       {
-        console.log('creating new Idea on '+personId);
+        console.log('creating new Project by '+personId);
         personDoc = People.findOne({_id: personId});
-        ideaDoc.author_id = personDoc._id;
-        //console.log(ideaDoc);
-        ideaId = Projects.insert(ideaDoc);
-        /*for( var i = 0; i < ideaDoc.tag_ids.length; i++)
-        {
-          //Need to know how to insert relation with tags
-          //Meteor.call('pushProjectTag', personId, ideaDoc.tag_ids[i]);
-        }*/
-        People.update({id:personId},{$addToSet:{idea_ids:ideaId}});
+        projectDoc.author_id = personDoc._id;
+        //console.log(projectDoc);
+        projectId = Projects.insert(projectDoc);
+      
+        People.update({_id:personId},{$addToSet:{'supporting':projectId}});
             
       },
 

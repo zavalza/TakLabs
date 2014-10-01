@@ -215,49 +215,37 @@ Template.newProject.events({
       //alert('salvar');
       var name= tmpl.find('#name').value;
       var purpose = tmpl.find('#problem').value;
+      var area = tmpl.find('#area').value;
       var description = tmpl.find('#solution').value;
+      var hoursPerWeek = tmpl.find('#hoursPerWeek').value;
+      if (typeof hoursPerWeek == 'undefined')
+      {
+        hoursPerWeek = 0;
+      }
+      alert(hoursPerWeek);
       var video_url = Session.get('video_url');
       var logo = Session.get('logo');
       
       var screenshots = Session.get('screenshots');
-      //var type = tmpl.find('#impulseType').value;
-      //var remotes = document.getElementsByName('remote');
-      /*for(var i = 0; i < remotes.length; i++)
-      {
-        if(remotes[i].checked)
-           var remote= remotes[i].value;
-      }*/
+      
      
-      if(name.length==0 || description.length == 0 || purpose.length ==0)
+      if(name.length==0 || description.length == 0 || purpose.length ==0 || area.length == 0)
       {
         alert ('Por favor llena todos los campos');
         return false;
       }
-      /*var tags = Session.get('selectedTags');
-      if(tags.length == 0)
+      var personTags = Session.get('personTags');
+      if(personTags.length == 0)
       {
         alert('Selecciona al menos un tag para el perfil');
         return false;
       }
-      var reward_ids = [];
-      var rewards = document.getElementsByName('reward');
-      for (var i = 0; i < rewards.length; i++)
-      {
-        if(rewards[i].checked)
-        {
-          //alert(rewards[i].id);
-          reward_ids.push(rewards[i].id);
-        }
-      }
-      if(reward_ids.length == 0)
-      {
-        alert ("Selecciona qué darás a cambio");
-        return false;
-      }
-      reward_ids.push(type);*/
+
+      var tags = Session.get('selectedTags');
+      tags.push(area);
 
       //var projectDoc = Projects.findOne({'url': Session.get('url')});
-      var ideaDoc = {
+      var projectDoc = {
         //project_id: will be added on server side
         name:name,
         purpose:purpose,
@@ -265,13 +253,19 @@ Template.newProject.events({
         video_url: video_url,
         logo:logo, 
         screenshots: screenshots,
-        //person_tags:tags,
-        //remote:remote,
-        //tag_ids:reward_ids
+        person_tags:personTags,
+        tag_ids: tags,
+        team:[{
+          person_id: Meteor.user().person_id,
+          hoursPerWeek:hoursPerWeek
+        }]
+          
       }
       Session.set('logo', null);
       Session.set('screenshots', []);
-      Meteor.call('insertIdea', Meteor.user().person_id, ideaDoc);
+      Session.set('selectedTags', []);
+      Session.set('personTags', []);
+      Meteor.call('insertProject', Meteor.user().person_id, projectDoc);
       //go to new idea profile
       //alert(EJSON.stringify(impulseDoc));
       window.history.back();
@@ -312,11 +306,6 @@ Template.newProject.events({
         cityOptions : function()
         {
           return Tags.find({type:'City'});
-        },
-
-        selected:function()
-        {
-          return Projects.findOne({url:Session.get('url'), tag_ids:this._id});
         },
 
         tag: function(tagsArray)

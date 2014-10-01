@@ -9,7 +9,7 @@ Session.set('claimProfile', false);
 Session.set('hasIdea', false);
 Session.set('working', false);
 Session.set('waiting', false);
-Session.set('personTags', ['2SSogG5J2SHnHoRw8']);
+Session.set('personTags', []);
 Session.set('screenshots', []);
 Session.set('filters',[]);
 Session.set('selectedTags',[]);
