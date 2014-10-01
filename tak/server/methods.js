@@ -463,6 +463,7 @@
         console.log('creating new Project by '+personId);
         personDoc = People.findOne({_id: personId});
         projectDoc.author_id = personDoc._id;
+        projectDoc.url = Meteor.call('generateUrl', projectDoc.name);
         //console.log(projectDoc);
         projectId = Projects.insert(projectDoc);
       

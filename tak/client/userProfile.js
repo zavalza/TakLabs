@@ -43,14 +43,19 @@ Template.userProfile.helpers({
           
         },
 
-       project: function(projectId)
+       project: function(projectIds)
        {
-        return Projects.find({_id:projectId});
+        return Projects.find({_id:{$in:projectIds}});
        },
 
        role: function(tagsArray)
        {
           return Tags.find({_id:{$in:tagsArray}, type: 'Role'}); 
+       },
+
+        area: function(tagsArray)
+       {
+          return Tags.find({_id:{$in:tagsArray}, type: 'Area'}); 
        },
 
       city: function(tagsArray)

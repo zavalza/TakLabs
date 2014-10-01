@@ -12,6 +12,9 @@
             {{#each role tag_ids}}
             <div class="btn tag btn-xs">{{name}}</div>
             {{/each}}
+             {{#each area tag_ids}}
+            <div class="btn tag btn-xs">{{name}}</div>
+            {{/each}}
             {{#each city tag_ids}}
             <div class="btn tag btn-xs">{{name}}</div>
             {{/each}}
@@ -39,14 +42,13 @@
         </div>
       </div>
       <div class="row">
-        {{#if experience}}
+        {{#if supporting}}
         <div class="col-md-8 col-xs-12 well" >
-          <h3>Experiencia</h3>
+          <h3>Contribuyendo</h3>
           <div class="row">
-            {{#each experience}}
             <div class="col-md-4 col-xs-6">
               <div class="thumbnail">
-                {{#each project project_id}}
+                {{#each project supporting}}
                 <a href="{{pathFor 'profile'}}">
                   {{#each image logo}}
                   <img src="{{url}}" class="img-responsive" style="height:70px;" >
@@ -56,10 +58,8 @@
                 </a>
                 <a href="{{pathFor 'profile'}}"><h4 class="text-center">{{name}}</h4></a>
                 {{/each}}
-                <h5 class="text-center">{{type}}</h5>
               </div>
             </div>
-            {{/each}}
           </div>
         </div>
          {{/if}}
