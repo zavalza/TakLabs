@@ -51,7 +51,7 @@ Template.projectThumbnail.screenshotToShow = function() {
       return this.screenshots[0]
   };
  Template.projects.events({
-    'change #types': function(evt, tmpl){
+    'change .area': function(evt, tmpl){
     //alert(evt.target.value);
     var filtersArray = Session.get("filters");
     if (evt.target.checked)
