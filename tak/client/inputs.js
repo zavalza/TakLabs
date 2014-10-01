@@ -105,10 +105,17 @@
        }
     });
 
+    Template.personTagInput.helpers({
+      tagOptions:function()
+      {
+        return Tags.find({type:{$in:['Role','Skill','City']}});
+      }
+    })
+
     Template.industryInput.helpers({
         industryOptions: function()
        {
-        return Tags.find({type:'Industrie'});
+        return Tags.find({type:'Industry'});
        }
      });
 

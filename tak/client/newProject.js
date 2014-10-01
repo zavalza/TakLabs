@@ -8,7 +8,7 @@ Template.newProject.rendered = function () {
 }
 
 Template.newProject.events({
-    'keyup #Market, #Industry' : function(evt, tmpl){
+    'keyup #Market,#Industry,#Tag' : function(evt, tmpl){
       var targetId = evt.target.id;
       //alert(targetId)
       filter = tmpl.find('#'+targetId).value.trim().toUpperCase();
@@ -56,9 +56,19 @@ Template.newProject.events({
         break;
         case 13: //Return
           //alert('Enter')
-          var tagsArray = Session.get("selectedTags");
+          if(targetId == 'Tag') //tags of profile the idea is looking for
+          {
+            var personTags = Session.get('personTags');
+            personTags.push(matches[selection].getAttribute('name'));
+            Session.set('personTags', personTags);
+          }
+          else
+          {
+            var tagsArray = Session.get("selectedTags");
           tagsArray.push(matches[selection].getAttribute('name'));
           Session.set('selectedTags', tagsArray);
+          }
+          
           //alert(Session.get('selectedTags'));
           //alert(EJSON.stringify(Session.get('selectedTags')));
           tmpl.find('#'+targetId).value = "";
@@ -83,7 +93,7 @@ Template.newProject.events({
       //alert(selection);
     },
 
-    'blur #Market, #Industry' : function(evt, tmpl){
+    'blur #Market,#Industry,#Tag' : function(evt, tmpl){
       var targetId = evt.target.id;
       //alert(evt.currentTarget.id);
       Session.set('keyControl', -1);
@@ -92,23 +102,45 @@ Template.newProject.events({
       
     },
 
-    'mousedown .Market, .Industry' : function (evt, tmpl){
+    'mousedown .Market,.Industry,.Tag' : function (evt, tmpl){
       //alert(this._id);
       var targetClass = evt.target.getAttribute('class');
+      //alert(targetClass);
+      if(targetClass.lastIndexOf('Tag') != -1)
+      {
+        var personTags = Session.get('personTags');
+            personTags.push(evt.target.getAttribute('name'));
+            Session.set('personTags', personTags);
+      }
+      else
+      {
+
       var tagsArray = Session.get("selectedTags");
-      alert(evt.target.getAttribute('name'));
+      //alert(evt.target.getAttribute('name'));
       tagsArray.push(evt.target.getAttribute('name'));
       Session.set('selectedTags', tagsArray);
+      }
       //blur event is called after mousedown
     },
     'click .pullTag' : function(evt, tmpl){
       //alert (targetName)
       var tagsArray = Session.get('selectedTags');
-      var pos= tagsArray.indexOf(evt.target.id);
+      var pos= tagsArray.indexOf(evt.target.getAttribute('name'));/////ESTO y pullprojectTag
       tagsArray.splice(pos, 1);
       Session.set('selectedTags', tagsArray);
       
     },
+
+    'click .pullPersonTag' : function(evt, tmpl){
+      //alert (targetName)
+      var personTags = Session.get('personTags');
+      var pos= personTags.indexOf(evt.target.getAttribute('name'));
+      personTags.splice(pos, 1);
+      Session.set('personTags', personTags);
+      
+    },
+
+
 
     'change #logo' : function(evt, tmpl) {
     var error = false;
@@ -129,6 +161,17 @@ Template.newProject.events({
       }   
     });
   },
+'change .working': function(evt, tmpl){
+  if(evt.target.checked && evt.target.value=='true')
+  {
+    Session.set('working', true);
+  }
+  else
+  {
+    Session.set('working', false);
+  }
+
+},
 
 'change #image' : function(evt, tmpl) {
     var error = false;
@@ -240,6 +283,11 @@ Template.newProject.events({
     return Session.get('selectedTags');
   }
 
+  Template.newProject.personTags = function()
+  {
+    return Session.get('personTags');
+  }
+
   Template.newProject.video_url = function()
   {
     return Session.get('video_url');
@@ -255,6 +303,11 @@ Template.newProject.events({
     return Session.get('logo');
   }
 
+  Template.newProject.working = function()
+  {
+    return Session.get('working');
+  }
+
     Template.newProject.helpers ({
         cityOptions : function()
         {
@@ -264,6 +317,11 @@ Template.newProject.events({
         selected:function()
         {
           return Projects.findOne({url:Session.get('url'), tag_ids:this._id});
+        },
+
+        tag: function(tagsArray)
+        {
+          return Tags.find({_id:{$in:tagsArray}});
         },
 
         city: function(tagId)
@@ -366,5 +424,17 @@ Template.newProject.events({
             }
           }
           return Meteor.users.find({_id:{$in:idsToFind}});
-        }
+        },
+        area: function(tagId)
+  {
+    return Tags.find({_id:tagId, type:'Area'});
+  },
+
+  areaOptions : function()
+        {
+          return Tags.find({type:'Area'});
+        },
+
+
+
     });

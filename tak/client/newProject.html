@@ -30,7 +30,7 @@
                 <div class="input-group">
                   <input type="text" class="form-control " id="market" value="{{name}}" disabled>
                   <span class="input-group-btn">
-                  <button name="Market" class="btn btn-danger pullProjectTag" type="button">x</button>
+                  <button name="Market" class="btn btn-danger pullTag" type="button">x</button>
                   </span>
                 </div>
               {{/each}}
@@ -42,7 +42,7 @@
               <label>¿Qué área estás atacando?</label>
               <select class="form-control" id="type">
                 <option value="">Selecciona</option>
-                {{#each typeOfProjectOptions}}
+                {{#each areaOptions}}
                 {{#if selected}}
                 <option id="{{_id}}" value="{{name}}" selected>{{name}}</option>
                 {{else}}
@@ -66,7 +66,7 @@
                 <div class="input-group">
                   <input type="text" class="form-control " id="industry" value="{{name}}" disabled>
                   <span class="input-group-btn">
-                  <button name="Industry" class="btn btn-danger pullProjectTag" type="button">x</button>
+                  <button name="Industry" class="btn btn-danger pullTag" type="button">x</button>
                   </span>
                 </div>
               {{/each}}
@@ -78,56 +78,34 @@
           </div>
           <div class="row">
              <div class="col-md-8">
-            <label>Tus roles - ¿Cómo ayudarás a que la idea se haga realidad? </label>
-            <select class="form-control" id="type">
-                <option value="">Selecciona</option>
-                {{#each typeOfProjectOptions}}
-                {{#if selected}}
-                <option id="{{_id}}" value="{{name}}" selected>{{name}}</option>
-                {{else}}
-                <option id="{{_id}}" value="{{name}}">{{name}}</option>
-                {{/if}}
-                {{/each}}
-              </select>
+            <label>¿Estás trabajando en esta idea?</label><br/>
+             <input type="radio" name="working" class="working" value="true">Sí<br/>
+              <input type="radio" name="working" class="working" value="false" checked>No<br/>
+              {{#if working}}
+              <div class="row">
+                <div class="col-md-8 ">
+                  <label>¿Cuántas horas le dedicas a la semana?</label>
+                  <input type="number" class="form-control " id="hoursPerWeek" placeholder="Horas semanales" value="0">
+                </div>
+              </div>
+              {{/if}}
             </div>
           </div>
           <!--Palabras clave de las personas que necesitan -->
           <div class="row">
              <div class="col-md-8">
-            <label>¿Qué roles necesitas en tu equipo? </label>
-            <select class="form-control" id="type">
-                <option value="">Selecciona</option>
-                {{#each typeOfProjectOptions}}
-                {{#if selected}}
-                <option id="{{_id}}" value="{{name}}" selected>{{name}}</option>
-                {{else}}
-                <option id="{{_id}}" value="{{name}}">{{name}}</option>
-                {{/if}}
-                {{/each}}
-              </select>
-            </div>
+            <label>¿Qué perfiles esperas se unan a esta idea? </label>
+            {{>personTagInput}}
+            {{#each tag personTags}}
+                <div class="input-group">
+                  <input type="text" class="form-control " id="industry" value="{{name}}" disabled>
+                  <span class="input-group-btn">
+                  <button name="Industry" class="btn btn-danger pullPersonTag" type="button">x</button>
+                  </span>
+                </div>
+            {{/each}}
           </div>
-          <div class="row">
-             <div class="col-md-8">
-            <label>¿Qué habilidades necesitas tener en tu equipo? </label>
-            <select class="form-control" id="type">
-                <option value="">Selecciona</option>
-                {{#each typeOfProjectOptions}}
-                {{#if selected}}
-                <option id="{{_id}}" value="{{name}}" selected>{{name}}</option>
-                {{else}}
-                <option id="{{_id}}" value="{{name}}">{{name}}</option>
-                {{/if}}
-                {{/each}}
-              </select>
-            </div>
-          </div>
-         <div class="row">
-            <div class="col-md-8 ">
-              <label>¿Cuántas personas integrarían tu equipo ideal?</label>
-              <input type="text" class="form-control " id="amount" placeholder="Cantidad de personas">
-            </div>
-          </div>
+        </div>
           <div class="row">
             <h4 class="name">Imagen Principal</h4>
           </div>
