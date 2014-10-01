@@ -11,7 +11,7 @@ var db = connection.getDB( "meteor_test" );
  
 // Authorize this connection.
 //db.auth("user", "password");
-db.auth( "rojinegro", "pierrepaul10" );
+db.auth( "xxxx", "xxxx" );
 
 //roles, city, skill, college
 db.tags.find({}).forEach(function(doc){
