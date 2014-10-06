@@ -16,7 +16,7 @@ Session.set('selectedTags',[]);
 Session.set("desireImg", 1);
 Session.set('keyControl',-1);
 Session.set('screenshotToShow',"");
-Session.set('message', "Una gran idea requiere un gran equipo");
+Session.set('message', "Participa en un reto que te apasione");
 Session.set('callToAction', "Encuéntralo");
 Session.set('action', "hasIdea");
 Meteor.subscribe("allProjects");
@@ -33,12 +33,12 @@ Deps.autorun(function () {
 
 Meteor.setInterval( function(){
     //alert('clock is working');
-    var messages=["Una gran idea requiere un gran equipo", "Trabaja en un problema que te apasione", "Genera innovación con tus habilidades y experiencias"];
-    var callsToAction=["Encuéntralo", "Descubre tu causa", "Colabora"];
-    var actions=["hasIdea", "findIdeas", "help"];
+    var messages=["Participa en un reto que te apasione", "Genera innovación con tus habilidades y experiencias"];
+    var callsToAction=["Descúbrelo", "Colabora"];
+    var actions=["findChallenges", "help"];
     var currentImage=Session.get("desireImg");
     currentImage+=1;
-    if(currentImage==4)
+    if(currentImage==3)
       currentImage =1;
     Session.set("desireImg", currentImage);
     Session.set("message", messages[currentImage-1]);

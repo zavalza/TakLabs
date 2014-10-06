@@ -41,7 +41,7 @@ Router.map(function() {
     Session.set('filters',[]);
     return Meteor.subscribe('allCompanies')},
   });
-  this.route('impulses', {path: '/colabora',
+  this.route('faqs', {path: '/dudas',
     waitOn: function() 
   { 
     Session.set('filters',[]);

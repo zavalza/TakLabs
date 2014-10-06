@@ -48,7 +48,7 @@ Template.headerwrap.pathValue = function()
       }
     },
 
-    'click .findIdeas':function(evt, tmpl)
+    'click .findChallenges':function(evt, tmpl)
     {
       Router.go('projects');
     },
