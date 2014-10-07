@@ -12,12 +12,12 @@
         </div>
         <div class="col-md-9" >
           <h2 class="name">{{name}}</h2>
-          <i><h4>{{highConcept}}</h4></i>
+          <i><h4 style="background:blue; color:white;">Facebook Hackathon</h4></i>
           <div class="row">
-            {{#each typeOfProject tag_ids}}
+            {{#each area tag_ids}}
             <div class="btn tag btn-xs">{{name}}</div>
             {{/each}}
-            {{#each city tag_ids}}
+            {{#each industry tag_ids}}
             <div class="btn tag btn-xs">{{name}}</div>
             {{/each}}
             {{#each market tag_ids}}
@@ -25,6 +25,11 @@
             {{/each}}
           </div>
           <div class="row">
+            {{#if hadLiked currentUser.person_id}}
+            <a href="#"><button id="{{_id}}" class="btn btn-success unfollow" type="button">Siguiendo</button></a>
+            {{else}}
+             <a href="#"><button id="{{_id}}" class="btn btn-default follow" type="button">Me gusta</button></a>
+            {{/if}}
             {{#if canEdit currentUser.person_id}}
             <a href="{{pathFor 'editProject'}}"><button class="btn btn-info" type="button">Editar</button></a>
             {{/if}}
@@ -105,19 +110,40 @@
             <div class="row">
               {{#each team}}
               {{#each person person_id}}
-              <div class="col-md-4 col-xs-6">
+              <div class="col-md-6 col-xs-6">
                 {{>profileThumbnail}}
               </div>
               {{/each}}
               {{/each}}
             </div>
             <div class="row text-center">
-            <a href="#"><button id="{{_id}}" class="btn btn-default giveInterest" type="button">Colaborar</button></a>
+              {{#if hadInterest currentUser.person_id}}
+              <h5 class="name">Ya has mandado tu solicitud</h5>
+              {{else}}
+            <a href="#"><button id="{{_id}}" class="btn btn-default giveInterest" type="button">Quiero Unirme</button></a>
+            {{/if}}
             </div>
           </div>
           {{/if}}
-          
+          <div class="row well">
+            <h3 class="name">Comentarios</h3>
+            {{#each comments}}
+              <div class="row">
+              
+              {{#each person author_id}}
+              <a href="{{pathFor 'profile'}}"><img style="height: 30px;" class="pull-left img-circle" src="{{picture}}"></a>
+              {{/each}}
+              {{text}}
+
+            </div>
+            {{/each}}
+            <div class="row">
+              <label>Nuevo comentario</label>
+            <textarea id="newComment" class="form-control" rows="2"  placeholder=""></textarea>
+          </div><a href="#"><button id="{{_id}}" class="btn btn-default saveComment" type="button">Guardar</button></a>
         </div>
+        </div>
+
         <!--
         
         -->

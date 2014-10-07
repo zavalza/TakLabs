@@ -64,6 +64,22 @@ Template.projectThumbnail.helpers({
 Template.projectThumbnail.screenshotToShow = function() {
       return this.screenshots[0]
   };
+
+Template.projectThumbnail.commentsAmount = function()
+{
+  if(this.comments)
+    return this.comments.length;
+  else
+    return 0;
+}
+
+Template.projectThumbnail.followersAmount = function()
+{
+  if(this.followers)
+    return this.followers.length;
+  else
+    return 0;
+}
  Template.projects.events({
     'change .area': function(evt, tmpl){
     //alert(evt.target.value);

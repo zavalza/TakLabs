@@ -471,15 +471,37 @@
             
       },
 
-      giveInterest: function(impulseId, userId)
+      giveInterest: function(projectId, userId)
       {
-        console.log('interest from '+userId+' to '+impulseId)
-        Impulses.update({_id: impulseId},{$addToSet:{'people':userId}});
+        console.log('interest from '+userId+' in '+projectId)
+        Projects.update({_id: projectId},{$addToSet:{'people':userId}});
+      },
+
+      pushFollower: function(projectId, userId)
+      {
+        console.log(userId+' following '+projectId)
+        Projects.update({_id: projectId},{$addToSet:{'followers':userId}});
+      },
+
+      pullFollower: function(projectId, userId)
+      {
+        console.log(userId+' unfollowing '+projectId)
+        Projects.update({_id: projectId},{$pull:{'followers':userId}});
+      },
+
+      saveComment:function (projectId, text, author_id)
+      {
+        commentDoc={
+          text:text,
+          author_id:author_id
+        };
+
+        Projects.update({_id:projectId}, {$addToSet:{'comments':commentDoc}});
       },
 
       saveImpulse: function (impulseDoc)
       {
-       
+      
         
         //console.log(impulseDoc);
          Impulses.update({_id:impulseDoc._id}, impulseDoc);

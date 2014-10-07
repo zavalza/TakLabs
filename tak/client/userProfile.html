@@ -47,19 +47,10 @@
           <h3>Contribuyendo</h3>
           <div class="row">
             {{#each project supporting}}
-            <div class="col-md-4 col-xs-6">
-              <div class="thumbnail">
-                <a href="{{pathFor 'profile'}}">
-                  {{#each image logo}}
-                  <img src="{{url}}" class="img-responsive" style="height:70px;" >
-                  {{else}}
-                  <img src="companyLogo.png" class="img-responsive" style="height:70px;">
-                  {{/each}}
-                </a>
-                <a href="{{pathFor 'profile'}}"><h4 class="text-center">{{name}}</h4></a>
-                
-              </div>
+            <div class="col-md-6">
+              {{>projectThumbnail}}
             </div>
+
             {{/each}}
           </div>
         </div>

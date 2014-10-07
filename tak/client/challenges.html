@@ -1,19 +1,21 @@
 <template name="challenges">
 <div class="wrap row">
 		<div class="col-md-3">
+		<!--AQUI LO MEJOR SERÍA LLAMAR EL MISMO TEMPLATE QUE EN PROJECTS	
 		<div class="row">
 			<div class="col-md-offset-3 col-xs-offset-1">
 			<h2 class="name">¿Qué tipo de problema quieres resolver?</h2>
 		</div>
 		</div>
-		<form name="roles" role="form" class="form-inline col-md-6 col-xs-10 col-md-offset-3 col-xs-offset-1">
+		<form name="roles" role="form" class="form-inline col-xs-10  col-xs-offset-1">
 			<div class="form-group">
-				<h4><b>ÁREA</b></h4>
 				{{#each areaOption}}
+				<div class="row">
 				<label>
 					{{name}}
 					<input class="area form-control" type="checkbox" value="{{_id}}">
 				</label>
+			</div>
 				{{/each}}
 			</div>
 		</form>
@@ -40,6 +42,7 @@
 				</div>
 			</div>
 		</div>
+	-->
 	</div>
 	<div class="col-md-8 col-md-offset-0 col-xs-10 col-xs-offset-1">
 		<div class="row center-block">
@@ -61,9 +64,12 @@ The winning team will get the chance to compete against teams from other Hackath
 <a href="https://www.facebook.com/events/607669236008856/?fref=ts">Evento de Facebook</a>
 </h5>
 				</div>
-				
+				<a class="btn btn-lg btn-default" href="{{pathFor 'newProject'}}">Agregar mi idea a Tak</a>
+				<!--
 				<div style="font-size: 10px;" class="btn tag btn-xs">area and tags</div>
+				-->
 			</div>
+		
 		</div>
 		<br/>
 	</div>

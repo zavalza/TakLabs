@@ -36,8 +36,36 @@ Template.projectProfile.events({
     //alert(evt.target.id)
     //alert(this._id);
     Meteor.call('giveInterest', evt.target.id, Meteor.user().person_id);
-    alert('Tu información se ha enviado, espera a que te contacten');
-  }
+    alert('Le enviaremos tú información al líder del equipo, espera a que te contacten');
+  },
+
+
+  'click .follow': function(evt, tmpl)
+  {
+    //alert(evt.target.id)
+    //alert(this._id);
+    Meteor.call('pushFollower', evt.target.id, Meteor.user().person_id);
+  },
+
+ 'click .unfollow': function(evt, tmpl)
+  {
+    //alert(evt.target.id)
+    //alert(this._id);
+    Meteor.call('pullFollower', evt.target.id, Meteor.user().person_id);
+  },
+
+  'click .saveComment': function(evt, tmpl)
+  {
+    //alert(evt.target.id)
+    //alert(this._id);
+    var comment = tmpl.find('#newComment').value;
+    //alert (comment)
+    tmpl.find('#newComment').value = "";
+    Meteor.call('saveComment', evt.target.id, comment,  Meteor.user().person_id);
+  }, 
+
+
+
 });
 
 
@@ -96,8 +124,21 @@ Template.projectProfile.helpers ({
         canEdit: function(personId)
     {
       //return true;
-      return (People.find({_id: personId,
-        'experience':{$elemMatch:{'project_id': Session.get('currentProjectId')}}}).count() > 0);
+      return People.find({_id: personId,
+        supporting: Session.get('currentProjectId')});
+    },
+
+         hadInterest: function(personId)
+    {
+      //return true;
+      return Projects.findOne({_id: Session.get('currentProjectId'), people:personId});
+    },
+
+
+         hadLiked: function(personId)
+    {
+      //return true;
+      return Projects.findOne({_id: Session.get('currentProjectId'), followers:personId});
     },
 
     person:function(personId)
@@ -108,6 +149,17 @@ Template.projectProfile.helpers ({
       city: function(tagsArray)
       {
         return Tags.find({_id:{$in:tagsArray}, type:'City'});
+      },
+
+      area: function(tagsArray)
+      {
+      
+        return Tags.find({_id:{$in:tagsArray}, type:'Area'});
+      },
+
+      industry: function(tagsArray)
+      {
+        return Tags.find({_id:{$in:tagsArray}, type:'Industry'});
       },
 
       market: function(tagsArray)

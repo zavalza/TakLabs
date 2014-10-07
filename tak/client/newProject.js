@@ -217,12 +217,7 @@ Template.newProject.events({
       var purpose = tmpl.find('#problem').value;
       var area = tmpl.find('#area').value;
       var description = tmpl.find('#solution').value;
-      var hoursPerWeek = tmpl.find('#hoursPerWeek').value;
-      if (typeof hoursPerWeek == 'undefined')
-      {
-        hoursPerWeek = 0;
-      }
-      alert(hoursPerWeek);
+
       var video_url = Session.get('video_url');
       var logo = Session.get('logo');
       
@@ -257,7 +252,7 @@ Template.newProject.events({
         tag_ids: tags,
         team:[{
           person_id: Meteor.user().person_id,
-          hoursPerWeek:hoursPerWeek
+          //hoursPerWeek:hoursPerWeek
         }]
           
       }

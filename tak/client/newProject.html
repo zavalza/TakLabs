@@ -72,25 +72,10 @@
            <div class="row">
             <h4 class="name">Equipo</h4>
           </div>
-          <div class="row">
-             <div class="col-md-8">
-            <label>¿Estás trabajando en esta idea?</label><br/>
-             <input type="radio" name="working" class="working" value="true">Sí<br/>
-              <input type="radio" name="working" class="working" value="false" checked>No<br/>
-              {{#if working}}
-              <div class="row">
-                <div class="col-md-8 ">
-                  <label>¿Cuántas horas le dedicas a la semana?</label>
-                  <input type="number" class="form-control " id="hoursPerWeek" placeholder="Horas semanales" value="0">
-                </div>
-              </div>
-              {{/if}}
-            </div>
-          </div>
           <!--Palabras clave de las personas que necesitan -->
           <div class="row">
              <div class="col-md-8">
-            <label>¿Qué perfiles esperas se unan a esta idea? </label>
+            <label>¿Qué habilidades esperas se unan a esta idea? </label>
             {{>personTagInput}}
             {{#each tag personTags}}
                 <div class="input-group">
