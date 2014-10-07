@@ -16,7 +16,7 @@ Session.set('selectedTags',[]);
 Session.set("desireImg", 1);
 Session.set('keyControl',-1);
 Session.set('screenshotToShow',"");
-Session.set('message', "Participa en un reto que te apasione");
+Session.set('message', "Convertimos ideas en soluciones reales");
 Session.set('callToAction', "Encuéntralo");
 Session.set('action', "hasIdea");
 Meteor.subscribe("allProjects");
@@ -33,12 +33,12 @@ Deps.autorun(function () {
 
 Meteor.setInterval( function(){
     //alert('clock is working');
-    var messages=["Participa en un reto que te apasione", "Genera innovación con tus habilidades y experiencias"];
-    var callsToAction=["Descúbrelo", "Colabora"];
-    var actions=["findChallenges", "help"];
+    var messages=["Convertimos ideas en soluciones reales", "Trabaja en un problema que te apasione", "Genera innovación con tus habilidades y experiencias"];
+    var callsToAction=["Inspírate", "Descubre tu causa", "Colabora en retos"];
+    var actions=["findChallenges", "findChallenges", "help"]; //el inspirate debe mandar a la seccion de resultados de los retos
     var currentImage=Session.get("desireImg");
     currentImage+=1;
-    if(currentImage==3)
+    if(currentImage==4)
       currentImage =1;
     Session.set("desireImg", currentImage);
     Session.set("message", messages[currentImage-1]);

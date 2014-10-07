@@ -1,35 +1,58 @@
 <template name="welcome">
 	{{>slider}}
-{{>headerwrap}}
+	{{>featuredChallenges}}
+	{{>featuredProjects}}
+{{>why}}
 </template>
-<template name="what">
-	<div class="wrap">
-	<h2 class="name text-center">Convertimos ideas en soluciones reales</h2>
+<template name="featuredChallenges">
+<div id="why">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<br/>
+				<h3 class="name text-left">RETOS</h3>
+				<div class="col-md-4">
+					<div class="thumbnail">
+						<a href="#">
+							<img class="img-responsive" width="180" style="height: 150px;" src="challenges/fb-hackathon.png">
+						</a>
+						<span  style="display:inline-block;">
+						<h4 class="text-center"><a  href="#"><b>Facebook Mexico Hackathon @ ITESM Monterrey 2014</b></a>
+						</h4>
+					</span>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	<br/>
-	<br/>
-</template>
-<template name="headerwrap">
-<div id="headerwrap">
-	<div class="container">
+	</template>
+<template name="featuredProjects">
+<div id="why">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<br/>
+				<h3 class="name text-left">IDEAS DESTACADAS</h3>
+				{{#each project}}
+				<div class="col-md-4">
+					{{>projectThumbnail}}
+				</div>
+				{{/each}}
+			</div>
+		</div>
+	</div>
+	</template>
+<template name="why">
+<div id="why">
 		<div id="explanation" class="row">
 			<div class="col-md-8 col-md-offset-2">
-				<h1 class="name">¿Porqué Tak?</h1>
+				<br/>
+				<img class="center-block img-responsive" width="100" src="takLogo.png">
+				<h1 class="name">Convertimos ideas en soluciones reales</h1>
 				<h3>Creemos que la creatividad es lo más valioso que tenemos. No nos gusta ver ideas muertas, por eso queremos rodearlas de la gente necesaria para que vivan y logren un impacto en la sociedad.</h3>
 				<h4>Sí, somos algo cursis.</h4>
-				<!--<h3>Las Startups son nuestra razón de ser, son proyectos diseñados para crecer rápidamente. Buscan un negocio replicable y escalable.</h3>-->
 			</div>
 		</div>
 		<br/>
-		<!--
-			<div id="definition" class="row">
-				<div class="col-md-6 col-md-offset-3">
-					<h1>¿Qué es una Startup?</h1>
-						<h3>Las Startups son nuestra razón de ser, son proyectos diseñados para crecer rápidamente. Buscan un negocio replicable y escalable.</h3>
-			</div>
-		</div>-->
 	</div>
-	</div><!-- /headerwrap -->
 	</template>
 	<template name="footer">
 	<!--show this menu in top navbar when mobil -->

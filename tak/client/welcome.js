@@ -1,23 +1,4 @@
-Template.headerwrap.takValue = function()
-{
-	return Session.get('takValue');
-}
 
-Template.headerwrap.pathValue = function()
-{
-	return Session.get('pathValue');
-}
-
-  Template.headerwrap.peopleAmount = function(){
-  	Meteor.subscribe("allUserProfiles");
-    return Meteor.users.find({}).count();
-  }
-
-  Template.headerwrap.startupsAmount = function(){
-    Meteor.subscribe("allProjects");
-    //maybe just type=startup
-    return Projects.find({types:'Startup',isPublic:true}).count();
-  }
   Template.slider.desireImg = function() {
     return Session.get("desireImg");
   };
@@ -33,6 +14,13 @@ Template.headerwrap.pathValue = function()
   Template.slider.action = function(){
     return Session.get('action');
   }
+
+  Template.featuredProjects.helpers({
+    project : function()
+    {
+      return Projects.find({},{limit:3});
+    }
+  })
 
   Template.welcome.events({
     'click .hasIdea': function(evt, tmpl)
