@@ -21,6 +21,20 @@ Template.projectThumbnail.helpers({
       {
         return Tags.find({_id:{$in:tagsArray}, type:'TypeOfProject'});
       },
+    person:function(personId)
+    {
+      return People.find({_id:personId});
+    },
+     roleTag: function(personTags)
+      {
+        return Tags.find({_id:{$in:personTags}, type:'Role'});
+      },
+
+      skillTag: function(personTags)
+      {
+        return Tags.find({_id:{$in:personTags}, type:'Skill'});
+      },
+
     image: function(ids)
         {
           if (typeof (ids) == 'object')

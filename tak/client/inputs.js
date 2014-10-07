@@ -108,7 +108,7 @@
     Template.personTagInput.helpers({
       tagOptions:function()
       {
-        return Tags.find({type:{$in:['Role','Skill','City']}});
+        return Tags.find({type:{$in:['Skill']}});
       }
     })
 

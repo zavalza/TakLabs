@@ -98,6 +98,21 @@
 					<span class="thumbText" style="display:inline-block;">
 						<h4 class="text-center"><a  href="{{pathFor 'profile'}}"><b>{{name}}</b></a>
 						</h4>
+						<div class="block-inline text-left">
+						<h5><b class="name">Necesita:</b>
+							<span>
+								{{#each skillTag person_tags}}
+								{{name}};
+								{{/each}}
+							</span>
+						</h5>
+						</div>
+						{{#each team}}
+						  <h5 class="name text-left"><b>Equipo</b></h5>
+			              {{#each person person_id}}
+			              <a href="{{pathFor 'profile'}}"><img style="height: 30px;" class="pull-left img-circle" src="{{picture}}"></a>
+			              {{/each}}
+			              {{/each}}
 						<div class="box">
 						<div class="text">
 						<h5 style="margin: 8px; font-size:16px;" class="text-justify">{{description}}</h5>

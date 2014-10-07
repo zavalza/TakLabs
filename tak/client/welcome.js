@@ -22,6 +22,18 @@
     }
   })
 
+  Template.featuredChallenges.helpers({
+    fbLeft: function()
+    {
+      var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+      var deadline = new Date(2014,9,28);
+      var currentDay = new Date();
+
+      var diffDays = Math.round(Math.abs((deadline.getTime() - currentDay.getTime())/(oneDay)));
+      return diffDays;
+    }
+  })
+
   Template.welcome.events({
     'click .hasIdea': function(evt, tmpl)
   {

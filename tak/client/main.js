@@ -33,8 +33,8 @@ Deps.autorun(function () {
 
 Meteor.setInterval( function(){
     //alert('clock is working');
-    var messages=["Convertimos ideas en soluciones reales", "Trabaja en un problema que te apasione", "Genera innovación con tus habilidades y experiencias"];
-    var callsToAction=["Inspírate", "Descubre tu causa", "Colabora en retos"];
+    var messages=["Convertimos ideas en soluciones reales", "Trabaja en un problema que te apasione", "Colabora con otros innovadores hacia la mejor solución"];
+    var callsToAction=["Inspírate", "Descubre tu causa", "Comienza ahora"];
     var actions=["findChallenges", "findChallenges", "help"]; //el inspirate debe mandar a la seccion de resultados de los retos
     var currentImage=Session.get("desireImg");
     currentImage+=1;
