@@ -1,0 +1,71 @@
+<template name="challenges">
+<div class="wrap row">
+		<div class="col-md-3">
+		<div class="row">
+			<div class="col-md-offset-3 col-xs-offset-1">
+			<h2 class="name">¿Qué tipo de problema quieres resolver?</h2>
+		</div>
+		</div>
+		<form name="roles" role="form" class="form-inline col-md-6 col-xs-10 col-md-offset-3 col-xs-offset-1">
+			<div class="form-group">
+				<h4><b>ÁREA</b></h4>
+				{{#each areaOption}}
+				<label>
+					{{name}}
+					<input class="area form-control" type="checkbox" value="{{_id}}">
+				</label>
+				{{/each}}
+			</div>
+		</form>
+		<div class="row">
+			<div class="col-md-6 col-xs-6 col-md-offset-3 col-xs-offset-3">
+				<h4><b>PALABRAS CLAVE</b></h4>
+				<div class="row">
+					<input type="text" class="form-control dropdown-toggle" id="Market" placeholder="Añadir Mercado" data-toggle="dropdown">
+					<ul class="dropdown-menu" style="display: none;" id="MarketOptions">
+						{{#each marketOption}}
+						<a href="#"><li style=" display: none;" class="Market" id="{{_id}}">{{name}}</li></a>
+						{{/each}}
+					</ul>
+					{{#each filters}}
+					{{#each market this}}
+					<div class="input-group">
+						<input type="text" class="form-control " id="city" value="{{name}}" disabled>
+						<span class="input-group-btn">
+						<button id="{{_id}}" name="City" class="btn btn-danger pullFilter" type="button">x</button>
+						</span>
+					</div>
+					{{/each}}
+					{{/each}}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-8 col-md-offset-0 col-xs-10 col-xs-offset-1">
+		<div class="row center-block">
+			<div class="col-md-2 col-xs-3">
+					<img class="img-responsive" width="100" src="challenges/fb-hackathon.png">
+			</div>
+			<div class="col-md-7 col-xs-9">
+				<div class="row">
+					<h5 class="name">
+						Facebok México Hackathon
+					</h5>
+					<h5><b>Descripción</b>
+Join Facebook as we stay up all night hacking, learning and having a some fun! Start brainstorming ideas and forming teams (of up to 4 people). We'll supply the food, fun diversions, prizes, and some expert guidance in the form of our engineers. You bring your laptop, appetitean, skills and ideas.
+</h5>
+<h5><b>Premio</b>
+The winning team will get the chance to compete against teams from other Hackathons both domestically and internationally at the Hackathon Finals and be judged by our executives- held at Facebook HQ in Menlo Park, California in November!
+</h5>
+<h5><b>Más información y registro</b>
+<a href="https://www.facebook.com/events/607669236008856/?fref=ts">Evento de Facebook</a>
+</h5>
+				</div>
+				
+				<div style="font-size: 10px;" class="btn tag btn-xs">area and tags</div>
+			</div>
+		</div>
+		<br/>
+	</div>
+</div>
+</template>

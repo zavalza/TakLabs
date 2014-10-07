@@ -1,70 +1,5 @@
 
- Template.projectThumbnail.rendered = function()
- {
-
-  var maxHeight = 0;
-  $('.thumbText').each(function(){
-        var h = $(this).height();
-        if(h > maxHeight)
-        {
-          //alert(h);
-          maxHeight = h;
-        }
-    });
-  $('.thumbText').each(function(){
-        $(this).css('height',maxHeight+2);
-    });
-}
-
-Template.projectThumbnail.helpers({
-  typeOfProject: function(tagsArray)
-      {
-        return Tags.find({_id:{$in:tagsArray}, type:'TypeOfProject'});
-      },
-    person:function(personId)
-    {
-      return People.find({_id:personId});
-    },
-     roleTag: function(personTags)
-      {
-        return Tags.find({_id:{$in:personTags}, type:'Role'});
-      },
-
-      skillTag: function(personTags)
-      {
-        return Tags.find({_id:{$in:personTags}, type:'Skill'});
-      },
-
-    image: function(ids)
-        {
-          if (typeof (ids) == 'object')
-          return Images.find({_id:{$in: ids}});
-          else
-          {
-            //alert(typeof (ids)) string
-            return Images.find({_id:ids})
-          }
-          
-        },
-    areas: function(tagsArray)
-    {
-         return Tags.find({_id:{$in:tagsArray}, type:'Area'});
-    },
-
-  cities: function(tagsArray)
-    {
-         return Tags.find({_id:{$in:tagsArray}, type:'City'});
-    },
-  markets: function(tagsArray)
-    {
-         return Tags.find({_id:{$in:tagsArray}, type:'Market'});
-    },
-
-})
-Template.projectThumbnail.screenshotToShow = function() {
-      return this.screenshots[0]
-  };
- Template.projects.events({
+ Template.challenges.events({
     'change .area': function(evt, tmpl){
     //alert(evt.target.value);
     var filtersArray = Session.get("filters");
@@ -187,14 +122,7 @@ Template.projectThumbnail.screenshotToShow = function() {
     }
  })
 
- Template.projects.helpers({
-  project: function()
-  {
-        if (Session.get('filters').length == 0)
-            return Projects.find();
-           else
-            return Projects.find({tag_ids:{$all:Session.get('filters')}});
-  },
+ Template.challenges.helpers({
 
   city: function(tagId)
   {
@@ -229,7 +157,7 @@ Template.projectThumbnail.screenshotToShow = function() {
 
  })
 
-Template.projects.filters = function(){
+Template.challenges.filters = function(){
   return Session.get('filters');
 };
  
