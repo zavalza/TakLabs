@@ -119,16 +119,13 @@ Template.editProject.events({
       }
     },
 
-'change #name,#highConcept,#description' :function (evt, tmpl){
+'change #name,#purpose,#description' :function (evt, tmpl){
   var targetId = evt.target.id;
   var value= tmpl.find('#'+targetId).value;
   var re = /([a-zA-Z]+)/g;
 
   if(value.match(re))
-  { if (targetId=='City')
-    {
-      targetId = targetId.toLowerCase();
-    }
+  { 
     Meteor.call('updateProjectText', Session.get('url'), targetId, value);
   }
 },
@@ -147,43 +144,6 @@ else
 }
 },
 
-'change #title,#startedAt,#endedAt': function(evt, tmpl){
-      //alert(this.project_id);
-      var field = evt.target.id;
-      //alert(field);
-      var value = evt.target.value.trim();
-      //alert(value);
-      Meteor.call('updateExperience', this.person_id, Session.get('currentProjectId'), field, value);
-  },
-
-  'click .addArticle' : function (evt, tmpl){
-    //alert('article')
-      //alert(this._id);
-      var link = tmpl.find('#newLink').value;
-      var re = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
-      if (link.match(re))
-      {
-        Meteor.call('addArticle', Session.get('currentProjectId'), link);
-        tmpl.find('#newLink').value = "";
-      }
-      else
-      {
-        alert("No parece una liga válida, revisa que no haya ningún signo '?'");
-      }
-      //document.getElementById('SkillOptions').style.display='none';
-      return true;
-    },
-
-    'click .deleteArticle' : function (evt, tmpl){
-      //alert(this.toString());
-      Meteor.call('deleteArticle', Session.get('currentProjectId'), this.toString());
-      return true;
-    },
-
- 'click .deleteExperience': function(evt, tmpl){
-     //alert(this.project_id);
-     Meteor.call('deleteExperience', this.person_id, Session.get('currentProjectId'));
-  },
   
   'click .pullProjectType': function(evt, tmpl){
   //alert(this);
@@ -202,7 +162,7 @@ else
   Meteor.call('deleteProjectLogo', Session.get('url'), this._id);
 },
 
-'keyup #City,#User,#Market' : function(evt, tmpl){
+'keyup #City,#User,#Market,#Industry,#Tag' : function(evt, tmpl){
       //busca todo el string y no palabra por palabra
       var targetId = evt.target.id;
       //alert(targetId)
@@ -316,7 +276,15 @@ else
              }
             } 
             else
+
+            {
+              if(targetId == 'Tag') //tags of profile the idea is looking for
+          {
+             Meteor.call('pushPersonTag', Session.get('url'), matches[selection].getAttribute('name'));
+          }
+          else
                Meteor.call('pushProjectTag', Session.get('url'), matches[selection].getAttribute('name'));
+          }
           }
           tmpl.find('#'+targetId).value = "";
             tmpl.find('#'+targetId).blur();
@@ -341,7 +309,7 @@ else
     },
 
 
-    'blur #City,#User,#Market' : function(evt, tmpl){
+    'blur #City,#User,#Market,#Industry,#Tag' : function(evt, tmpl){
       var targetId = evt.target.id;
       //alert(evt.currentTarget.id);
       Session.set('keyControl', -1);
@@ -350,93 +318,43 @@ else
       
     },
 
-    'mousedown .City,.Market' : function (evt, tmpl){
+    'mousedown .City,.Market,.Industry,.Tag' : function (evt, tmpl){
       //alert(this._id);
       //alert (targetClass);
-      //Meteor.call('pushTag', Meteor.userId(), this._id);
+      var targetClass = evt.target.getAttribute('class');
+      //alert(targetClass);
+      if(targetClass.lastIndexOf('Tag') != -1)
+          {
+             Meteor.call('pushPersonTag', Session.get('url'),  this._id);
+          }
+      else
+      {
+
       Meteor.call('pushProjectTag', Session.get('url'), this._id);
+      }
       //return true;
     },
     
-    /*'click .pullProjectTag' : function(evt, tmpl){
+    'click .pullProjectTag' : function(evt, tmpl){
        Meteor.call('pullProjectTag', Session.get('url'), this._id);
-    }*/
+    },
+
+    'click .pullPersonTag' : function(evt, tmpl){
+       Meteor.call('pullPersonTag', Session.get('url'), this._id);
+    }
   });
 
-  Template.addMember.events({
-    'mousedown .addMember' : function(evt, tmpl){
-      //alert("click")
-    var typeOfExperience = tmpl.find('#Experience').value.trim();
-    var name = tmpl.find('#User').value.trim()
-    var re = /([a-zA-Z]+)/g;
-    if (typeOfExperience != "" && name.match(re))
-    {
-    //alert (name);
-     Meteor.call('addMember', Session.get('url'), typeOfExperience, name);
-    }
-    else
-    {
-    alert ("Selecciona un tipo de experiencia y escribe un nombre");
-    }
-    },
-
-    'mousedown .User': function(evt, tmpl){
-    var personId = evt.target.id.trim();
-    //alert (this._id);
-    var typeOfExperience = tmpl.find('#Experience').value.trim();
-    if (typeOfExperience != "")
-    {
-    var personDoc = {
-    type:typeOfExperience,
-    title:null,
-    startedAt:null,
-    endedAt:null,
-    confirmed:false,
-    person_id: personId
-    };
-    var projectDoc = {
-    type:typeOfExperience,
-    title:null,
-    startedAt:null,
-    endedAt:null,
-    confirmed:false,
-    project_id: Session.get('currentProjectId')
-    };
-    Meteor.call('pushExperience', personId, Session.get('currentProjectId'), projectDoc, personDoc);
-    }
-    else
-    {
-    alert ("Selecciona un tipo de experiencia");
-    }
-    },
-})
-
-Template.addMember.helpers({
-    userOptions : function()
-    {
-      Meteor.subscribe('people');
-    return People.find({});
-    }
-})
-Template.member.helpers({
-  user: function(userId)
-  {
-  Meteor.subscribe("userProfile", userId);
-  return Meteor.users.find({_id: userId});
-  },
-
-  person: function(personId)
-  {
-  Meteor.subscribe("person", personId);
-  return People.find({_id: personId});
-  }
-})
-
+  
 
     Template.editProject.helpers ({
         cityOptions : function()
         {
           return Tags.find({type:'City'});
+        },
+
+        areaOptions : function()
+        {
+          return Tags.find({type:'Area'});
         },
 
         selected:function()
@@ -453,6 +371,18 @@ Template.member.helpers({
         {
           return Tags.find({_id:tagId, type:'Market'});
         },
+
+        industry: function(tagId)
+        {
+          return Tags.find({_id:tagId, type:'Industry'});
+        },
+
+        tag: function(personTags)
+        {
+          return Tags.find({_id:{$in:personTags}});
+        },
+
+
 
         project: function()
         {

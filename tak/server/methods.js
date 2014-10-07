@@ -325,18 +325,14 @@
       pushProjectType: function(projectUrl, type){
           console.log('Pushing type '+ type +' to project ' + projectUrl);
           Projects.update({url: projectUrl},
-            {$push: {'types': type}});
-          var tag=Tags.findOne({name:type, type:"TypeOfProject"});
-          Meteor.call('pushProjectTag', projectUrl, tag._id);
+            {$push: {'tag_ids': type}});
           return true
       },
 
       pullProjectType: function(projectUrl, type){
           console.log('Pulling type '+ type +' from project ' + projectUrl);
           Projects.update({url: projectUrl},
-            {$pull: {'types': type}});
-          var tag=Tags.findOne({name:type, type:"TypeOfProject"});
-          Meteor.call('pullProjectTag', projectUrl, tag._id);
+            {$pull: {'tag_ids': type}});
           return true
       },
 
@@ -375,9 +371,9 @@
             Projects.update({url: projectUrl},
             {$set: {'city': value}});
             break;
-            case ('highConcept'):
+            case ('purpose'):
              Projects.update({url: projectUrl},
-            {$set: {'highConcept': value}});
+            {$set: {'purpose': value}});
             break;
             case ('description'):
              Projects.update({url: projectUrl},
@@ -404,6 +400,13 @@
           Tags.update({_id: tagId}, {$inc:{'counter.projects':updatedDoc}});
           return true
       },
+
+      pushPersonTag: function (projectUrl, tagId){
+          console.log('link tag with id '+ tagId +' from project '+ projectUrl);
+          Projects.update({url: projectUrl},
+            {$addToSet: {'person_tags': tagId}});
+          return true
+        },
     
       pullTag: function (personId, tagId){
           console.log('Unlink tag with id '+ tagId +' from person '+ personId);
@@ -418,6 +421,13 @@
           Projects.update({url: projectUrl},
             {$pull: {'tag_ids': tagId}});
           Tags.update({_id: tagId}, {$inc:{'counter.projects':-1}});
+          return true
+      },
+
+       pullPersonTag: function (projectUrl, tagId){
+          console.log('Unlink tag with id '+ tagId +' from project '+ projectUrl);
+          Projects.update({url: projectUrl},
+            {$pull: {'person_tags': tagId}});
           return true
       },
 

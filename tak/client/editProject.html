@@ -48,11 +48,11 @@
               <label>¿Qué área estás atacando?</label>
               <select class="form-control" id="type">
                 <option value="">Selecciona</option>
-                {{#each typeOfProjectOptions}}
+                {{#each areaOptions}}
                 {{#if selected}}
-                <option id="{{_id}}" value="{{name}}" selected>{{name}}</option>
+                <option id="{{_id}}" value="{{_id}}" selected>{{name}}</option>
                 {{else}}
-                <option id="{{_id}}" value="{{name}}">{{name}}</option>
+                <option id="{{_id}}" value="{{_id}}">{{name}}</option>
                 {{/if}}
                 {{/each}}
               </select>
@@ -66,9 +66,9 @@
           <div class="row">
           <div class="col-md-8">
               <label>Palabras clave de la solución</label>
-              {{>marketInput}}
+              {{>industryInput}}
               {{#each tag_ids}}
-              {{#each market this}}
+              {{#each industry this}}
                 <div class="input-group">
                   <input type="text" class="form-control " id="market" value="{{name}}" disabled>
                   <span class="input-group-btn">
@@ -80,20 +80,23 @@
             </div>
           </div>
           <div class="row">
-             <div class="col-md-8">
-            <label>Tu rol - ¿Cómo ayudarás a que la idea se haga realidad? </label>
-            <select class="form-control" id="type">
-                <option value="">Selecciona</option>
-                {{#each typeOfProjectOptions}}
-                {{#if selected}}
-                <option id="{{_id}}" value="{{name}}" selected>{{name}}</option>
-                {{else}}
-                <option id="{{_id}}" value="{{name}}">{{name}}</option>
-                {{/if}}
-                {{/each}}
-              </select>
-            </div>
+            <h4 class="name">Equipo</h4>
           </div>
+          <!--Palabras clave de las personas que necesitan -->
+          <div class="row">
+             <div class="col-md-8">
+            <label>¿Qué habilidades esperas se unan a esta idea? </label>
+            {{>personTagInput}}
+            {{#each tag person_tags}}
+               <div class="input-group">
+                  <input type="text" class="form-control " id="market" value="{{name}}" disabled>
+                  <span class="input-group-btn">
+                  <button name="Market" class="btn btn-danger pullPersonTag" type="button">x</button>
+                  </span>
+                </div>
+            {{/each}}
+          </div>
+        </div>
          
           <div class="row">
             <h4 class="name">Imagen Principal</h4>
