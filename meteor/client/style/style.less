@@ -1,0 +1,67 @@
+// Import Vendors
+// mrt add less-bootstrap-3
+@import "../../packages/bootstrap3-less/lib/less/bootstrap.import.less";
+// mrt add less-fontawesome-4
+//@import "../../packages/font-awesome-4-less/lib/less/core.import.less";
+
+// Vendor Variables
+@import "variables_bootstrap.import.less";
+@import "variables_fontawesome.import.less";
+
+//Google Fonts
+@import url(http://fonts.googleapis.com/css?family=Dosis:500);
+@import url(http://fonts.googleapis.com/css?family=Lato:400,900);
+
+/* CSS declarations go here */
+
+
+html{
+	margin: 0;
+	height: 100%;
+}
+
+body {
+	height:100%;
+	background:transparent;
+	font-size:18px;
+	font-family: Lato;
+	font-weight: normal;
+}
+
+//This line fix horizontal scroll bar
+.row { margin: 0; padding: 0 }
+
+.top-section{
+	background:#505D6E url(background.jpg) no-repeat right;
+	height:100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	color:#fff;
+}
+
+.bottom-section{
+	margin-top:5%;
+	margin-bottom:5%;
+}
+
+.copy{
+	background-color:#000;
+	color:#fff;
+	padding:1%;
+}
+
+.main-text {
+	margin: 10%;
+  	position: absolute;
+  	top: 8%; 
+}
+
+.wait-message{
+ 	top: 10%; 
+}
+
+.highlight {
+	color: @brand;
+}
