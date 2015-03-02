@@ -6,7 +6,4 @@
 
   Template.pitch.events({
 
-    'click button': function () {
-      Router.go('newCostumer');
-    }
   });
